@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="NR_CARPETA" class="java.lang.String"/>
+	<parameter name="TRANSPORTISTA" class="java.lang.String"/>
+	<parameter name="CLIENTE" class="java.lang.String"/>
+	<parameter name="NM_BUQUE" class="java.lang.String"/>
+	<parameter name="FX_LLEGADA_BUQUE" class="java.util.Date"/>
+	<parameter name="DUENIO_CAMION_TRANSPORTISTA" class="java.lang.String"/>
+	<parameter name="CHOFER" class="java.lang.String"/>
+	<parameter name="CEDULA" class="java.lang.String"/>
+	<parameter name="MATRICULA_CAMION" class="java.lang.String"/>
+	<parameter name="MATRICULA_ZORRA" class="java.lang.String"/>
+	<parameter name="MARCA_ANIO_CAMION" class="java.lang.String"/>
+	<parameter name="AGENCIA_MARITIMA" class="java.lang.String"/>
+	<parameter name="TIPO_CONTENEDOR" class="java.lang.String"/>
+	<parameter name="CODIGO_UY" class="java.lang.String"/>
+	<parameter name="KILAJE" class="java.lang.String"/>
+	<parameter name="FECHA_SALIDA_CARGA_CLIENTE" class="java.util.Date"/>
+	<parameter name="DESTINO" class="java.lang.String"/>
+	<parameter name="COMENTARIOS_DETALLES" class="java.lang.String"/>
+	<parameter name="DESPACHANTE" class="java.lang.String"/>
+	<parameter name="BL_ORIGINAL_COPIA" class="java.lang.String"/>
+	<parameter name="FACTURA" class="java.lang.String"/>
+	<parameter name="PACKING_LIST" class="java.lang.String"/>
+	<parameter name="NR_CONTENEDOR" class="java.lang.String"/>
+	<parameter name="PASADO_POR_FAX" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FECHA_HORA_RECIBIDO" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="FX_VENCIMIENTO" class="java.util.Date" isForPrompting="false"/>
+	<background>
+		<band />
+	</background>
+	<title>
+		<band height="92" >
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="22" y="13" width="286" height="26"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NR_CONTENEDOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="332" y="13" width="226" height="26"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NR_CARPETA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="449" y="58" width="120" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{TRANSPORTISTA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="449" y="73" width="120" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CLIENTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="114" y="4" width="96" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Numero de contenedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="402" y="3" width="85" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Numero de carpeta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="377" y="58" width="72" height="15"/>
+				<textElement/>
+				<text><![CDATA[Transportista :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="406" y="73" width="43" height="15"/>
+				<textElement/>
+				<text><![CDATA[Cliente :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="42" y="59" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[Nombre del Buque :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2" y="74" width="140" height="15"/>
+				<textElement/>
+				<text><![CDATA[Fecha de llegada del Buque :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="142" y="59" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NM_BUQUE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="142" y="74" width="138" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{FX_LLEGADA_BUQUE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="660" >
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="172" y="28" width="220" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DUENIO_CAMION_TRANSPORTISTA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="2" y="28" width="170" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Transportista/Dueno del camion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="120" y="43" width="51" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Chofer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="121" y="58" width="50" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Cedula:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="53" y="73" width="118" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Matricula del camion :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="52" y="88" width="119" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Matricula de la chata :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="48" y="103" width="122" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Marca-anio del camion :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="171" y="58" width="221" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CEDULA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="171" y="43" width="221" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CHOFER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="171" y="73" width="221" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{MATRICULA_CAMION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="171" y="88" width="221" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{MATRICULA_ZORRA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="171" y="103" width="221" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{MARCA_ANIO_CAMION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="5" y="428" width="163" height="15"/>
+				<textElement/>
+				<text><![CDATA[FECHA Y HORA DE RECIBIDO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="4" y="399" width="255" height="15"/>
+				<textElement/>
+				<text><![CDATA[FECHA DE SALIDA SOLICITADA POR EL CLIENTE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="90" y="221" width="397" height="33"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{AGENCIA_MARITIMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="259" y="254" width="70" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Agencia Maritima]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="435" y="322" width="135" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{TIPO_CONTENEDOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="435" y="337" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{KILAJE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="435" y="352" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CODIGO_UY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="334" y="322" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Tipo de contenedor :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="334" y="337" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Kilaje :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="334" y="352" width="100" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Codigo UY :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="5" y="532" width="66" height="15"/>
+				<textElement/>
+				<text><![CDATA[Comentarios:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="5" y="457" width="46" height="15"/>
+				<textElement/>
+				<text><![CDATA[Destino :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="322" y="483" width="59" height="15"/>
+				<textElement/>
+				<text><![CDATA[BL original :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2" y="628" width="101" height="30"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENCE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="3" y="590" width="101" height="30"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="4" y="483" width="148" height="15"/>
+				<textElement/>
+				<text><![CDATA[Pasado por fax a Paraguay :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="5" y="507" width="72" height="15"/>
+				<textElement/>
+				<text><![CDATA[Despachante:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="322" y="457" width="66" height="15"/>
+				<textElement/>
+				<text><![CDATA[Factura Nro:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="322" y="507" width="66" height="15"/>
+				<textElement/>
+				<text><![CDATA[Packing List :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="388" y="457" width="152" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{FACTURA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="51" y="457" width="139" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESTINO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="71" y="532" width="251" height="52"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{COMENTARIOS_DETALLES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="388" y="507" width="155" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{PACKING_LIST}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="381" y="483" width="154" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{BL_ORIGINAL_COPIA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="77" y="507" width="127" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESPACHANTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="259" y="399" width="228" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{FECHA_SALIDA_CARGA_CLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="168" y="428" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{FECHA_HORA_RECIBIDO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="103" y="628" width="263" height="30"/>
+				<textElement>
+					<font size="24" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{FX_VENCIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="483" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{PASADO_POR_FAX}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

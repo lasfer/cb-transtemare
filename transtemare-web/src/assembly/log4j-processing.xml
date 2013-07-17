@@ -1,0 +1,12 @@
+<processor>
+     <remove>
+        <name>/log4j:configuration/appender[@name='stdout']</name>
+    </remove>
+    <remove>
+        <name>/log4j:configuration/root/appender-ref[@ref='stdout']</name>
+    </remove>
+    <modify>
+        <name>/log4j:configuration/appender[@name='fileError']/param[@name='file']/@value</name>
+        <value>${catalina.home}/log/transtemare-web-error2.log</value>
+    </modify>
+</processor>

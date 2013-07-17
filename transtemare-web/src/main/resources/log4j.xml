@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %5p (%F:%L) - %m%n" />
+		</layout>
+	</appender>
+	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${catalina.home}/log/transtemare-web.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %5p (%F:%L) - %m%n" />
+		</layout>
+	</appender>
+	<appender name="fileError" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${catalina.home}/log/transtemare-web-error.log" />
+		<param name="Threshold" value="ERROR" />    
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern"  
+                value="%n%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%l] %n%m%n" />  
+        </layout>  
+	</appender>
+<!--  Esto es para que no se logueen los warns del binding -->
+	<logger name="com.opensymphony">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.struts2">
+		<level value="INFO" />
+	</logger>	
+	
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="file" />
+		<appender-ref ref="fileError" />
+	</root>
+</log4j:configuration>
+<!-- log4j.appender.file.layout.ConversionPattern=%d [%t] %-5p %c - %m%n -->

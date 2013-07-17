@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+
+	<!-- este es para cachar las anotaciones @Autowired, @Resource, @Required -->
+	<!-- <context:annotation-config /> -->
+
+	<!-- este es para procesar los métodos que traen anotación @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+	<!-- <property name="jndiName" value="java:comp/env/skuncadb" /> -->
+	<!-- <property name="jndiName" value="java:skuncadb"/> -->
+	<!-- <property name="resourceRef" value="true" /> -->
+	<!-- </bean> -->
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/skuncadb?autoReconnect=true" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- En caso de usar hibernate -->
+	<!-- <bean id="mySessionFactory" -->
+	<!-- class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
+	<!-- <property name="dataSource" ref="dataSource" /> -->
+	<!-- <property name="annotatedClasses"> -->
+	<!-- <list> -->
+	<!-- <value>com.core.transtemare.entidades.Camion</value> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- <property name="hibernateProperties"> -->
+	<!-- <props> -->
+	<!-- <prop key="hibernate.dialect"> org.hibernate.dialect.MySQLDialect</prop> -->
+	<!-- <prop key="hibernate.show_sql">true</prop> -->
+	<!-- <prop key="hibernate.hbm2ddl.auto">validate</prop> -->
+	<!-- </props> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="daoPaises" class="com.core.transtemare.daos.daoPaises">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="daoLocalidades" class="com.core.transtemare.daos.daoLocalidades">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="daoRutas" class="com.core.transtemare.daos.daoRutas">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="daoResponsable" class="com.core.transtemare.daos.daoResponsable">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="daoCarpetas" class="com.core.transtemare.daos.daoCarpeta">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="daoEmpresas" class="com.core.transtemare.daos.daoEmpresas">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="daoTransportadoras" class="com.core.transtemare.daos.daoTransportadoras">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="daoCamiones" class="com.core.transtemare.daos.daoCamiones">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	<bean id="fachadaTransportadoras" class="com.core.transtemare.commons.FachadaTransportadoras">
+		<constructor-arg ref="daoResponsable" />
+		<constructor-arg ref="daoTransportadoras" />
+		<constructor-arg ref="daoCamiones" />
+	</bean>
+
+	<bean id="fachadaCarpetas" class="com.core.transtemare.commons.FachadaCarpetas">
+		<constructor-arg ref="daoCarpetas" />
+		<constructor-arg ref="daoEmpresas" />
+		<constructor-arg ref="daoLocalidades" />
+	</bean>
+
+	<bean id="fachadaComunes" class="com.core.transtemare.commons.FachadaComunes">
+		<!-- <constructor-arg ref="poolConexiones" /> -->
+		<constructor-arg ref="daoPaises" />
+		<constructor-arg ref="daoLocalidades" />
+		<constructor-arg ref="daoRutas" />
+		<constructor-arg ref="daoResponsable" />
+	</bean>
+
+	<bean id="fachada" class="com.core.transtemare.commons.Fachada">
+		<constructor-arg ref="fachadaTransportadoras" />
+		<constructor-arg ref="fachadaCarpetas" />
+		<constructor-arg ref="fachadaComunes" />
+	</bean>
+
+	<bean id="jsonListaCiudades" class="com.web.transtemare.acciones.commons.JSONListaCiudades">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonAlarmaCarpeta" class="com.web.transtemare.acciones.alarmas.JSONAlarmaCarpeta">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<!-- <bean id="URLAlarmasCarpetas" class="com.web.transtemare.acciones.alarmas.URLAlarmasCarpetas" > -->
+	<!-- <constructor-arg ref="fachada" /> -->
+	<!-- </bean> -->
+
+	<bean id="ABMCamiones" class="com.web.transtemare.acciones.camiones.ABMCamiones">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="ABMLocalidades" class="com.web.transtemare.acciones.localidades.ABMLocalidades">
+		<constructor-arg ref="fachada" />
+	</bean>
+	<bean id="JSONLocalidades" class="com.web.transtemare.acciones.localidades.JSONLocalidades">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="JSONCamiones" class="com.web.transtemare.acciones.camiones.JSONCamiones">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<!-- <bean id="URLCamiones" class="com.web.transtemare.acciones.camiones.URLCamiones" > -->
+	<!-- <constructor-arg ref="fachada" /> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="JSONCamiones" class="com.web.transtemare.acciones.camiones.JSONCamiones" > -->
+	<!-- <constructor-arg ref="fachada" /> -->
+	<!-- </bean> -->
+
+	<bean id="jsonListaCarpetas" class="com.web.transtemare.acciones.carpetas.JSONCarpetas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+
+	<bean id="jsonListaSubCarpetas" class="com.web.transtemare.acciones.carpetas.SubGrillaCarpetas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+
+
+	<bean id="daoCarpeta" class="com.core.transtemare.daos.daoCarpeta" />
+
+
+	<bean id="CrearCarpeta" class="com.web.transtemare.acciones.carpetas.CrearCarpeta">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+
+	<bean id="EditarCarpeta" class="com.web.transtemare.acciones.carpetas.EditarCarpeta">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+
+	<bean id="jsonCantidadMic" class="com.web.transtemare.acciones.carpetas.JSONCantidadMic">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonCarpetas" class="com.web.transtemare.acciones.carpetas.JSONCarpetas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="nuevaCarpeta" class="com.web.transtemare.acciones.carpetas.NuevaCarpeta">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="resumen" class="com.web.transtemare.acciones.carpetas.Resumen">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="resumenCorto" class="com.web.transtemare.acciones.carpetas.ResumenCorto">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="abmchoferes" class="com.web.transtemare.acciones.choferes.ABMChoferes">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonchoferes" class="com.web.transtemare.acciones.choferes.JSONChoferes">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonListaAduanas" class="com.web.transtemare.acciones.commons.JSONListaAduanas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistaagenciamaritimas" class="com.web.transtemare.acciones.commons.JSONListaAgenciasMaritimas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistabultos" class="com.web.transtemare.acciones.commons.JSONListaBultos">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistacamiones" class="com.web.transtemare.acciones.commons.JSONListaCamiones">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistaremolques" class="com.web.transtemare.acciones.commons.JSONListaRemolques">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistachoferes" class="com.web.transtemare.acciones.commons.JSONListaChoferes">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistaclientes" class="com.web.transtemare.acciones.commons.JSONListaClientes">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistadespachantes" class="com.web.transtemare.acciones.commons.JSONListaDespachantes">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistaempresas" class="com.web.transtemare.acciones.commons.JSONListaEmpresas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistamonedas" class="com.web.transtemare.acciones.commons.JSONListaMonedas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistapaises" class="com.web.transtemare.acciones.commons.JSONListaPaises">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistarutas" class="com.web.transtemare.acciones.commons.JSONListaRutas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistatamaniosletra" class="com.web.transtemare.acciones.commons.JSONListaTamaniosLetra">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonlistatransportadoras" class="com.web.transtemare.acciones.commons.JSONListaTransportadoras">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsontipocontenedores" class="com.web.transtemare.acciones.commons.JSONTipoContenedores">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+<!-- 	<bean id="jsonTerminales" class="com.web.transtemare.acciones.commons.JSONTerminales"> -->
+<!-- 		<constructor-arg ref="fachada" /> -->
+<!-- 	</bean> -->
+
+	<bean id="listarciudades" class="com.web.transtemare.acciones.commons.ListarCiudades">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="listarpaises" class="com.web.transtemare.acciones.commons.ListarPaises">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<!-- <bean id="usuariosactivos" class="com.web.transtemare.acciones.commons.UsuariosActivos" > -->
+	<!-- <constructor-arg ref="fachada" /> -->
+	<!-- </bean> -->
+
+	<bean id="abmempresas" class="com.web.transtemare.acciones.empresas.ABMEmpresas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsonempresas" class="com.web.transtemare.acciones.empresas.JSONEmpresas">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="JSONCarpetasHistorico" class="com.web.transtemare.acciones.historico.JSONCarpetasHistorico">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsoncarpetashistoricos" class="com.web.transtemare.acciones.historico.JSONCarpetasHistorico">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="entrar" class="com.web.transtemare.acciones.login.Entrar">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<!-- <bean id="salir" class="com.web.transtemare.acciones.login.Salir" > -->
+	<!-- <constructor-arg ref="fachada" /> -->
+	<!-- </bean> -->
+
+	<bean id="caratula" class="com.web.transtemare.acciones.reportes.Caratula">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="crt" class="com.web.transtemare.acciones.reportes.CRT">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="micdta" class="com.web.transtemare.acciones.reportes.MICDTA">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="abmtransportadora" class="com.web.transtemare.acciones.transportadora.ABMTransportadora">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<!-- <bean id="jsontabletransportadoras" -->
+	<!-- class="com.web.transtemare.acciones.transportadora.JsonTableTransportadora"> -->
+	<!-- <constructor-arg ref="fachada" /> -->
+	<!-- </bean> -->
+
+
+	<bean id="jsontableterminales" class="com.web.transtemare.acciones.terminales.JSONTerminales">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="jsontableListaTerminales" class="com.web.transtemare.acciones.terminales.JSONListaTerminales">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="actionJob" class="com.web.transtemare.scheduler.ActionJob">
+		<constructor-arg ref="fachada" />
+	</bean>
+
+	<bean id="scheduler" class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+		<property name="targetObject">
+			<ref bean="actionJob" />
+		</property>
+		<property name="targetMethod">
+			<value>execute</value>
+		</property>
+	</bean>
+
+	<bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="delay">
+			<value>1000</value>
+		</property>
+		<property name="period">
+			<!-- <value>3600000</value> -->
+			<value>10000</value>
+		</property>
+		<property name="timerTask">
+			<ref bean="scheduler" />
+		</property>
+	</bean>
+
+	<bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref local="scheduledTask" />
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- <bean id="log4jInitializer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> -->
+	<!-- <property name="staticMethod" value="org.springframework.util.Log4jConfigurer.initLogging" /> -->
+	<!-- <property name="arguments"> -->
+	<!-- <list> -->
+	<!-- <value>classpath:log4j.properties</value> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
+
+</beans>
+

@@ -1,0 +1,20 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+       "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+  <field name="cantidadMIC">
+      <field-validator type="required">
+          <message>La cantidad de mic es requerida</message>
+      </field-validator>
+      <field-validator type="int">
+          <param name="min">1</param>
+          <param name="max">50</param>
+          <message>El numero de carpeta tiene que esta entre 1 y 50</message>
+      </field-validator>
+  </field>
+  
+  <field name="transportadora">
+      <field-validator type="required">
+          <message>La transportadora es requerida</message>
+     </field-validator>
+  </field>
+</validators>

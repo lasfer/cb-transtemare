@@ -1,0 +1,144 @@
+
+ <!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.convention.result.path" value="/paginas" />
+	<constant name="struts.convention.exclude.parentClassLoader"
+		value="true" />
+	<constant name="struts.convention.action.fileProtocols" value="jar,vfsfile,vfszip" />
+	<constant name="struts.convention.classes.reload" value="false" />
+	<constant name="struts.convention.action.packages" value="com.web.transtemare.acciones" />
+	<constant name="struts.convention.default.parent.package"
+		value="default" />
+
+	<package name="default" extends="struts-default,json-default">
+
+		<interceptors>
+			<interceptor name="login"
+				class="com.web.transtemare.interceptor.AuthenticationInterceptor" />
+			<interceptor-stack name="all-default">
+				<interceptor-ref name="login" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="all-default" />
+
+		<global-results>
+			<result name="err1">/paginas/echo.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping name="exception" exception="java.lang.Exception"
+				result="err1" />
+			<exception-mapping name="conectionException"
+				exception="com.core.transtemare.excepciones.ConexionException"
+				result="err1" />
+			<exception-mapping name="daoException"
+				exception="com.core.transtemare.excepciones.DaoException" result="err1" />
+			<exception-mapping name="actionException"
+				exception="com.core.transtemare.excepciones.ActionException" result="err1" />
+			<exception-mapping name="fachadaException"
+				exception="com.core.transtemare.excepciones.FachadaException"
+				result="err1" />
+		</global-exception-mappings>
+
+		<action name="logout" class="com.web.transtemare.acciones.login.Salir">
+			<result name="success">/index.jsp</result>
+		</action>
+
+
+		<action name="NuevaCarpeta"
+			class="com.web.transtemare.acciones.carpetas.NuevaCarpeta">
+			<result type="redirectAction">
+				<param name="actionName">index</param>
+				<param name="destino">editarCarpeta?id=%{c.idCarpeta}</param>
+			</result>
+			<result name="input" type="redirectAction">/paginas/simpleecho.jsp</result>
+			<result name="error" type="redirectAction">/paginas/simpleecho.jsp</result>
+		</action>
+
+		<action name="CRT" class="com.web.transtemare.acciones.reportes.CRT">
+			<result name="success" type="stream">
+				<param name="inputName">inputStream2</param>
+				<param name="contentType">application/x-download</param>
+				<param name="contentDisposition">attachment;filename="CRT.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+		<action name="MICDTA" class="com.web.transtemare.acciones.reportes.MICDTA">
+			<result name="success" type="stream">
+				<param name="contentType">application/x-download</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="MICDTA.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+		<action name="CARATULA" class="com.web.transtemare.acciones.reportes.Caratula">
+			<result name="success" type="stream">
+				<param name="contentType">application/x-download</param>
+				<param name="contentDisposition">attachment;filename="caratula.pdf"</param>
+				<param name="bufferSize">1024</param>
+				<param name="inputName">inputStream2</param>
+			</result>
+		</action>
+
+
+		<action name="CRTHistorico"
+			class="com.web.transtemare.acciones.reportes.CRTHistoricoV1">
+			<result name="success" type="stream">
+				<param name="inputName">inputStream2</param>
+				<param name="contentType">application/x-download</param>
+				<param name="contentDisposition">attachment;filename="CRT.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+		<action name="MICDTAHistorico"
+			class="com.web.transtemare.acciones.reportes.MICDTAHistoricoV1">
+			<result name="success" type="stream">
+				<param name="contentType">application/x-download</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="MICDTA.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+		<action name="CARATULAHistorico"
+			class="com.web.transtemare.acciones.reportes.CaratulaHistoricoV1">
+			<result name="success" type="stream">
+				<param name="contentType">application/x-download</param>
+				<param name="contentDisposition">attachment;filename="caratula.pdf"</param>
+				<param name="bufferSize">1024</param>
+				<param name="inputName">inputStream2</param>
+			</result>
+		</action>
+
+
+
+
+	</package>
+
+
+	<package name="login" extends="struts-default,json-default"
+		namespace="/">
+
+		<action name="entrar" class="com.web.transtemare.acciones.login.Entrar">
+			<result name="success">/index.jsp</result>
+		</action>
+	</package>
+
+
+
+
+
+
+</struts>

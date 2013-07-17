@@ -1,0 +1,2 @@
+ALTER TABLE `skuncadb`.`responsable` ADD COLUMN `telefono` VARCHAR(50) NULL  AFTER `Activo` ;
+ALTER TABLE `skuncadb`.`camion` ADD COLUMN `numeroPoliza` VARCHAR(20) NULL  AFTER `tipo` , ADD COLUMN `vencimientoPoliza` DATE NULL  AFTER `numeroPoliza` ;

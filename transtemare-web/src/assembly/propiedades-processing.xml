@@ -1,0 +1,30 @@
+<processor>
+    <!-- Add non-existing property -->
+    <add>
+        <name>test-property</name>
+        <value>papo</value>
+        <before>extension.archivos.logos</before>
+    </add>
+
+    <!-- Modify a property value -->
+    <modify>
+        <name>extension.archivos.logos</name>
+        <value>.PEPE</value>
+    </modify>
+
+    <!-- Remove a property -->
+    <remove>
+        <name>hola</name>
+    </remove>
+
+    <!-- Commenting a property -->
+    <comment>
+        <name>hola2</name>
+    </comment>
+
+    <!-- Appending a file 
+    <add>
+        <file>jar:file:///C:/projects/java/test.jar!/META-INF/test.properties</file>
+        <last />
+    <add>-->
+</processor>
