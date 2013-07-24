@@ -3,6 +3,9 @@ package com.core.transtemare.entidades;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.core.transtemare.enums.TipoContenedor;
 
 public class Carpeta {
@@ -820,6 +823,11 @@ public class Carpeta {
 
 	public void setValorFOTAux(String valorFOTAux) {
 		this.valorFOTAux = valorFOTAux;
+	}
+	
+	@Override	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
 	}
 
 }

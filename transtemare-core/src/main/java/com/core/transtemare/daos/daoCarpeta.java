@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -210,15 +211,30 @@ public class daoCarpeta {
 		return check;
 	}
 
-	public List<Carpeta> obtenerCarpetas(boolean historico, int desde, int hasta) {
+	public List<Carpeta> obtenerCarpetas(Carpeta carpeta, boolean historico, int desde, int hasta) {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("obtenerTop20Carpetas(boolean=" + historico + ", int=" + desde + ", int=" + hasta + ") - start"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			LOGGER.debug("obtenerTop20Carpetas(carpeta=" + carpeta + ",boolean=" + historico + ", int=" + desde + ", int=" + hasta + ") - start"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
-
-		final Object[] params = new Object[] { historico, desde, hasta };
+		List<Object> params=new ArrayList<Object>(4);
+		params.add(historico);
+		String replaceConsulta="";
+		if(carpeta!= null){
+			StringBuilder sb=new StringBuilder("and ");
+			if(carpeta.getNroDocumento()!=null){
+				sb.append("c.nroDocumento like ?");
+				params.add(carpeta.getNroDocumento());
+			}else if(StringUtils.isNotEmpty(carpeta.getNroContenedor())){
+				sb.append("c.nroContenedor like ?");
+				params.add(carpeta.getNroContenedor());
+			}
+			replaceConsulta=sb.toString();
+		}
+		params.add(desde);
+		params.add(hasta);
 		List<Carpeta> listaCarpetas = new ArrayList<Carpeta>();
+		
 		listaCarpetas = jdbcTemplate.query(
-				SQLCarpetas.OBTENER_CARPETAS_DESDE_HASTA, params,
+				SQLCarpetas.OBTENER_CARPETAS_DESDE_HASTA.replace("[FILTROADICIONAL]", replaceConsulta), params.toArray(),
 				new CarpetaSnapMapper());
 
 		if (LOGGER.isDebugEnabled()) {

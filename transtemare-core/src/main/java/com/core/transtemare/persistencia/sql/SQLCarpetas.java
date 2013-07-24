@@ -22,7 +22,7 @@ public class SQLCarpetas {
 			+ " e, "
 			+ SQLTablas.TABLA_TRANSPORTADORAS
 			+ " t "
-			+ " WHERE c.transportadora=t.codTransportadora and c.agenciaMaritima=e.idEmpresa and c.historico = ? AND c.idCarpeta!=0 AND c.esCRT = 1  ORDER BY c.idCarpeta DESC LIMIT ?,?";
+			+ " WHERE c.transportadora=t.codTransportadora and c.agenciaMaritima=e.idEmpresa and c.historico = ? AND c.idCarpeta!=0 AND c.esCRT = 1  [FILTROADICIONAL]   ORDER BY c.idCarpeta DESC LIMIT ?,?";
 
 	public static final String OBTENER_SUBCARPETAS = "SELECT c.idCarpeta,c.referenciaDestino,c.nroContenedor, t.Nombre as nombreTransportadora, c.terminal, e.nombre as nombreAgenciaMaritima, c.FxAlta,c.FxMod, c.fechaVencimiento, c.fechaLlegadaBuque FROM "
 			+ SQLTablas.TABLA_CARPETAS

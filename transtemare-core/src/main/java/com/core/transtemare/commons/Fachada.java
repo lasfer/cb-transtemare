@@ -320,9 +320,9 @@ public class Fachada {
 		return fC.obtenerHistoricoCarpetas(desde, hasta);
 	}
 
-	public List<Carpeta> obtenerCarpetas(boolean historico, int desde, int hasta)
+	public List<Carpeta> obtenerCarpetas(Carpeta carpeta, boolean historico, int desde, int hasta)
 			throws FachadaException {
-		return fC.obtenerCarpetas(historico, desde, hasta);
+		return fC.obtenerCarpetas(carpeta, historico, desde, hasta);
 	}
 
 	public List<Carpeta> obtenerSubCarpetas(boolean historico, int idCarpetPadre)

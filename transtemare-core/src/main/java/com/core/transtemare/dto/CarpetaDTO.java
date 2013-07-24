@@ -10,6 +10,7 @@ public class CarpetaDTO {
 	private String numeroCarpeta;
 	private String referenciaDestino;
 	private String numeroContenedor;
+	private Integer numeroDocumento;
 	private String transportadora;
 	private String terminal;
 	private String agenciaMaritima;
@@ -23,6 +24,7 @@ public class CarpetaDTO {
 		this.numeroCarpeta = String.valueOf(carpeta.getIdCarpeta());
 		this.referenciaDestino = carpeta.getReferenciaDestino();
 		this.numeroContenedor = carpeta.getNroContenedor();
+		this.numeroDocumento = carpeta.getNroDocumento();
 		this.transportadora = carpeta.getTrans().getNombreTransportadora();
 		this.terminal = carpeta.getTerminal() != null ? carpeta.getTerminal().getNombre() : null;
 		this.agenciaMaritima = carpeta.getAgenciaMaritima().getNombre();
@@ -125,6 +127,20 @@ public class CarpetaDTO {
 	 */
 	public void setAgenciaMaritima(String agenciaMaritima) {
 		this.agenciaMaritima = agenciaMaritima;
+	}
+
+	/**
+	 * @return the numeroDocumento
+	 */
+	public Integer getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+	/**
+	 * @param numeroDocumento the numeroDocumento to set
+	 */
+	public void setNumeroDocumento(Integer numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
 	}
 
 }

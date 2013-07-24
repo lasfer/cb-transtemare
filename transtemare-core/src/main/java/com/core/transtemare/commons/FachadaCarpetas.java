@@ -162,9 +162,9 @@ public class FachadaCarpetas {
 
 	}
 
-	public List<Carpeta> obtenerCarpetas(boolean historico, int desde, int hasta) {
+	public List<Carpeta> obtenerCarpetas(Carpeta carpeta, boolean historico, int desde, int hasta) {
 		try {
-			return daoCa.obtenerCarpetas(historico, desde, hasta);
+			return daoCa.obtenerCarpetas(carpeta, historico, desde, hasta);
 
 		} catch (Exception e) {
 			throw new FachadaException(e.getMessage());
