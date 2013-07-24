@@ -3,6 +3,7 @@ package com.web.transtemare.acciones.carpetas;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -43,14 +44,37 @@ public class JSONCarpetas extends ActionSupport {
 		int to = (rows * page);
 		int from = to - rows;
 		gridModel = new ArrayList<CarpetaDTO>();
-
+		
 		// Your logic to search and select the required data.
 		try {
 			if (searchString != null && "eq".equals(searchOper)) {
-				int id = Integer.parseInt(searchString);
-				gridModel.add(new CarpetaDTO(fac.obtenerCarpeta(id)));
+				Carpeta carpeta=new Carpeta();
+				if ("numeroCarpeta".equals(searchField)) {
+					int id = Integer.parseInt(searchString);
+					gridModel.add(new CarpetaDTO(fac.obtenerCarpeta(id)));
+				} else if ("numeroDocumento".equals(searchField)) {
+					try{
+						
+						carpeta.setNroDocumento(Integer.parseInt(searchString));
+						List<Carpeta> carpetas = fac.obtenerCarpetas(carpeta,false, from, to);
+						records = fac.totalCarpetas();
+						for (Carpeta c : carpetas) {
+							gridModel.add(new CarpetaDTO(c));
+						}
+					}catch(Exception e){
+						return ERROR;
+					}
+				}else if ("numeroContenedor".equals(searchField)) {
+					carpeta.setNroContenedor(searchString.replace("-",StringUtils.EMPTY));
+					List<Carpeta> carpetas = fac.obtenerCarpetas(carpeta,false, from, to);
+					records = fac.totalCarpetas();
+					for (Carpeta c : carpetas) {
+						gridModel.add(new CarpetaDTO(c));
+					}				
+				}	
+
 			} else {
-				List<Carpeta> carpetas = fac.obtenerCarpetas(false, from, to);
+				List<Carpeta> carpetas = fac.obtenerCarpetas(null,false, from, to);
 				records = fac.totalCarpetas();
 				for (Carpeta c : carpetas) {
 					gridModel.add(new CarpetaDTO(c));

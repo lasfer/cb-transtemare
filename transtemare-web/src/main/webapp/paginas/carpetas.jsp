@@ -35,12 +35,15 @@
 			<sjg:gridColumn name="numeroCarpeta" index="numeroCarpeta"
 				search="true" searchoptions="{sopt:['eq']}" title="Numero"
 				key="true" required="false" width="65" />
+			<sjg:gridColumn name="numeroDocumento" index="numeroDocumento"
+				search="true" searchoptions="{sopt:['eq'],searchhidden : true}" title="Documento"
+				required="false" width="0" hidden="true" />
 			<sjg:gridColumn name="referenciaDestino" index="referenciaDestino"
 				search="false" title="Nro. Paraguay" key="true" required="false"
 				width="130" />
 			<sjg:gridColumn name="numeroContenedorFormateado"
-				index="numeroContenedor" search="false" id="numeroContenedor"
-				title="Contenedor" width="130" />
+				index="numeroContenedor" search="true" id="numeroContenedor"
+				title="Contenedor" width="130"  searchoptions="{sopt:['eq']}"/>
 			<sjg:gridColumn name="transportadora" index="transportadora"
 				search="false" id="transportadora" title="Transportadora"
 				width="130" />
@@ -63,9 +66,10 @@
 			<li><sj:a id="Carpetas1" href="%{CrearCarpetaPaso1}"
 					targets="main">CREAR CARPETA</sj:a></li>
 			<li><sj:div id="gridEditarCarpetas" /></li>
-			<li><sj:div id="gridCaratula" /></li>
+			
 			<li><sj:div id="gridCrt" /></li>
 			<li><sj:div id="gridMicDta" /></li>
+			<li><sj:div id="gridCaratula" /></li>
 		</ul>
 		<div id='previewID' class='result ui-widget-content ui-corner-all'>
 		</div>

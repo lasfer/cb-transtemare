@@ -40,8 +40,8 @@
 			id="numeroPoliza" title="Nro. Poliza" search="false" editable="true"
 			edittype="text" hidden="true" editrules="{edithidden:true,required: false}" />
 		<sjg:gridColumn name="vencimientoPoliza" index="vencimientoPoliza"
-			id="vencimientoPoliza" title="Venc. Poliza" search="false"
-			editable="true" edittype="text" formatter="date"
+			id="vencimientoPoliza" title="Venc. Poliza(dd/mm/yyyy)" search="false"
+			editable="true" edittype="text" formatter="date" 
 			formatoptions="{newformat : 'd/m/Y'}"  hidden="true" editrules="{edithidden:true,required: false}"  />
 	</sjg:grid>
 </div>

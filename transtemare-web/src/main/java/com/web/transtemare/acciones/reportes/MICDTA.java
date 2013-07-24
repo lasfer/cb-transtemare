@@ -19,6 +19,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -38,6 +39,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class MICDTA extends ActionSupport implements ServletResponseAware {
 
 	public static JasperReport jasperReport;
+	public static JasperReport jasperReportCamionSust;
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(MICDTA.class);
 	private static String EXTENSION_ARCHIVO;
@@ -46,6 +48,7 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 	private Fachada fac;
 	private Carpeta c;
 	private Integer id;
+	private Boolean camionSust;
 
 	public MICDTA(Fachada fac) {
 		super();
@@ -58,8 +61,11 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 			EXTENSION_ARCHIVO = rb2.getString("extension.archivos.logos");
 			String fileReport = MICDTA.class.getClassLoader()
 					.getResource("documentos/MICDTA.jrxml").getFile();
+			String fileReportCamionSust = MICDTA.class.getClassLoader()
+					.getResource("documentos/MICDTACamionSust.jrxml").getFile();
 			logger.info("Compilando el fuente: " + fileReport);
 			jasperReport = JasperCompileManager.compileReport(fileReport);
+			jasperReportCamionSust=JasperCompileManager.compileReport(fileReportCamionSust);
 			logger.info("Se compilo el micdta correctamente");
 		} catch (Exception e) {
 			logger.error("No se pudo compilar el micdta", e);
@@ -95,9 +101,14 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 					styles[i].setFontSize(c.getTamanioLetraMarcaYNumero());
 				}
 			}
-
-			JasperPrint jp = JasperFillManager.fillReport(jasperReport,
-					parametros, new JREmptyDataSource());
+			JasperPrint jp=null;
+			if (BooleanUtils.isTrue(this.camionSust)) {
+				jp = JasperFillManager.fillReport(jasperReportCamionSust,
+						parametros, new JREmptyDataSource());
+			} else {
+				jp = JasperFillManager.fillReport(jasperReport, parametros,
+						new JREmptyDataSource());
+			}
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			JasperExportManager.exportReportToPdfStream(jp, baos);
 			logger.debug("Reporte exportado OK.");
@@ -420,6 +431,20 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 					.split(Utils.ID)[1] : "");
 		}
 		return ndr.toString();
+	}
+
+	/**
+	 * @return the camionSust
+	 */
+	public Boolean getCamionSust() {
+		return camionSust;
+	}
+
+	/**
+	 * @param camionSust the camionSust to set
+	 */
+	public void setCamionSust(Boolean camionSust) {
+		this.camionSust = camionSust;
 	}
 
 }

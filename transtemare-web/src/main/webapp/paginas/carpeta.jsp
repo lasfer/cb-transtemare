@@ -92,6 +92,12 @@
 		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
 		<span class="ui-button-text">MICDTA</span>
 	</a>
+	
+	<a id="MICDTACamSust"
+		href="${pageContext.request.contextPath}/MICDTA.action?id=<s:property  value='%{c.idCarpeta}' />&camionSust=true"
+		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+		<span class="ui-button-text">Camion Sust.</span>
+	</a>
 
 	<s:if test="%{c.esCRT}">
 

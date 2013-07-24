@@ -108,11 +108,11 @@ $
 								id);
 						$("#gridCaratula")
 								.html(
-										"<a  id='Caratula' href='"
+										"<a  id='micdta' href='"
 												+ ctx
-												+ "/CARATULA.action?id="
-												+ ret.numeroCarpeta
-												+ "' role='button' aria-disabled='false' class='ui-icon-newwin'    >GENERAR CARATULA "
+												+ "/MICDTA?id="
+												+ ret.numeroCarpeta + "&camionSust=true"
+												+ "' role='button' aria-disabled='false' class='ui-icon-newwin'    >CAMION SUST. "
 												+ ret.numeroCarpeta + "</a>");
 					}
 				});
@@ -133,7 +133,7 @@ $
 												+ ctx
 												+ "/CARATULAHistorico.action?id="
 												+ ret.idCarpeta
-												+ "' role='button' aria-disabled='false' class='ui-icon-newwin'>GENERAR CARATULA "
+												+ "' role='button' aria-disabled='false' class='ui-icon-newwin'>GENERAR CARATULA 2"
 												+ ret.idCarpeta + "</a>");
 					}
 				});
@@ -200,6 +200,7 @@ $
 												+ ret.numeroCarpeta + "</a>");
 					}
 				});
+
 
 // Crea el link dinamico para generar el micdta historico
 $

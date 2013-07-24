@@ -29,6 +29,7 @@
 
 	<style 
 		name="MarcaYNumeroStyle"
+		isDefault="false"
 	>
 	</style>
 
@@ -1661,12 +1662,12 @@ Placa de caminhão]]></text>
 					<reportElement
 						x="268"
 						y="429"
-						width="238"
+						width="248"
 						height="50"
 						key="textField-19"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="9"/>
+						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentosAnexos}]]></textFieldExpression>
 				</textField>
