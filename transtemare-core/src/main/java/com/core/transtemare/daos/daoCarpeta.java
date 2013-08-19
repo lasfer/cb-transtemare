@@ -25,6 +25,7 @@ import com.core.transtemare.entidades.Historico;
 import com.core.transtemare.entidades.NumerosCarpetaDocumento;
 import com.core.transtemare.entidades.Terminal;
 import com.core.transtemare.entidades.Transportadora;
+import com.core.transtemare.excepciones.FachadaException;
 import com.core.transtemare.persistencia.sql.SQLCarpetas;
 
 public class daoCarpeta {
@@ -226,6 +227,8 @@ public class daoCarpeta {
 			}else if(StringUtils.isNotEmpty(carpeta.getNroContenedor())){
 				sb.append("c.nroContenedor like ?");
 				params.add(carpeta.getNroContenedor());
+			}else{
+				throw new FachadaException("Uno de los dos parametros debe estar seteado");
 			}
 			replaceConsulta=sb.toString();
 		}

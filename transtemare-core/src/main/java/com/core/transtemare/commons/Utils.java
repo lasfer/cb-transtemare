@@ -3,6 +3,7 @@ package com.core.transtemare.commons;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,6 +15,10 @@ public class Utils {
 
 	private static final Logger LOGGER = Logger.getLogger(Utils.class);
 	public static final String ID = "--";
+	// Para validar el nro de contenedor.
+	private static int[] map = { 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+			23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38 };
+	private static int[] weights = { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 };
 
 	public Utils() {
 	}
@@ -154,4 +159,48 @@ public class Utils {
 		return 0;
 	}
 
+	/**
+	 * Para validar el numero de contenedor
+	 * 
+	 * @param id
+	 * @return true si es valido
+	 */
+	public static boolean validarNroContenedor(String id) {
+		try {
+			if (StringUtils.isEmpty(id) || id.length() != 11) {
+				return false;
+			}
+			int checkDigit = Character
+					.getNumericValue(id.charAt(id.length() - 1));
+
+			int[] digits = new int[10];
+			try {
+				for (int i = 0; i < 4; i++) {
+					digits[i] = getNumber(id.charAt(i));
+
+				}
+				for (int i = 4; i < 10; i++) {
+					digits[i] = Integer.parseInt(id.substring(i, i + 1));
+				}
+			} catch (Exception e) {
+				return false;
+			}
+			for (int i = 0; i < 10; i++) {
+				digits[i] = digits[i] * weights[i];
+			}
+			int total = 0;
+			for (int i = 0; i < 10; i++) {
+				total = total + digits[i];
+			}
+			return ((total % 11) == checkDigit);
+		} catch (Exception e) {
+			LOGGER.error("No se pudo validar el nro de contenedor" + id, e);
+			return false;
+		}
+	}
+
+	// para validar el nro de contenedor
+	private static int getNumber(char c) {
+		return map[Character.getNumericValue(c) - 10];
+	}
 }

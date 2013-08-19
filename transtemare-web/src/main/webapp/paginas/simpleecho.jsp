@@ -11,7 +11,10 @@
 	<sj:dialog id="mydialog" title="Mensaje" autoOpen="true" modal="true"
 		width="600" buttons="{'OK':function() {$(this).dialog('close'); }}">
 		<p>
+			
+			<img align="middle" alt="s" src="images/${image}.png"/> &nbsp; &nbsp;
 			<s:property value="echo" escape="%{escape}" />
+			
 		</p>
 	</sj:dialog>
 </body>

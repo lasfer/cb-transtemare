@@ -1,7 +1,9 @@
 package com.web.transtemare.acciones.carpetas;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -28,6 +30,7 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 @ParentPackage(value = "default")
 public class CrearCarpeta extends ActionSupport {
 
+	private enum Image{ok,warn,error};
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(CrearCarpeta.class);
 
@@ -65,6 +68,7 @@ public class CrearCarpeta extends ActionSupport {
 	private String agenciaMaritima;
 	private String ruta;
 	private String echo;
+	private String image;
 	private String tipoBulto;
 	private Terminal terminal;
 
@@ -89,8 +93,9 @@ public class CrearCarpeta extends ActionSupport {
 			@Result(location = "/paginas/simpleecho.jsp", name = "error") })
 	public String execute() {
 		boolean check = false;
+		Carpeta carpetaOriginal=null;
 		try {
-
+			carpetaOriginal=fac.obtenerCarpeta(Integer.valueOf(idCarpeta));			
 			carpeta.setTipoBulto(new Bulto(Utils.obtenerId(tipoBulto, Utils.ID)));
 			carpeta.setNroContenedor(Utils.construirNroContenedor(
 					carpeta.getNumeroContenedorParte1(),
@@ -166,7 +171,9 @@ public class CrearCarpeta extends ActionSupport {
 
 		} catch (NumberFormatException e) {
 			setEcho("La carpeta no se guardo correctamente , hubo un error");
+			this.setImage(Image.error.name());
 		} catch (Exception e) {
+			this.setImage(Image.error.name());
 			setEcho("La carpeta no se guardo correctamente , hubo un error");
 			logger.error(
 					"Error al modificar carpeta: " + idCarpeta + " - "
@@ -176,8 +183,34 @@ public class CrearCarpeta extends ActionSupport {
 		}
 
 		if (check) {
+			this.setImage(Image.ok.name());
 			addActionMessage(Globales.SE_CREO_CARPETA);
 			setEcho("La carpeta se guardo correctamente");
+			//Si cambio el nro de contenedor
+			if(carpetaOriginal!=null && StringUtils.isNotEmpty(carpeta.getNroContenedor()) && !carpeta.getNroContenedor().equals(carpetaOriginal.getNroContenedor())){
+				boolean hayCarpetasConMismoNroCont=false;
+				try{
+					Carpeta carpetaBusqueda=new Carpeta();
+					carpetaBusqueda.setNroContenedor(carpeta.getNroContenedor());
+					List<Carpeta> carpetasConMismoNroContenedor=fac.obtenerCarpetas(carpetaBusqueda, false, 0, 2);
+					hayCarpetasConMismoNroCont=carpetasConMismoNroContenedor.size()>1;
+				}catch(Exception e){
+					logger.error("Error al obtener carpetas con mismo nro de contenedor", e );
+				}
+				
+				boolean nroContValido=Utils.validarNroContenedor(carpeta.getNroContenedor());
+				
+				if(!nroContValido && hayCarpetasConMismoNroCont){
+					this.setImage(Image.warn.name());
+					setEcho("Nro. de contenedor invalido y repetido. Pero la carpeta se guardo correctamente");
+				}else if(!nroContValido){
+					this.setImage(Image.warn.name());
+					setEcho("El nro. de contenedor no es valido. Pero la carpeta se guardo correctamente");
+				}else if(hayCarpetasConMismoNroCont){
+					this.setImage(Image.warn.name());
+					setEcho("El nro. de contenedor esta repetido. Pero la carpeta se guardo correctamente");
+				}
+			}
 			return SUCCESS;
 		}
 		return SUCCESS;
@@ -432,6 +465,14 @@ public class CrearCarpeta extends ActionSupport {
 
 	public void setTerminal(Terminal terminal) {
 		this.terminal = terminal;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }
