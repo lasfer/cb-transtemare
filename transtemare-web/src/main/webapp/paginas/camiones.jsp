@@ -38,9 +38,9 @@
 		<sjg:gridColumn name="tipo" index="tipo" title="Tipo" search="false" />
 		<sjg:gridColumn name="numeroPoliza" index="numeroPoliza"
 			id="numeroPoliza" title="Nro. Poliza" search="false" editable="true"
-			edittype="text" hidden="true" editrules="{edithidden:true,required: false}" />
+			edittype="text" hidden="true" editrules="{edithidden:true,required: false}" editoptions="{size: 16, maxlength: 16}" />
 		<sjg:gridColumn name="vencimientoPoliza" index="vencimientoPoliza"
-			id="vencimientoPoliza" title="Venc. Poliza(dd/mm/yyyy)" search="false"
+			id="vencimientoPoliza" title="Venc. Poliza(dd/mm/aaaa)" search="false"
 			editable="true" edittype="text" formatter="date" 
 			formatoptions="{newformat : 'd/m/Y'}"  hidden="true" editrules="{edithidden:true,required: false}"  />
 	</sjg:grid>

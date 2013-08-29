@@ -1474,7 +1474,7 @@ Placa de caminhão]]></text>
 						key="textField-7"/>
 					<box></box>
 					<textElement>
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{remolqueCamionSust}]]></textFieldExpression>
 				</textField>
@@ -1526,7 +1526,7 @@ Placa de caminhão]]></text>
 						key="textField-11"/>
 					<box></box>
 					<textElement>
-						<font size="8"/>
+						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{anioCamionSust}]]></textFieldExpression>
 				</textField>
@@ -2721,7 +2721,7 @@ Placa de caminhão]]></text>
 						key="textField-50"/>
 					<box></box>
 					<textElement>
-						<font size="6"/>
+						<font size="5"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nroVencCamionOrig}]]></textFieldExpression>
 				</textField>
@@ -2734,7 +2734,7 @@ Placa de caminhão]]></text>
 						key="textField-51"/>
 					<box></box>
 					<textElement textAlignment="Right">
-						<font size="6"/>
+						<font size="5"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nroVencCamionSust}]]></textFieldExpression>
 				</textField>

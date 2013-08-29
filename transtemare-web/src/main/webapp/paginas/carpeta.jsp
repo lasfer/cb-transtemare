@@ -271,28 +271,28 @@
 										<td><sj:autocompleter id="transportadoraCamionOriginal"
 												value="%{c.transportadoraCamion.toString()}"
 												name="transportadoraCamionOriginal"
-												href="%{jsonTransportadora}" delay="50" loadMinimumCount="2"
+												href="%{jsonTransportadora}" delay="50" loadMinimumCount="2" forceValidOption="false"
 												cssStyle="width: 450px " /></td>
 									</tr>
 									<tr>
 										<td style="color: red">Chofer:</td>
 										<td><sj:autocompleter id="choferOriginal"
 												value="%{c.choferOriginal.toString()}" name="choferOriginal"
-												href="%{jsonChofer}" delay="50" loadMinimumCount="2"
+												href="%{jsonChofer}" delay="50" loadMinimumCount="2" forceValidOption="false"
 												cssStyle="width: 450px " /></td>
 									</tr>
 									<tr>
 										<td style="color: red">Camion:</td>
 										<td><sj:autocompleter id="camionOriginal"
 												value="%{c.camionOriginal.toString()}" name="camionOriginal"
-												href="%{jsonCamion}" delay="50" loadMinimumCount="2"
+												href="%{jsonCamion}" delay="50" loadMinimumCount="2" forceValidOption="false"
 												cssStyle="width: 450px " /></td>
 									</tr>
 									<tr>
 										<td style="color: red">Remolque:</td>
 										<td><sj:autocompleter id="remolqueOriginal"
 												value="%{c.remolqueOriginal.toString()}"
-												name="remolqueOriginal" href="%{jsonRemolques}" delay="50"
+												name="remolqueOriginal" href="%{jsonRemolques}" delay="50" forceValidOption="false"
 												loadMinimumCount="2" cssStyle="width: 450px " /></td>
 									</tr>
 								</table>
@@ -305,7 +305,7 @@
 										<td><sj:autocompleter id="transportadoraCamionSustituto"
 												name="transportadoraCamionSustituto"
 												value="%{c.transportadoraCamionSustituto.toString()}"
-												href="%{jsonTransportadora}" delay="50" loadMinimumCount="2"
+												href="%{jsonTransportadora}" delay="50" loadMinimumCount="2" forceValidOption="false"
 												cssStyle="width: 450px " /></td>
 									</tr>
 									<tr>
@@ -313,7 +313,7 @@
 										<td><sj:autocompleter id="choferSubstituto"
 												name="choferSubstituto"
 												value="%{c.choferSubstituto.toString()}"
-												href="%{jsonChofer}" delay="50" loadMinimumCount="2"
+												href="%{jsonChofer}" delay="50" loadMinimumCount="2" forceValidOption="false"
 												cssStyle="width: 450px " /></td>
 									</tr>
 									<tr>
@@ -321,7 +321,7 @@
 										<td><sj:autocompleter id="camionSubstituto"
 												name="camionSubstituto"
 												value="%{c.camionSubstituto.toString()}"
-												href="%{jsonCamion}" delay="50" loadMinimumCount="2"
+												href="%{jsonCamion}" delay="50" loadMinimumCount="2" forceValidOption="false"
 												cssStyle="width: 450px " /></td>
 									</tr>
 									<tr>
@@ -329,7 +329,7 @@
 										<td><sj:autocompleter id="remolqueSubstituto"
 												name="remolqueSubstituto"
 												value="%{c.remolqueSubstituto.toString()}"
-												href="%{jsonRemolques}" delay="50" loadMinimumCount="2"
+												href="%{jsonRemolques}" delay="50" loadMinimumCount="2" forceValidOption="false"
 												cssStyle="width: 450px " /></td>
 									</tr>
 								</table>

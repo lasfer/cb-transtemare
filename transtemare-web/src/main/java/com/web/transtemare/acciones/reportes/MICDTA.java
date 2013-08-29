@@ -254,21 +254,25 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 			if (camion.getAnio() != null) {
 				param.put("anioCamionOrig", String.valueOf(camion.getAnio()));
 			}
+			
+		}
+		if(c.getRemolqueOriginal()!=null && c.getRemolqueOriginal().getIdCamion()!=0){
 			if (c.getRemolqueOriginal().getMatricula() != null) {
 				param.put("remolqueCamionOrig", c.getRemolqueOriginal()
 						.getMatricula());
-			}
+			}			
+			Camion remolque = fac.obtenerCamionPorId(c.getRemolqueOriginal()
+					.getIdCamion());
 			StringBuilder sbDatosPolizaCamionOrig = new StringBuilder();
-			if (StringUtils.isNotEmpty(camion.getNumeroPoliza())) {
+			if (StringUtils.isNotEmpty(remolque.getNumeroPoliza())) {
 				sbDatosPolizaCamionOrig.append("POLIZA Nro. "
-						+ camion.getNumeroPoliza());
+						+ remolque.getNumeroPoliza());
 			}
-			if (camion.getVencimientoPoliza() != null) {
+			if (remolque.getVencimientoPoliza() != null) {
 				sbDatosPolizaCamionOrig.append(" VTO: "
-						+ DATE_FORMAT.format(camion.getVencimientoPoliza()));
+						+ DATE_FORMAT.format(remolque.getVencimientoPoliza()));
 			}
 			param.put("nroVencCamionOrig", sbDatosPolizaCamionOrig.toString());
-
 		}
 		if (c.getTrans().getRolDelContribuyente() != null)
 			param.put("rolContribuyenteOrig", c.getTrans()
@@ -288,25 +292,29 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 				if (camion.getAnio() != null)
 					param.put("anioCamionSust",
 							String.valueOf(camion.getAnio()));
-
-				if (c.getRemolqueSubstituto().getMatricula() != null) {
-					param.put("remolqueCamionSust", c.getRemolqueSubstituto()
-							.getMatricula());
-				}
+			
 				if (c.getTrans().getRolDelContribuyente() != null)
 					param.put("rolContribuyenteSust", c.getTrans()
 							.getRolDelContribuyente());
 			}
-			StringBuilder sbDatosPolizaCamionSust = new StringBuilder();
-			if (StringUtils.isNotEmpty(camion.getNumeroPoliza())) {
-				sbDatosPolizaCamionSust.append("POLIZA Nro. "
-						+ camion.getNumeroPoliza());
+		}
+		if(c.getRemolqueSubstituto()!=null && c.getRemolqueSubstituto().getIdCamion()!=0){
+			if (c.getRemolqueSubstituto().getMatricula() != null) {
+				param.put("remolqueCamionSust", c.getRemolqueSubstituto()
+						.getMatricula());
+			}			
+			Camion remolque = fac.obtenerCamionPorId(c.getRemolqueSubstituto()
+					.getIdCamion());
+			StringBuilder sbDatosPolizaCamionOrig = new StringBuilder();
+			if (StringUtils.isNotEmpty(remolque.getNumeroPoliza())) {
+				sbDatosPolizaCamionOrig.append("POLIZA Nro. "
+						+ remolque.getNumeroPoliza());
 			}
-			if (camion.getVencimientoPoliza() != null) {
-				sbDatosPolizaCamionSust.append(" VTO: "
-						+ DATE_FORMAT.format(camion.getVencimientoPoliza()));
+			if (remolque.getVencimientoPoliza() != null) {
+				sbDatosPolizaCamionOrig.append(" VTO: "
+						+ DATE_FORMAT.format(remolque.getVencimientoPoliza()));
 			}
-			param.put("nroVencCamionSust", sbDatosPolizaCamionSust.toString());
+			param.put("nroVencCamionSust", sbDatosPolizaCamionOrig.toString());
 		}
 
 		if (!StringUtils.isEmpty(c.getAduanaDestino().getDescripcion())) {
