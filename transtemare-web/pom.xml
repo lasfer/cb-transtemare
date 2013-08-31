@@ -160,7 +160,7 @@
 						<!-- <containerId>tomcat6x</containerId> -->
 						<!-- <home>/opt/apache-tomcat-6.0.33</home> -->
 						<containerId>jboss42x</containerId>
-						<home>/opt/jboss-4.2.3.GA</home>
+						<home>/usr/lib/jboss/jboss-4.2.3.GA/</home>
 					</container>
 					<!-- Configuration to use with the container -->
 					<configuration>
