@@ -14,7 +14,7 @@ public class SQLCarpetas {
 			+ " set nombre=?,rolDelCon=?,Direccion=?,FK_Localidad=?, tipo= ?, nombreCorto=? WHERE idEmpresa=?";
 	public static final String INSERTAR_EMPRESA = "INSERT INTO "
 			+ SQLTablas.TABLA_EMPRESAS + " VALUES(null,?,?,?,?,1,?,?)";
-	public static final String PROCEDURE_SELECT_CARPETA_POR_ID = "CALL `skuncadb`.`sp_buscar_carpeta`(?)";
+	public static final String PROCEDURE_SELECT_CARPETA_POR_ID = "CALL `sp_buscar_carpeta`(?)";
 	public static final String OBTENER_CARPETAS_DESDE_HASTA = "SELECT c.idCarpeta,c.referenciaDestino,c.nroContenedor, t.Nombre as nombreTransportadora, c.terminal, e.nombre as nombreAgenciaMaritima, c.FxAlta,c.FxMod, c.fechaVencimiento, c.fechaLlegadaBuque FROM "
 			+ SQLTablas.TABLA_CARPETAS
 			+ " c  ,"
@@ -86,12 +86,12 @@ public class SQLCarpetas {
 			+ "nroChequeGarantia=?, fechaCargaGarantia=?, garantiaDevuelta=?  where idCarpeta=?";
 
 	public static final String BORRAR_EMPRESA = "UPDATE empresas SET Activo=0 WHERE idEmpresa=?";
-	public static final String PROCEDURE_NUMERADORES = "CALL `skuncadb`.`sp_numeradores`(?,?);";
+	public static final String PROCEDURE_NUMERADORES = "CALL `sp_numeradores`(?,?);";
 	public static final String ALARAMA_CARPETAS = "Select *, null as nombreTransportadora, null as nombreAgenciaMaritima from carpeta where DATEDIFF(fechaVencimiento,now()) < 15 and devuelto = 0 LIMIT ? , ?;";
 	public static final String OBTENER_CANTIDAD_TOTAL_EMPRESAS = "SELECT count(*) as total FROM empresas where activo=1";
 	public static final String OBTENER_CANTIDAD_TOTAL_CARPETAS = "SELECT count(*) as total FROM carpeta where historico=0 and  esCRT = 1";
 	public static final String OBTENER_CANTIDAD_TOTAL_ALARMAS = "SELECT count(*) as total FROM carpeta where historico=0 and esCRT = 1";
-	public static final String PROCEDURE_PASAR_HISTORICO = "CALL `skuncadb`.`sp_pasar_historico`(?,?,?,?,?,?,?)";
+	public static final String PROCEDURE_PASAR_HISTORICO = "CALL `sp_pasar_historico`(?,?,?,?,?,?,?)";
 	public static final String OBTENER_CANTIDAD_TOTAL_CARPETAS_HISTORICO = "SELECT count(*) as total from historicos";
 
 	public static final String OBTENER_CANTIDAD_TERMINALES = "SELECT count(*) as total FROM"
