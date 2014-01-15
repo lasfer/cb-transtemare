@@ -19,6 +19,7 @@ import com.core.transtemare.entidades.Responsable;
 import com.core.transtemare.entidades.Ruta;
 import com.core.transtemare.entidades.Terminal;
 import com.core.transtemare.entidades.Transportadora;
+import com.core.transtemare.enums.EnumTipoGarantia;
 import com.core.transtemare.enums.TipoContenedor;
 
 public class CarpetaMapper implements RowMapper<Carpeta> {
@@ -314,20 +315,30 @@ public class CarpetaMapper implements RowMapper<Carpeta> {
 		carpeta.setEsCRT(rs.getBoolean("esCRT"));
 		carpeta.setNumeroDeMic(rs.getInt("nroMIC"));
 		carpeta.setIdCarpetaPadre(rs.getInt("idCarpetaPadre"));
-//		carpeta.setTerminal(Terminal.getByCode(rs.getInt("terminal")));
+		// carpeta.setTerminal(Terminal.getByCode(rs.getInt("terminal")));
 		carpeta.setLocalidades(localidades);
-		
+
 		Terminal terminal = null;
-		if(rs.getInt("idTerminal") > 0){
+		if (rs.getInt("idTerminal") > 0) {
 			terminal = new Terminal();
 			terminal.setId(rs.getInt("idTerminal"));
 			terminal.setNombre(rs.getString("nombreTerminal"));
 		}
-		
+
 		carpeta.setTerminal(terminal);
-		
-		
+
 		carpeta.setAduanas(aduanas);
+		carpeta.setContenedorDevuelto(rs.getBoolean("contenedorDevuelto"));
+		carpeta.setCargarInformacionGarantia(rs
+				.getBoolean("cargarInformacionGarantia"));
+		carpeta.setTipoGarantia(EnumTipoGarantia.getByCode(rs
+				.getByte("tipoGarantia")));
+		carpeta.setImporteGarantia(rs.getBigDecimal("importeGarantia"));
+		carpeta.setBancoGarantia(rs.getString("bancoGarantia"));
+		carpeta.setNroChequeGarantia(rs.getString("nroChequeGarantia"));
+		carpeta.setFechaCargaGarantia(Utils.convertToUtilDate(rs
+				.getDate("fechaCargaGarantia")));
+		carpeta.setGarantiaDevuelta(rs.getBoolean("garantiaDevuelta"));
 		return carpeta;
 	}
 

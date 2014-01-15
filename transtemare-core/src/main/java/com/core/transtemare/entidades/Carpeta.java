@@ -1,11 +1,13 @@
 package com.core.transtemare.entidades;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.core.transtemare.enums.EnumTipoGarantia;
 import com.core.transtemare.enums.TipoContenedor;
 
 public class Carpeta {
@@ -116,6 +118,70 @@ public class Carpeta {
 	private String rutasLargo;
 	private int idCarpetaPadre;
 	private Terminal terminal;
+	private Boolean contenedorDevuelto;
+	private Boolean cargarInformacionGarantia;
+	private EnumTipoGarantia tipoGarantia;
+	private BigDecimal importeGarantia;
+	private Date fechaCargaGarantia;
+	private String bancoGarantia;
+	private String nroChequeGarantia;
+	private Boolean garantiaDevuelta;
+
+	public EnumTipoGarantia getTipoGarantia() {
+		return tipoGarantia;
+	}
+
+	public void setTipoGarantia(EnumTipoGarantia tipoGarantia) {
+		this.tipoGarantia = tipoGarantia;
+	}
+
+	public Boolean getContenedorDevuelto() {
+		return contenedorDevuelto;
+	}
+
+	public void setContenedorDevuelto(Boolean contenedorDevuelto) {
+		this.contenedorDevuelto = contenedorDevuelto;
+	}
+
+	public Boolean getCargarInformacionGarantia() {
+		return cargarInformacionGarantia;
+	}
+
+	public void setCargarInformacionGarantia(Boolean cargarInformacionGarantia) {
+		this.cargarInformacionGarantia = cargarInformacionGarantia;
+	}
+
+	public Boolean getGarantiaDevuelta() {
+		return garantiaDevuelta;
+	}
+
+	public Date getFechaCargaGarantia() {
+		return fechaCargaGarantia;
+	}
+
+	public void setFechaCargaGarantia(Date fechaCargaGarantia) {
+		this.fechaCargaGarantia = fechaCargaGarantia;
+	}
+
+	public void setGarantiaDevuelta(Boolean garantiaDevuelta) {
+		this.garantiaDevuelta = garantiaDevuelta;
+	}
+
+	public BigDecimal getImporteGarantia() {
+		return importeGarantia;
+	}
+
+	public void setImporteGarantia(BigDecimal importeGarantia) {
+		this.importeGarantia = importeGarantia;
+	}
+
+	public String getBancoGarantia() {
+		return bancoGarantia;
+	}
+
+	public void setBancoGarantia(String bancoGarantia) {
+		this.bancoGarantia = bancoGarantia;
+	}
 
 	private HashMap<Integer, Localidad> localidades;
 	private HashMap<Integer, Aduana> aduanas;
@@ -824,10 +890,19 @@ public class Carpeta {
 	public void setValorFOTAux(String valorFOTAux) {
 		this.valorFOTAux = valorFOTAux;
 	}
-	
-	@Override	
+
+	public String getNroChequeGarantia() {
+		return nroChequeGarantia;
+	}
+
+	public void setNroChequeGarantia(String nroChequeGarantia) {
+		this.nroChequeGarantia = nroChequeGarantia;
+	}
+
+	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.DEFAULT_STYLE);
 	}
 
 }

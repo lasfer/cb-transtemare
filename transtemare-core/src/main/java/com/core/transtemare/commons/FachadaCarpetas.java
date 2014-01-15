@@ -162,9 +162,19 @@ public class FachadaCarpetas {
 
 	}
 
-	public List<Carpeta> obtenerCarpetas(Carpeta carpeta, boolean historico, int desde, int hasta) {
+	public List<Carpeta> obtenerCarpetas(Carpeta carpeta, boolean historico,
+			int desde, int hasta) {
 		try {
 			return daoCa.obtenerCarpetas(carpeta, historico, desde, hasta);
+
+		} catch (Exception e) {
+			throw new FachadaException(e.getMessage());
+		}
+	}
+
+	public List<Carpeta> obtenerCarpetasCargaGarantia(Carpeta carpeta) {
+		try {
+			return daoCa.obtenerCarpetasCargaGarantia(carpeta);
 
 		} catch (Exception e) {
 			throw new FachadaException(e.getMessage());
@@ -314,9 +324,9 @@ public class FachadaCarpetas {
 		}
 		return resultado;
 	}
-	
+
 	public List<Terminal> obtenerTerminalesTabla(int from, int to) {
-		return daoCa.obtenerTerminalesTabla(from,to);
+		return daoCa.obtenerTerminalesTabla(from, to);
 	}
 
 	public Integer totalTerminales() {
@@ -324,14 +334,15 @@ public class FachadaCarpetas {
 	}
 
 	public void crearModificarTerminal(String id, String nombre) {
-		daoCa.crearModificarTerminal(id,nombre);
+		daoCa.crearModificarTerminal(id, nombre);
 	}
 
 	public void eliminarTerminal(Integer id) {
 		daoCa.eliminarTerminal(id);
 	}
-	
-	public void obtenerTodasLasTerminales(List<Terminal> terminales) throws FachadaException {
+
+	public void obtenerTodasLasTerminales(List<Terminal> terminales)
+			throws FachadaException {
 		try {
 			daoCa.obtenerTerminales(terminales);
 		} catch (Exception e) {

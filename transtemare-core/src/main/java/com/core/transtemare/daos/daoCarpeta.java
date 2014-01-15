@@ -16,6 +16,7 @@ import com.core.transtemare.commons.Utils;
 import com.core.transtemare.daos.mappers.BultoMapper;
 import com.core.transtemare.daos.mappers.CarpetaHistoricoMapper;
 import com.core.transtemare.daos.mappers.CarpetaMapper;
+import com.core.transtemare.daos.mappers.CarpetaSnapGarantiaMapper;
 import com.core.transtemare.daos.mappers.CarpetaSnapMapper;
 import com.core.transtemare.daos.mappers.NumerosCarpetaDocumentoMapper;
 import com.core.transtemare.daos.mappers.TerminalMapper;
@@ -198,7 +199,15 @@ public class daoCarpeta {
 				carpeta.getTransportadoraCamionSustituto()
 						.getIdTransportadora(),
 				carpeta.getNombreFirmaDestinatario(),
-				carpeta.getTerminal() != null ? carpeta.getTerminal().getId() : 0,carpeta.getIdCarpeta()  };
+				carpeta.getTerminal() != null ? carpeta.getTerminal().getId()
+						: 0,
+				carpeta.getContenedorDevuelto(),
+				carpeta.getCargarInformacionGarantia(),
+				carpeta.getTipoGarantia() != null ? carpeta.getTipoGarantia()
+						.getCode() : null, carpeta.getImporteGarantia(),
+				carpeta.getBancoGarantia(), carpeta.getNroChequeGarantia(),
+				carpeta.getFechaCargaGarantia(), carpeta.getGarantiaDevuelta(),
+				carpeta.getIdCarpeta() };
 
 		LOGGER.info("Creando carpeta: " + carpeta.getIdCarpeta()
 				+ " - Ejecutando update");
@@ -212,36 +221,56 @@ public class daoCarpeta {
 		return check;
 	}
 
-	public List<Carpeta> obtenerCarpetas(Carpeta carpeta, boolean historico, int desde, int hasta) {
+	public List<Carpeta> obtenerCarpetas(Carpeta carpeta, boolean historico,
+			int desde, int hasta) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("obtenerTop20Carpetas(carpeta=" + carpeta + ",boolean=" + historico + ", int=" + desde + ", int=" + hasta + ") - start"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
-		List<Object> params=new ArrayList<Object>(4);
+		List<Object> params = new ArrayList<Object>(4);
 		params.add(historico);
-		String replaceConsulta="";
-		if(carpeta!= null){
-			StringBuilder sb=new StringBuilder("and ");
-			if(carpeta.getNroDocumento()!=null){
+		String replaceConsulta = "";
+		if (carpeta != null) {
+			StringBuilder sb = new StringBuilder("and ");
+			if (carpeta.getNroDocumento() != null) {
 				sb.append("c.nroDocumento like ?");
 				params.add(carpeta.getNroDocumento());
-			}else if(StringUtils.isNotEmpty(carpeta.getNroContenedor())){
+			} else if (StringUtils.isNotEmpty(carpeta.getNroContenedor())) {
 				sb.append("c.nroContenedor like ?");
 				params.add(carpeta.getNroContenedor());
-			}else{
-				throw new FachadaException("Uno de los dos parametros debe estar seteado");
+			} else {
+				throw new FachadaException(
+						"Uno de los dos parametros debe estar seteado");
 			}
-			replaceConsulta=sb.toString();
+			replaceConsulta = sb.toString();
 		}
 		params.add(desde);
 		params.add(hasta);
 		List<Carpeta> listaCarpetas = new ArrayList<Carpeta>();
-		
+
 		listaCarpetas = jdbcTemplate.query(
-				SQLCarpetas.OBTENER_CARPETAS_DESDE_HASTA.replace("[FILTROADICIONAL]", replaceConsulta), params.toArray(),
-				new CarpetaSnapMapper());
+				SQLCarpetas.OBTENER_CARPETAS_DESDE_HASTA.replace(
+						"[FILTROADICIONAL]", replaceConsulta),
+				params.toArray(), new CarpetaSnapMapper());
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("obtenerTop20Carpetas(boolean, int, int) - end - return value=" + listaCarpetas); //$NON-NLS-1$
+		}
+		return listaCarpetas;
+	}
+
+	public List<Carpeta> obtenerCarpetasCargaGarantia(Carpeta carpeta) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("obtenerCarpetasCargaGarantia(carpeta=" + carpeta
+					+ ") - start");
+		}
+		List<Carpeta> listaCarpetas = new ArrayList<Carpeta>();
+		listaCarpetas = jdbcTemplate.query(
+				SQLCarpetas.OBTENER_CARPETAS_CARGA_GARANTIA,
+				new CarpetaSnapGarantiaMapper());
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("obtenerCarpetasCargaGarantia(carpeta=) - end - return value="
+					+ listaCarpetas);
 		}
 		return listaCarpetas;
 	}
@@ -408,13 +437,14 @@ public class daoCarpeta {
 			LOGGER.debug("obtenerTodosLosBultos(List<Bulto>) - end"); //$NON-NLS-1$
 		}
 	}
-	
+
 	public void obtenerTerminales(List<Terminal> terminales) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("obtenerTerminales(List<Terminal>=" + terminales + ") - start"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		List<Terminal> terminals = jdbcTemplate.query(SQLCarpetas.OBTENER_TERMINALES, new TerminalMapper());
+		List<Terminal> terminals = jdbcTemplate.query(
+				SQLCarpetas.OBTENER_TERMINALES, new TerminalMapper());
 		terminales.addAll(terminals);
 
 		if (LOGGER.isDebugEnabled()) {
@@ -427,10 +457,12 @@ public class daoCarpeta {
 			LOGGER.debug("obtenerTerminalesTabla(from=" + from + ", to=" + to + ") - start"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 
-		final Object[] params = new Object[] { from, to};
+		final Object[] params = new Object[] { from, to };
 		List<Terminal> terminales = new ArrayList<Terminal>();
 
-		terminales = jdbcTemplate.query(SQLCarpetas.OBTENER_TERMINALES_DESDE_HASTA,	params, new TerminalMapper());
+		terminales = jdbcTemplate.query(
+				SQLCarpetas.OBTENER_TERMINALES_DESDE_HASTA, params,
+				new TerminalMapper());
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("obtenerSubCarpetas(boolean, int) - end - return value=" + terminales); //$NON-NLS-1$
@@ -443,40 +475,43 @@ public class daoCarpeta {
 			LOGGER.debug("totalTerminales() - start"); //$NON-NLS-1$
 		}
 
-		Integer total = this.jdbcTemplate.queryForInt(SQLCarpetas.COUNT_TERMINALES);
+		Integer total = this.jdbcTemplate
+				.queryForInt(SQLCarpetas.COUNT_TERMINALES);
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("totalTerminales() - end - return value=" + total); //$NON-NLS-1$
 		}
 		return total;
 	}
 
-	public int crearModificarTerminal(String id , String nombre) {
+	public int crearModificarTerminal(String id, String nombre) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("crearModificarTerminal(String=" + nombre + ") - start"); //$NON-NLS-1$ 
 		}
-		int returnint =0;
-		
-		if(id == null || id.equals("_empty")){
-			returnint = this.jdbcTemplate.update(SQLCarpetas.ALTA_TERMINAL, new Object[] {nombre});
-		}else {
-			returnint = this.jdbcTemplate.update(SQLCarpetas.ACTUALIZAR_TERMINAL, new Object[] {nombre,Integer.valueOf(id)});
+		int returnint = 0;
+
+		if (id == null || id.equals("_empty")) {
+			returnint = this.jdbcTemplate.update(SQLCarpetas.ALTA_TERMINAL,
+					new Object[] { nombre });
+		} else {
+			returnint = this.jdbcTemplate.update(
+					SQLCarpetas.ACTUALIZAR_TERMINAL, new Object[] { nombre,
+							Integer.valueOf(id) });
 		}
 
-		 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("crearModificarTerminal(String) - end - return value=" + returnint); //$NON-NLS-1$
 		}
 		return returnint;
-		
+
 	}
 
 	public int eliminarTerminal(Integer id) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("eliminarTerminal(String=" + id + ") - start"); //$NON-NLS-1$ 
 		}
-		int returnint = this.jdbcTemplate.update(SQLCarpetas.ELIMINAR_TERMINAL, new Object[] {id});
+		int returnint = this.jdbcTemplate.update(SQLCarpetas.ELIMINAR_TERMINAL,
+				new Object[] { id });
 
-		 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("eliminarTerminal(String) - end - return value=" + returnint); //$NON-NLS-1$
 		}
