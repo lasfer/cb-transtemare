@@ -4,6 +4,14 @@
   <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <servlet-name>worksheet</servlet-name>
+    <servlet-class>org.jmesa.worksheet.servlet.WorksheetServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>worksheet</servlet-name>
+    <url-pattern>*.wrk</url-pattern>
+</servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

@@ -126,6 +126,7 @@
 			<sj:tab id="tab1" href="%{urlResumen}" label="Resumen" />
 			<sj:tab id="tab2" target="ttwo" label="Seccion1" />
 			<sj:tab id="tab3" target="tthree" label="Seccion2" />
+			<sj:tab id="tab3" target="tfour" label="Garantia" />
 			<!--      <sj:tab id="tab4" target="tfour" label="Seccion 3"/>-->
 			<!--      <sj:tab id="tab5" target="tfive" label="Seccion 4"/>-->
 			<!--      <sj:tab id="tab6" target="tsix" label="Seccion5"/>-->
@@ -174,6 +175,9 @@
 						<td title="Transito aduanero">Tran. Aduanero:</td>
 						<td><sj:radio name="carpeta.transitoAduanero" 
 								list="#{'true':'Si','false':'No'}" value="%{c.transitoAduanero}"  /></td>
+								<td title="Cargar Info Garantia">Cargar Info Garantia:</td>
+						<td><sj:radio name="carpeta.cargarInformacionGarantia" 
+								list="#{'true':'Si','false':'No'}" value="%{c.cargarInformacionGarantia}"  /></td>
 					</tr>
 
 				</table>
@@ -677,12 +681,44 @@
 
 
 			</div>
-
-
-
-
-
-
+			
+			<div id="tfour">
+			   <table cellspacing="4">
+					<tr>
+						<td title="Contenedor Devuelto">Contenedor Devuelto:</td>
+						<td><sj:radio name="carpeta.contenedorDevuelto" 
+								list="#{'true':'Si','false':'No'}" value="%{c.contenedorDevuelto}"  /></td>						
+					</tr>
+					<tr>
+						<td title="Garantia Devuelta">Garantia Devuelta:</td>
+						<td><sj:radio name="carpeta.garantiaDevuelta" 
+								list="#{'true':'Si','false':'No'}" value="%{c.garantiaDevuelta}"  /></td>						
+					</tr>
+					<tr>
+						<td>Tipo Garantia :</td>
+						<td><sj:textfield label="Tipo Garantia" name="carpeta.tipoGarantia"
+								value="%{c.tipoGarantia}" readonly="true"
+								size="15"  /></td>
+					</tr>
+					<tr>
+						<td>Importe :</td>
+						<td><sj:textfield label="importeGarantia" name="carpeta.importeGarantia"
+								value="%{c.importeGarantia}" readonly="true"
+								size="15"  /></td>
+					</tr>
+					<tr>
+						<td>Banco :</td>
+						<td><sj:textfield label="Banco" name="carpeta.bancoGarantia"
+								value="%{c.bancoGarantia}" readonly="true"
+								size="15"  /></td>
+					</tr>
+					<tr>
+						<td>Nro Cheque:</td>
+						<td><sj:textfield label="Nro Cheque" name="carpeta.nroChequeGarantia"
+								value="%{c.nroChequeGarantia}" readonly="true"
+								size="15"/></td>
+					</tr>
+			</div>
 		</sj:tabbedpanel>
 
 	</s:form>

@@ -19,7 +19,7 @@
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/skuncadb?autoReconnect=true" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/transtemare_test?autoReconnect=true" />
 		<property name="user" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -148,7 +148,10 @@
 	<bean id="CrearCarpeta" class="com.web.transtemare.acciones.carpetas.CrearCarpeta">
 		<constructor-arg ref="fachada" />
 	</bean>
-
+	
+	<bean id="CarpetasACargarGarantiaReport" class="com.web.transtemare.acciones.carpetas.CarpetasACargarGarantiaReport">
+		<constructor-arg ref="fachada" />
+	</bean>
 
 	<bean id="EditarCarpeta" class="com.web.transtemare.acciones.carpetas.EditarCarpeta">
 		<constructor-arg ref="fachada" />
