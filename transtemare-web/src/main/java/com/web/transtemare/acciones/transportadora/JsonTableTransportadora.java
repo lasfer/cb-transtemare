@@ -83,8 +83,7 @@ public class JsonTableTransportadora extends ActionSupport implements
 	}
 
 	public void validateExecute() {
-		System.out.println("Entro Validate execute"
-				+ JsonTableTransportadora.class);
+		
 	}
 
 	public void validateDoExecute() {
