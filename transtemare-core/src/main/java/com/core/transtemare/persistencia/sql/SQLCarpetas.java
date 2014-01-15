@@ -24,14 +24,16 @@ public class SQLCarpetas {
 			+ " t "
 			+ " WHERE c.transportadora=t.codTransportadora and c.agenciaMaritima=e.idEmpresa and c.historico = ? AND c.idCarpeta!=0 AND c.esCRT = 1  [FILTROADICIONAL]   ORDER BY c.idCarpeta DESC LIMIT ?,?";
 
-	public static final String OBTENER_CARPETAS_CARGA_GARANTIA = "SELECT c.idCarpeta, am.nombre as nombreAgenciaMaritima, desp.nombre as nombreDespachante  FROM "
+	public static final String OBTENER_CARPETAS_CARGA_GARANTIA = "SELECT c.idCarpeta, am.nombre as nombreAgenciaMaritima, desp.nombre as nombreDespachante, transp.Nombre as nombreTransportadora  FROM "
 			+ SQLTablas.TABLA_CARPETAS
 			+ " c  ,"
 			+ SQLTablas.TABLA_EMPRESAS
 			+ " am ,"
 			+ SQLTablas.TABLA_EMPRESAS
-			+ " desp "
-			+ " WHERE  c.agenciaMaritima=am.idEmpresa and c.despachante=desp.idEmpresa and c.historico = 0 AND c.idCarpeta!=0 AND c.cargarInformacionGarantia=1 ORDER BY c.idCarpeta";
+			+ " desp ,"
+			+ SQLTablas.TABLA_TRANSPORTADORAS
+			+ " transp "
+			+ " WHERE  c.transportadora=transp.CodTransportadora and c.agenciaMaritima=am.idEmpresa and c.despachante=desp.idEmpresa and c.historico = 0 AND c.idCarpeta!=0 AND c.cargarInformacionGarantia=1 ORDER BY c.idCarpeta";
 
 	public static final String OBTENER_SUBCARPETAS = "SELECT c.idCarpeta,c.referenciaDestino,c.nroContenedor, t.Nombre as nombreTransportadora, c.terminal, e.nombre as nombreAgenciaMaritima, c.FxAlta,c.FxMod, c.fechaVencimiento, c.fechaLlegadaBuque FROM "
 			+ SQLTablas.TABLA_CARPETAS

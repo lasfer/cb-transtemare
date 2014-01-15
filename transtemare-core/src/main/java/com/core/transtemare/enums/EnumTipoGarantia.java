@@ -37,4 +37,13 @@ public enum EnumTipoGarantia {
 		}
 		return null;
 	}
+	
+	public static EnumTipoGarantia getByName(String value) {
+		for (EnumTipoGarantia garantia : values()) {
+			if (garantia.name().equals(value)) {
+				return garantia;
+			}
+		}
+		return null;
+	}
 }

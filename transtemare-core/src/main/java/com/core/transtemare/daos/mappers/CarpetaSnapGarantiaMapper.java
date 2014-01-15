@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.core.transtemare.entidades.Carpeta;
 import com.core.transtemare.entidades.Empresa;
+import com.core.transtemare.entidades.Transportadora;
 
 public class CarpetaSnapGarantiaMapper implements RowMapper<Carpeta> {
 
@@ -19,6 +20,10 @@ public class CarpetaSnapGarantiaMapper implements RowMapper<Carpeta> {
 		Empresa despachante = new Empresa();
 		despachante.setNombre(rs.getString("nombreDespachante"));
 		carpeta.setDespachante((despachante));
+		Transportadora transportadora = new Transportadora();
+		transportadora.setNombreTransportadora(rs
+				.getString("nombreTransportadora"));
+		carpeta.setTrans(transportadora);
 		return carpeta;
 	}
 }
