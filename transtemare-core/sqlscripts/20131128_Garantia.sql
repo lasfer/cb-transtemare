@@ -1,7 +1,9 @@
-ALTER TABLE `skuncadb`.`carpeta` ADD COLUMN `contenedorDevuelto` TINYINT(1) NULL  AFTER `terminal` , ADD COLUMN `cargarInformacionGarantia` TINYINT(1) NULL  AFTER `contenedorDevuelto` , ADD COLUMN `tipoGarantia` INT NULL DEFAULT NULL  AFTER `cargarInformacionGarantia` , ADD COLUMN `importeGarantia` VARCHAR(45) NULL  AFTER `tipoGarantia` , ADD COLUMN `bancoGarantia` VARCHAR(45) NULL  AFTER `importeGarantia` , ADD COLUMN `nroChequeGarantia` VARCHAR(50) NULL  AFTER `bancoGarantia` , ADD COLUMN `garantiaDevuelta` TINYINT(1) NULL  AFTER `nroChequeGarantia` ;
-ALTER TABLE `skuncadb`.`carpeta` ADD COLUMN `fechaCargaGarantia` DATETIME NULL DEFAULT NULL  AFTER `nroChequeGarantia` ;
-
 USE `skuncadb`;
+
+ALTER TABLE `carpeta` ADD COLUMN `contenedorDevuelto` TINYINT(1) NULL  AFTER `terminal` , ADD COLUMN `cargarInformacionGarantia` TINYINT(1) NULL  AFTER `contenedorDevuelto` , ADD COLUMN `tipoGarantia` INT NULL DEFAULT NULL  AFTER `cargarInformacionGarantia` , ADD COLUMN `importeGarantia` VARCHAR(45) NULL  AFTER `tipoGarantia` , ADD COLUMN `bancoGarantia` VARCHAR(45) NULL  AFTER `importeGarantia` , ADD COLUMN `nroChequeGarantia` VARCHAR(50) NULL  AFTER `bancoGarantia` , ADD COLUMN `garantiaDevuelta` TINYINT(1) NULL  AFTER `nroChequeGarantia` ;
+ALTER TABLE `carpeta` ADD COLUMN `fechaCargaGarantia` DATETIME NULL DEFAULT NULL  AFTER `nroChequeGarantia` ;
+
+
 DROP procedure IF EXISTS `sp_buscar_carpeta`;
 
 DELIMITER $$
@@ -147,6 +149,7 @@ c.`importeGarantia`,
 c.`bancoGarantia`,
 c.`nroChequeGarantia`,
 c.`bancoGarantia`,
+c.`fechaCargaGarantia`,
 c.`garantiaDevuelta`
              
 FROM carpeta c ,bultos b ,camion cam ,camion cam1,camion rem,camion rem1,empresas em1,empresas em2,empresas em3, 
