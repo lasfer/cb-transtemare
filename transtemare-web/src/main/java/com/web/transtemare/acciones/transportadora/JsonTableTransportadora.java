@@ -1,12 +1,10 @@
 package com.web.transtemare.acciones.transportadora;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.SessionAware;
 
 import com.core.transtemare.commons.Fachada;
 import com.core.transtemare.dto.TransportadoraDTO;
@@ -14,8 +12,7 @@ import com.core.transtemare.entidades.Transportadora;
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "default")
-public class JsonTableTransportadora extends ActionSupport implements
-		SessionAware {
+public class JsonTableTransportadora extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<TransportadoraDTO> gridModel;
@@ -40,7 +37,6 @@ public class JsonTableTransportadora extends ActionSupport implements
 	// All Record
 	private Integer records = 0;
 	private Fachada fac;
-	private Map<String, Object> session;
 
 	public JsonTableTransportadora(Fachada fac) {
 		super();
@@ -83,7 +79,7 @@ public class JsonTableTransportadora extends ActionSupport implements
 	}
 
 	public void validateExecute() {
-		
+
 	}
 
 	public void validateDoExecute() {
@@ -173,14 +169,6 @@ public class JsonTableTransportadora extends ActionSupport implements
 
 	public void setRecords(Integer records) {
 		this.records = records;
-	}
-
-	public Map<String, Object> getSession() {
-		return session;
-	}
-
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
 	}
 
 	public Fachada getFac() {
