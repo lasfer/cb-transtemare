@@ -174,10 +174,8 @@
 							&nbsp;&nbsp;</td>
 						<td title="Transito aduanero">Tran. Aduanero:</td>
 						<td><sj:radio name="carpeta.transitoAduanero" 
-								list="#{'true':'Si','false':'No'}" value="%{c.transitoAduanero}"  /></td>
-								<td title="Cargar Info Garantia">Cargar Info Garantia:</td>
-						<td><sj:radio name="carpeta.cargarInformacionGarantia" 
-								list="#{'true':'Si','false':'No'}" value="%{c.cargarInformacionGarantia}"  /></td>
+								list="#{'true':'Si','false':'No'}" value="%{c.transitoAduanero}"  />
+						</td>
 					</tr>
 
 				</table>
@@ -683,17 +681,14 @@
 			</div>
 			
 			<div id="tfour">
-			   <table cellspacing="4">
-					<tr>
-						<td title="Contenedor Devuelto">Contenedor Devuelto:</td>
-						<td><sj:radio name="carpeta.contenedorDevuelto" 
-								list="#{'true':'Si','false':'No'}" value="%{c.contenedorDevuelto}"  /></td>						
+			   <table cellspacing="4" width="200px">
+			   		<tr>
+						<td width="130px" title="Cargar Info Garantia">Cargar Información Garantía:</td>
+						<td><sj:radio name="carpeta.cargarInformacionGarantia" 
+								list="#{'true':'Si','false':'No'}" value="%{c.cargarInformacionGarantia}"  /></td>				
 					</tr>
-					<tr>
-						<td title="Garantia Devuelta">Garantia Devuelta:</td>
-						<td><sj:radio name="carpeta.garantiaDevuelta" 
-								list="#{'true':'Si','false':'No'}" value="%{c.garantiaDevuelta}"  /></td>						
-					</tr>
+				</table>
+				<table cellspacing="4">
 					<tr>
 						<td>Tipo Garantia :</td>
 						<td><sj:textfield label="Tipo Garantia" name="carpeta.tipoGarantia"
@@ -718,9 +713,20 @@
 								value="%{c.nroChequeGarantia}" readonly="true"
 								size="15"/></td>
 					</tr>
+				</table>
+				<table cellspacing="4" width="200px">
+					<tr>
+						<td width="130px" title="Contenedor Devuelto">Contenedor Devuelto:</td>
+						<td><sj:radio name="carpeta.contenedorDevuelto" 
+								list="#{'true':'Si','false':'No'}" value="%{c.contenedorDevuelto}"   /></td>						
+					</tr>
+					<tr>
+						<td width="130px"  title="Garantia Devuelta">Garantia Devuelta:</td>
+						<td><sj:radio name="carpeta.garantiaDevuelta" 
+								list="#{'true':'Si','false':'No'}" value="%{c.garantiaDevuelta}"  /></td>						
+					</tr>				
+				</table>
 			</div>
 		</sj:tabbedpanel>
-
 	</s:form>
-
 </div>
