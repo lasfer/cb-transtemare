@@ -58,7 +58,7 @@
 						<li class="ui-widget-header"><s:url includeParams="none"
 								id="urlAlarmasCarpetas" action="urlAlarmasCarpetas" />
 							<sj:a id="alarmasCarpetas" href="%{urlAlarmasCarpetas}"
-								targets="main">Alarmas Carpetas </sj:a></li>
+								targets="main">Alarmas</sj:a></li>
 						<li class="ui-widget-header"><s:url includeParams="none"
 								id="urlCamiones" action="urlCamiones" />
 							<sj:a id="Camiones" href="%{urlCamiones}" targets="main">Camiones</sj:a></li>
@@ -79,7 +79,7 @@
 						<li class="ui-widget-header"><s:url includeParams="none"
 								id="urlCarpetasHistorico" action="urlCarpetasHistorico" />
 							<sj:a id="CarpetasHistorico" href="%{urlCarpetasHistorico}"
-								targets="main">Historico Carpetas</sj:a></li>
+								targets="main">Historico</sj:a></li>
 								<li class="ui-widget-header"><s:url includeParams="none"
 								id="urlLocalidades" action="urlLocalidades" />
 							<sj:a id="Localidades" href="%{urlLocalidades}" targets="main">Localidades</sj:a></li>
