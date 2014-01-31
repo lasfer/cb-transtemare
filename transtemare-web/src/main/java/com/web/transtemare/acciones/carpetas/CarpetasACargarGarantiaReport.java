@@ -22,7 +22,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
-import org.jmesa.facade.TableFacade;
 import org.jmesa.limit.ExportType;
 import org.jmesa.model.TableModel;
 import org.jmesa.model.TableModelUtils;
@@ -88,7 +87,9 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 		TableModel tableModel = new TableModel("tag", request, response);
 		try {
 			tableModel.saveWorksheet(this);
-			setCarpetas(fac.obtenerCarpetasCargaGarantia(null));
+			Carpeta carpeta=new Carpeta();
+			carpeta.setCargarInformacionGarantia(true);
+			setCarpetas(fac.obtenerCarpetasGarantia(carpeta));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,7 +99,7 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 				&& ExportType.EXCEL.equals(tableModel.getExportType())) {
 
 			Table table = TableModelUtils.createTable("idCarpeta",
-					"despachante.nombre", "trans.nombreTransportadora",
+					"nroContenedor", "despachante.nombre", "trans.nombreTransportadora",
 					"agenciaMaritima.nombre", "tipoGarantia", "bancoGarantia",
 					"nroChequeGarantia", "importeGarantia");
 			CarpetasACargarGarantiaReport.setTableData(table);
@@ -112,10 +113,10 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 		tableModel.setExportTypes(PDF, EXCEL);
 
 		HtmlTable table = TableModelUtils.createHtmlTable("idCarpeta",
-				"despachante.nombre", "trans.nombreTransportadora",
+				"nroContenedor", "despachante.nombre", "trans.nombreTransportadora",
 				"agenciaMaritima.nombre", "tipoGarantia", "bancoGarantia",
 				"nroChequeGarantia", "importeGarantia");
-		table.getTableRenderer().setWidth("100%");
+		table.setWidth("100%");
 		CarpetasACargarGarantiaReport.setTableData(table);
 		table.getRow().setUniqueProperty("idCarpeta");
 		tableModel.setTable(table);
@@ -243,7 +244,9 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 		// }
 		// }
 		carpetas.clear();
-		carpetas.addAll(fac.obtenerCarpetasCargaGarantia(null));
+		Carpeta carpeta=new Carpeta();
+		carpeta.setCargarInformacionGarantia(true);
+		carpetas.addAll(fac.obtenerCarpetasGarantia(carpeta));
 
 	}
 
