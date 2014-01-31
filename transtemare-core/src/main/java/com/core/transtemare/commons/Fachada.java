@@ -325,11 +325,11 @@ public class Fachada {
 		return fC.obtenerCarpetas(carpeta, historico, desde, hasta);
 	}
 
-	public List<Carpeta> obtenerCarpetasCargaGarantia(Carpeta carpeta)
+	public List<Carpeta> obtenerCarpetasGarantia(Carpeta carpeta)
 			throws FachadaException {
 		return fC.obtenerCarpetasCargaGarantia(carpeta);
 	}
-
+	
 	public List<Carpeta> obtenerSubCarpetas(boolean historico, int idCarpetPadre)
 			throws FachadaException {
 		return fC.obtenerSubCarpetas(historico, idCarpetPadre);

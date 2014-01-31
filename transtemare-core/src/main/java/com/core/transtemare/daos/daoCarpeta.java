@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -263,10 +264,17 @@ public class daoCarpeta {
 			LOGGER.debug("obtenerCarpetasCargaGarantia(carpeta=" + carpeta
 					+ ") - start");
 		}
+		assert(carpeta!=null);
 		List<Carpeta> listaCarpetas = new ArrayList<Carpeta>();
-		listaCarpetas = jdbcTemplate.query(
+		if(BooleanUtils.isTrue(carpeta.getCargarInformacionGarantia())){
+			listaCarpetas = jdbcTemplate.query(
 				SQLCarpetas.OBTENER_CARPETAS_CARGA_GARANTIA,
 				new CarpetaSnapGarantiaMapper());
+		}else{
+			listaCarpetas = jdbcTemplate.query(
+					SQLCarpetas.OBTENER_CARPETAS_INFO_GARANTIA,
+					new CarpetaSnapGarantiaMapper());
+		}
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("obtenerCarpetasCargaGarantia(carpeta=) - end - return value="
