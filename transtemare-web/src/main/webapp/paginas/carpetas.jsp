@@ -18,7 +18,7 @@
 <div id="col1" style="width: 80%">
 	<div id="col1_content" class="clearfix">
 		<sjg:grid autoencode="false" id="gridedittable" caption="Carpetas"
-			dataType="json" href="%{urlCarpetas}" pager="true" width="735"
+			dataType="json" href="%{urlCarpetas}" pager="true" width="800"
 			navigator="true" gridModel="gridModel" rowList="15,30,60" rowNum="30"
 			navigatorDelete="false" navigatorAdd="false" navigatorEdit="false"
 			onSelectRowTopics="rowselectCarpetasEditar,rowselectCarpetasCrt,rowselectCarpetasCaratula,rowselectCarpetasMicDta,rowselectCarpetasPreview"
