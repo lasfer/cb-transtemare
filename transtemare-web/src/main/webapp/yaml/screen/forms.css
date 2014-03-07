@@ -142,7 +142,6 @@
   /* General form styling  | Allgemeine Formatierung des Formulars */
   .yform { overflow:hidden; }
   .yform fieldset { overflow:hidden; }
-  .yform label { display:block; cursor:pointer; }
   .yform legend { background:transparent; border:0; padding:0 0.5em; }
   .yform .message { display:block; margin-bottom:0.5em; color:#666; }
 

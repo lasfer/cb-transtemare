@@ -126,13 +126,6 @@
 			<sj:tab id="tab1" href="%{urlResumen}" label="Resumen" />
 			<sj:tab id="tab2" target="ttwo" label="Seccion1" />
 			<sj:tab id="tab3" target="tthree" label="Seccion2" />
-			<sj:tab id="tab3" target="tfour" label="Garantia" />
-			<!--      <sj:tab id="tab4" target="tfour" label="Seccion 3"/>-->
-			<!--      <sj:tab id="tab5" target="tfive" label="Seccion 4"/>-->
-			<!--      <sj:tab id="tab6" target="tsix" label="Seccion5"/>-->
-			<!--      <sj:tab id="tab7" target="tseven" label="Seccion6"/>-->
-
-
 			<div id="ttwo">
 
 
@@ -174,7 +167,7 @@
 							&nbsp;&nbsp;</td>
 						<td title="Transito aduanero">Tran. Aduanero:</td>
 						<td><sj:radio name="carpeta.transitoAduanero" 
-								list="#{'true':'Si','false':'No'}" value="%{c.transitoAduanero}"  />
+								list="#{'true':'Si','false':'No'}" value="%{c.transitoAduanero}" buttonset="false" />
 						</td>
 					</tr>
 
@@ -549,6 +542,53 @@
 				<sj:accordion id="accordion5" autoHeight="true" animated="slide"
 					collapsible="true" active="false">
 					<div style="width: 70%">
+						<sj:accordionItem title="Información Garantía">
+							 <table cellspacing="4" width="300px">
+						   		<tr>
+									<td width="130px" title="Cargar Info Garantia">Cargar Información Garantía:</td>
+									<td><sj:radio name="carpeta.cargarInformacionGarantia" 
+											list="#{'true':'Si','false':'No'}" value="%{c.cargarInformacionGarantia}" buttonset="false"  /></td>				
+								</tr>
+							</table>
+							<table cellspacing="4">
+								<tr>
+									<td>Tipo Garantia :</td>
+									<td><sj:textfield label="Tipo Garantia" name="carpeta.tipoGarantia"
+											value="%{c.tipoGarantia}" readonly="true"
+											size="15"  /></td>
+								</tr>
+								<tr>
+									<td>Importe :</td>
+									<td><sj:textfield label="importeGarantia" name="carpeta.importeGarantia"
+											value="%{c.importeGarantia}" readonly="true"
+											size="15"  /></td>
+								</tr>
+								<tr>
+									<td>Banco :</td>
+									<td><sj:textfield label="Banco" name="carpeta.bancoGarantia"
+											value="%{c.bancoGarantia}" readonly="true"
+											size="15"  /></td>
+								</tr>
+								<tr>
+									<td>Nro Cheque:</td>
+									<td><sj:textfield label="Nro Cheque" name="carpeta.nroChequeGarantia"
+											value="%{c.nroChequeGarantia}" readonly="true"
+											size="15"/></td>
+								</tr>
+							</table>
+							<table cellspacing="4" width="300px">
+								<tr>
+									<td width="130px" title="Contenedor Devuelto">Contenedor Devuelto:</td>
+									<td><sj:radio name="carpeta.contenedorDevuelto" 
+											list="#{'true':'Si','false':'No'}" value="%{c.contenedorDevuelto}"   buttonset="false" /></td>						
+								</tr>
+								<tr>
+									<td width="130px"  title="Garantia Devuelta">Garantia Devuelta:</td>
+									<td><sj:radio name="carpeta.garantiaDevuelta" 
+											list="#{'true':'Si','false':'No'}" value="%{c.garantiaDevuelta}"   buttonset="false" /></td>						
+								</tr>				
+							</table>
+						</sj:accordionItem>
 						<sj:accordionItem
 							title="Agencia Maritima/Despachante/Dia solicitado por cliente">
 							<table>
@@ -606,7 +646,7 @@
 						<td>Factura :</td>
 						<td><sj:radio name="carpeta.facturaOriginal"
 								list="#{'true':'Original','false':'Copia'}"
-								value="%{c.facturaOriginal}" /></td>
+								value="%{c.facturaOriginal}" buttonset="false"  /></td>
 						<td><sj:datepicker name="carpeta.fechaRecibidoFactura"
 								id="carpeta.fechaRecibidoFactura" displayFormat="dd/mm/yy"
 								showAnim="slideDown" value="%{c.fechaRecibidoFactura}" /></td>
@@ -615,7 +655,7 @@
 						<td>Packing :</td>
 						<td><sj:radio name="carpeta.packingOriginal"
 								list="#{'true':'Original','false':'Copia'}"
-								value="%{c.packingOriginal}" /></td>
+								value="%{c.packingOriginal}"  buttonset="false" /></td>
 						<td><sj:datepicker name="carpeta.fechaRecibidoPacking"
 								id="carpeta.fechaRecibidoPacking" displayFormat="dd/mm/yy"
 								showAnim="slideDown" value="%{c.fechaRecibidoPacking}" /></td>
@@ -624,7 +664,7 @@
 						<td>BL :</td>
 						<td><sj:radio name="carpeta.blOriginal"
 								list="#{'true':'Original','false':'Copia'}"
-								value="%{c.blOriginal}" /></td>
+								value="%{c.blOriginal}"  buttonset="false" /></td>
 						<td><sj:datepicker name="carpeta.fechaRecibidoBL"
 								id="carpeta.fechaRecibidoBL" displayFormat="dd/mm/yy"
 								showAnim="slideDown" value="%{c.fechaRecibidoBL}" /></td>
@@ -651,82 +691,7 @@
 								value="%{c.fechaVencimiento}" /></td>
 					</tr>
 				</table>
-
-				<!--	    <sj:accordion id="accordion8" autoHeight="true"  animated="slide" collapsible="true" active="false"  >-->
-				<!--	    <sj:accordionItem title="Buque"  >-->
-				<!--	    	<table>-->
-				<!--		    	<tr>-->
-				<!--		    		<td>Nombre Buque:</td>-->
-				<!--		    		<td><sj:textfield value="%{c.nombreBuque}" name="carpeta.nombreBuque"  cssStyle="width: 350px "  /></td>-->
-				<!--		    	</tr>-->
-				<!--		    	<tr>-->
-				<!--		    		<td>Fecha llegada:</td>-->
-				<!--		    		<td>-->
-				<!--		    		<sj:datepicker  name="carpeta.fechaLlegadaBuque"  id="carpeta.fechaLlegadaBuque" displayFormat="dd/mm/yy" showAnim="slideDown"  value="%{c.fechaLlegadaBuque}" />-->
-				<!--		    		</td>-->
-				<!--		    	</tr>-->
-				<!--		    	<tr>-->
-				<!--		    		<td>Liberacion:</td>-->
-				<!--		    		<td>-->
-				<!--		    			<s:checkbox name="carpeta.liberacion"  value="%{c.liberacion}" />-->
-				<!--   						<sj:textarea name="carpeta.liberacionDescripcion" value="%{c.liberacionDescripcion}"  cols="25" rows="3"  />-->
-				<!--   					</td>-->
-				<!--		    	</tr>-->
-				<!--	    	</table>-->
-				<!--    		</sj:accordionItem>-->
-				<!--    		-->
-				<!--    	</sj:accordion>-->
-
-
-			</div>
-			
-			<div id="tfour">
-			   <table cellspacing="4" width="200px">
-			   		<tr>
-						<td width="130px" title="Cargar Info Garantia">Cargar Información Garantía:</td>
-						<td><sj:radio name="carpeta.cargarInformacionGarantia" 
-								list="#{'true':'Si','false':'No'}" value="%{c.cargarInformacionGarantia}"  /></td>				
-					</tr>
-				</table>
-				<table cellspacing="4">
-					<tr>
-						<td>Tipo Garantia :</td>
-						<td><sj:textfield label="Tipo Garantia" name="carpeta.tipoGarantia"
-								value="%{c.tipoGarantia}" readonly="true"
-								size="15"  /></td>
-					</tr>
-					<tr>
-						<td>Importe :</td>
-						<td><sj:textfield label="importeGarantia" name="carpeta.importeGarantia"
-								value="%{c.importeGarantia}" readonly="true"
-								size="15"  /></td>
-					</tr>
-					<tr>
-						<td>Banco :</td>
-						<td><sj:textfield label="Banco" name="carpeta.bancoGarantia"
-								value="%{c.bancoGarantia}" readonly="true"
-								size="15"  /></td>
-					</tr>
-					<tr>
-						<td>Nro Cheque:</td>
-						<td><sj:textfield label="Nro Cheque" name="carpeta.nroChequeGarantia"
-								value="%{c.nroChequeGarantia}" readonly="true"
-								size="15"/></td>
-					</tr>
-				</table>
-				<table cellspacing="4" width="200px">
-					<tr>
-						<td width="130px" title="Contenedor Devuelto">Contenedor Devuelto:</td>
-						<td><sj:radio name="carpeta.contenedorDevuelto" 
-								list="#{'true':'Si','false':'No'}" value="%{c.contenedorDevuelto}"   /></td>						
-					</tr>
-					<tr>
-						<td width="130px"  title="Garantia Devuelta">Garantia Devuelta:</td>
-						<td><sj:radio name="carpeta.garantiaDevuelta" 
-								list="#{'true':'Si','false':'No'}" value="%{c.garantiaDevuelta}"  /></td>						
-					</tr>				
-				</table>
-			</div>
+			</div>		
 		</sj:tabbedpanel>
 	</s:form>
 </div>

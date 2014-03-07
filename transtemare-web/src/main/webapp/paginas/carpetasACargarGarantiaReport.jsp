@@ -18,7 +18,7 @@
 <script type="text/javascript">	
 	var destGarantiasCarga='CarpetasACargarGarantiaReport';
 	var destGarantiasInfo='GarantiaCarpetasReport';
-    var dest=destGarantiasInfo;
+    var dest=destGarantiasCarga;
     
     <%--       
  	      Si no es ajax
