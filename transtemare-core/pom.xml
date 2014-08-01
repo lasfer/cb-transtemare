@@ -5,7 +5,7 @@
 	<artifactId>transtemare-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>transtemare-core</name>
-<!-- 	<properties> -->
+<!-- 	<properties>  - ->
 <!-- 		<spring.version>3.1.2.RELEASE</spring.version> -->
 <!-- 	</properties> -->
 	<dependencies>
