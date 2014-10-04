@@ -81,6 +81,15 @@
 				<param name="bufferSize">1024</param>
 			</result>
 		</action>
+		
+		<action name="SABANA" class="com.web.transtemare.acciones.reportes.SABANA">
+			<result name="success" type="stream">
+				<param name="contentType">application/x-download</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="SABANA.pdf"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
 
 		<action name="CARATULA" class="com.web.transtemare.acciones.reportes.Caratula">
 			<result name="success" type="stream">

@@ -208,6 +208,7 @@ public class daoCarpeta {
 						.getCode() : null, carpeta.getImporteGarantia(),
 				carpeta.getBancoGarantia(), carpeta.getNroChequeGarantia(),
 				carpeta.getFechaCargaGarantia(), carpeta.getGarantiaDevuelta(),
+				carpeta.getNroDUA(),
 				carpeta.getIdCarpeta() };
 
 		LOGGER.info("Creando carpeta: " + carpeta.getIdCarpeta()

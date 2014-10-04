@@ -297,6 +297,9 @@
 	<bean id="micdta" class="com.web.transtemare.acciones.reportes.MICDTA">
 		<constructor-arg ref="fachada" />
 	</bean>
+	<bean id="sabana" class="com.web.transtemare.acciones.reportes.SABANA">
+		<constructor-arg ref="fachada" />
+	</bean>
 
 	<bean id="abmtransportadora" class="com.web.transtemare.acciones.transportadora.ABMTransportadora">
 		<constructor-arg ref="fachada" />

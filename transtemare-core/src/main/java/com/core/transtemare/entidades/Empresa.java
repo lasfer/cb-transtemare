@@ -15,13 +15,14 @@ public class Empresa {
 	private String direccion;
 	private Localidad localidad;
 	private String nombreCorto;
+	private String codigo;
 
 	public Empresa() {
 	}
 
 	public Empresa(int idEmpresa, byte tipo, String nombre,
 			String rolContribuyente, String direccion, Localidad localidad,
-			String nombreCorto) {
+			String nombreCorto, String codigo) {
 		super();
 		this.idEmpresa = idEmpresa;
 		this.tipo = tipo;
@@ -30,6 +31,7 @@ public class Empresa {
 		this.direccion = direccion;
 		this.localidad = localidad;
 		this.nombreCorto = nombreCorto;
+		this.codigo = codigo;
 	}
 
 	public Empresa(Integer id) {
@@ -102,6 +104,20 @@ public class Empresa {
 	 */
 	public void setNombreCorto(String nombreCorto) {
 		this.nombreCorto = nombreCorto;
+	}
+
+	/**
+	 * @return the codigo
+	 */
+	public String getCodigo() {
+		return codigo;
+	}
+
+	/**
+	 * @param codigo the codigo to set
+	 */
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public String toString() {

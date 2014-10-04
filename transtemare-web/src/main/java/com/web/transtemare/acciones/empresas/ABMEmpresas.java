@@ -21,6 +21,7 @@ public class ABMEmpresas extends ActionSupport {
 	private String id;
 	private String nombre;
 	private String nombreCorto;
+	private String codigo;
 	private String domicilio;
 	private String rol;
 	private String tipo;
@@ -50,7 +51,8 @@ public class ABMEmpresas extends ActionSupport {
 			logger.error("id:" + id + "nombre: " + nombre + ", domicilio:"
 					+ domicilio + ", rol:" + rol + "," + " pais:" + pais
 					+ ", ciudad:" + ciudad + ", tipo_" + tipo
-					+ " nombreCorto :" + nombreCorto + " oper :" + oper, e);
+					+ " nombreCorto :" + nombreCorto 
+					+ " codigo :" + codigo + " oper :" + oper, e);
 			logger.error(ToStringBuilder.reflectionToString(this,
 					ToStringStyle.SHORT_PREFIX_STYLE));
 			return ERROR;
@@ -151,7 +153,7 @@ public class ABMEmpresas extends ActionSupport {
 		int idEmpresa = id.equals("_empty") ? 0 : Integer.parseInt(id);
 		Localidad localidad = new Localidad(0, null, ciudad, false);
 		return new Empresa(idEmpresa, this.obtenerTipo(), nombre, rol,
-				domicilio, localidad, nombreCorto);
+				domicilio, localidad, nombreCorto, codigo);
 	}
 
 	private byte obtenerTipo() {
@@ -166,5 +168,19 @@ public class ABMEmpresas extends ActionSupport {
 			tipo_ = 3;
 		}
 		return tipo_;
+	}
+
+	/**
+	 * @return the codigo
+	 */
+	public String getCodigo() {
+		return codigo;
+	}
+
+	/**
+	 * @param codigo the codigo to set
+	 */
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 }

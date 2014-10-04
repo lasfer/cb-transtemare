@@ -56,7 +56,7 @@ public class JSONEmpresas extends ActionSupport {
 						.getRolContribuyente(), e.getTipo(), e.getDireccion(),
 						e.getLocalidad().getPais().getDescripcion(), e
 								.getLocalidad().getDescripcion(), e
-								.getNombreCorto()));
+								.getNombreCorto(), e.getCodigo()));
 			}
 
 		} catch (Exception e) {

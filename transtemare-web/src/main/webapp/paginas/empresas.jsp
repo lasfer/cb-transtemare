@@ -48,6 +48,11 @@
 			title="Nombre Corto" editable="true" edittype="text"
 			editrules="{edithidden:true,required: false}"
 			editoptions="{size: 6, maxlength: 6}" />
+		<sjg:gridColumn name="codigo" search="false" width="75"
+			disabled="true" index="codigo" hidden="true" id="codigo"
+			title="Codigo" editable="true" edittype="text"
+			editrules="{edithidden:true,required: false}"
+			editoptions="{size: 8, maxlength: 8}" />
 		<sjg:gridColumn name="pais" search="false" index="pais" title="Pais"
 			editable="false" edittype="select"
 			editoptions="{ dataUrl:'%{urlPaisesEmpresas_2}' }" />

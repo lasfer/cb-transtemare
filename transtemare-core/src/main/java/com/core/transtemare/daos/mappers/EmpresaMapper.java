@@ -18,6 +18,7 @@ public class EmpresaMapper implements RowMapper<Empresa> {
 		empresa.setRolContribuyente(rs.getString("rolDelCon"));
 		empresa.setNombre(rs.getString("nombre"));
 		empresa.setNombreCorto(rs.getString("nombreCorto"));
+		empresa.setCodigo(rs.getString("codigo"));
 		empresa.setTipo(rs.getByte("tipo"));
 		// Localidad
 		Localidad localidad = new Localidad();

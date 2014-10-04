@@ -201,6 +201,27 @@ $
 					}
 				});
 
+//Crea el link dinamico para generar sabana
+$
+		.subscribe(
+				'rowselectCarpetasSabana',
+				function(event, data) {
+					var id = jQuery("#gridedittable").jqGrid('getGridParam',
+							'selrow');
+					if (id) {
+						var ret = jQuery("#gridedittable").jqGrid('getRowData',
+								id);
+						$("#gridSabana")
+								.html(
+										"<a  id='sabana' href='"
+												+ ctx
+												+ "/SABANA?id="
+												+ ret.numeroCarpeta
+												+ "' role='button' aria-disabled='false' class='ui-icon-newwin'    >GENERAR SABANA "
+												+ ret.numeroCarpeta + "</a>");
+					}
+				});
+
 
 // Crea el link dinamico para generar el micdta historico
 $

@@ -11,9 +11,9 @@ public class SQLCarpetas {
 			+ " l WHERE e.FK_Localidad = l.CodLocalidad and l.CodPais_FK = p.CodPais AND idEmpresa = ? ";
 	public static final String MODIFICAR_EMPRESA = "Update  "
 			+ SQLTablas.TABLA_EMPRESAS
-			+ " set nombre=?,rolDelCon=?,Direccion=?,FK_Localidad=?, tipo= ?, nombreCorto=? WHERE idEmpresa=?";
+			+ " set nombre=?,rolDelCon=?,Direccion=?,FK_Localidad=?, tipo= ?, nombreCorto=?, codigo=? WHERE idEmpresa=?";
 	public static final String INSERTAR_EMPRESA = "INSERT INTO "
-			+ SQLTablas.TABLA_EMPRESAS + " VALUES(null,?,?,?,?,1,?,?)";
+			+ SQLTablas.TABLA_EMPRESAS + " VALUES(null,?,?,?,?,1,?,?,?)";
 	public static final String PROCEDURE_SELECT_CARPETA_POR_ID = "CALL `sp_buscar_carpeta`(?)";
 	public static final String OBTENER_CARPETAS_DESDE_HASTA = "SELECT c.idCarpeta,c.referenciaDestino,c.nroContenedor, t.Nombre as nombreTransportadora, c.terminal, e.nombre as nombreAgenciaMaritima, c.FxAlta,c.FxMod, c.fechaVencimiento, c.fechaLlegadaBuque FROM "
 			+ SQLTablas.TABLA_CARPETAS
@@ -61,14 +61,14 @@ public class SQLCarpetas {
 
 	public static final String OBTENER_CARPETAS_HISTORICO = "SELECT * FROM historicos h LIMIT ?,?";
 	public static final String OBTENER_CARPETA_POR_ID_HISTORICO = "SELECT * FROM historicos where idCarpeta=?";
-	public static final String OBTENER_TODAS_LAS_EMPRESAS = "SELECT e.idEmpresa , e.nombre , e.Direccion , e.rolDelCon ,e.tipo, l.descripcion, e.FK_Localidad, e.nombreCorto, p.* FROM "
+	public static final String OBTENER_TODAS_LAS_EMPRESAS = "SELECT e.idEmpresa , e.nombre , e.Direccion , e.rolDelCon ,e.tipo, l.descripcion, e.FK_Localidad, e.nombreCorto, e.codigo, p.* FROM "
 			+ SQLTablas.TABLA_EMPRESAS
 			+ " e, "
 			+ SQLTablas.TABLA_LOCALIDADES
 			+ " l , "
 			+ SQLTablas.TABLA_PAISES
 			+ " p WHERE e.FK_localidad = l.CodLocalidad AND l.CodPais_FK = p.CodPais AND e.Activo = 1 AND idEmpresa != 0 AND e.tipo=? ORDER BY e.idEmpresa DESC ";
-	public static final String OBTENER_TODAS_LAS_EMPRESAS_DESDE_HASTA = "SELECT e.idEmpresa , e.nombre , e.Direccion , e.rolDelCon ,e.tipo, e.FK_Localidad, e.nombreCorto, l.descripcion, p.* FROM "
+	public static final String OBTENER_TODAS_LAS_EMPRESAS_DESDE_HASTA = "SELECT e.idEmpresa , e.nombre , e.Direccion , e.rolDelCon ,e.tipo, e.FK_Localidad, e.nombreCorto, e.codigo, l.descripcion, p.* FROM "
 			+ SQLTablas.TABLA_EMPRESAS
 			+ " e, "
 			+ SQLTablas.TABLA_LOCALIDADES
@@ -98,7 +98,7 @@ public class SQLCarpetas {
 			+ "comentarios=?, tipoContenedor=?, fechaSalidaSolicitudCliente=?, transportadoraCamion=?, tamanioLetraMarcaYNumero=?, "
 			+ "validoHasta=?, rutasCorto=?, rutasLargo=?,transportadoraCamionSustituto=? , nombreFirmaDestinatario=?,  terminal=?, "
 			+ "contenedorDevuelto=?, cargarInformacionGarantia=?, tipoGarantia=?, importeGarantia=?, bancoGarantia=?, "
-			+ "nroChequeGarantia=?, fechaCargaGarantia=?, garantiaDevuelta=?  where idCarpeta=?";
+			+ "nroChequeGarantia=?, fechaCargaGarantia=?, garantiaDevuelta=?, nroDUA=?  where idCarpeta=?";
 
 	public static final String BORRAR_EMPRESA = "UPDATE empresas SET Activo=0 WHERE idEmpresa=?";
 	public static final String PROCEDURE_NUMERADORES = "CALL `sp_numeradores`(?,?);";

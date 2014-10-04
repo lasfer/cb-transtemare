@@ -10,15 +10,17 @@ public class EmpresaDTO {
 	private String pais;
 	private String ciudad;
 	private String nombreCorto;
+	private String codigo;
 
 	public EmpresaDTO(int idEmpresa, String nombre2, String rolContribuyente,
 			byte tipo2, String direccion, String pais, String ciudad,
-			String nombreCorto) {
+			String nombreCorto, String codigo) {
 		setId(String.valueOf(idEmpresa));
 		setNombre(nombre2);
 		setRol(rolContribuyente);
-		setDomicilio(direccion);
+		setDomicilio(direccion);		
 		this.nombreCorto = nombreCorto;
+		this.codigo=codigo;
 		switch (tipo2) {
 		case 0:
 			setTipo("Empresa");
@@ -109,6 +111,20 @@ public class EmpresaDTO {
 	 */
 	public void setNombreCorto(String nombreCorto) {
 		this.nombreCorto = nombreCorto;
+	}
+
+	/**
+	 * @return the codigo
+	 */
+	public String getCodigo() {
+		return codigo;
+	}
+
+	/**
+	 * @param codigo the codigo to set
+	 */
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 }

@@ -98,14 +98,18 @@
 		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
 		<span class="ui-button-text">Camion Sust.</span>
 	</a>
-
+	<a id="SABANAA"
+			href="${pageContext.request.contextPath}/SABANA.action?id=<s:property  value='%{c.idCarpeta}' />"
+			class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+			<span class="ui-button-text">SABANA</span>
+		</a>
 	<s:if test="%{c.esCRT}">
 
-		<a id="CARATULAA"
+	<%-- 	<a id="CARATULAA"
 			href="${pageContext.request.contextPath}/CARATULA.action?id=<s:property  value='%{c.idCarpeta}' />"
 			class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
 			<span class="ui-button-text">CARATULA</span>
-		</a>
+		</a>--%>
 		<sj:a targets="formResult" button="true" href="%{historico}">A HISTORICO</sj:a>
 	</s:if>
 </div>
@@ -642,6 +646,12 @@
 
 
 				<table cellspacing="4">
+					<tr>
+						<td>DUA :</td>
+						<td><sj:textfield value="%{c.nroDUA}"
+											name="carpeta.nroDUA" cssStyle="width: 100px " /></td>
+						<td></td>
+					</tr>
 					<tr>
 						<td>Factura :</td>
 						<td><sj:radio name="carpeta.facturaOriginal"

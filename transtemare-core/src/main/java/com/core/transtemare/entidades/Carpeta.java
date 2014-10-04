@@ -126,6 +126,7 @@ public class Carpeta {
 	private String bancoGarantia;
 	private String nroChequeGarantia;
 	private Boolean garantiaDevuelta;
+	private String nroDUA;
 
 	public EnumTipoGarantia getTipoGarantia() {
 		return tipoGarantia;
@@ -897,6 +898,20 @@ public class Carpeta {
 
 	public void setNroChequeGarantia(String nroChequeGarantia) {
 		this.nroChequeGarantia = nroChequeGarantia;
+	}
+
+	/**
+	 * @return the nroDUA
+	 */
+	public String getNroDUA() {
+		return nroDUA;
+	}
+
+	/**
+	 * @param nroDUA the nroDUA to set
+	 */
+	public void setNroDUA(String nroDUA) {
+		this.nroDUA = nroDUA;
 	}
 
 	@Override

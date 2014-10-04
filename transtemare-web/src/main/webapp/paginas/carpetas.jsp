@@ -21,7 +21,7 @@
 			dataType="json" href="%{urlCarpetas}" pager="true" width="800"
 			navigator="true" gridModel="gridModel" rowList="15,30,60" rowNum="30"
 			navigatorDelete="false" navigatorAdd="false" navigatorEdit="false"
-			onSelectRowTopics="rowselectCarpetasEditar,rowselectCarpetasCrt,rowselectCarpetasCaratula,rowselectCarpetasMicDta,rowselectCarpetasPreview"
+			onSelectRowTopics="rowselectCarpetasEditar,rowselectCarpetasCrt,rowselectCarpetasCaratula,rowselectCarpetasMicDta,rowselectCarpetasPreview,rowselectCarpetasSabana"
 			navigatorSearchOptions="{sopt:['eq']}">
 			<sjg:grid autoencode="false" id="editarSubCarpeta"
 				subGridUrl="%{urlSubCarpetas}" gridModel="gridModel"
@@ -70,6 +70,7 @@
 			<li><sj:div id="gridCrt" /></li>
 			<li><sj:div id="gridMicDta" /></li>
 			<li><sj:div id="gridCaratula" /></li>
+			<li><sj:div id="gridSabana" /></li>
 		</ul>
 		<div id='previewID' class='result ui-widget-content ui-corner-all'>
 		</div>

@@ -1,19 +1,17 @@
 package com.core.transtemare.daos;
 
-import org.apache.log4j.Logger;
-
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.core.transtemare.daos.mappers.EmpresaMapper;
 import com.core.transtemare.entidades.Empresa;
 import com.core.transtemare.persistencia.sql.SQLCarpetas;
-import com.core.transtemare.persistencia.sql.SQLTransportadoras;
 
 public class daoEmpresas {
 	/**
@@ -113,7 +111,7 @@ public class daoEmpresas {
 		}
 
 		Empresa empresa = this.jdbcTemplate.queryForObject(
-				SQLTransportadoras.OBTENER_RESPONSABLE_POR_ID,
+				SQLCarpetas.OBTENER_EMPRESA_POR_ID,
 				new Object[] { new Long(id) }, new EmpresaMapper());
 
 		if (LOGGER.isDebugEnabled()) {
@@ -135,7 +133,7 @@ public class daoEmpresas {
 						empresa.getDireccion(),
 						empresa.getLocalidad() != null ? empresa.getLocalidad()
 								.getIdLocalidad() : null, empresa.getTipo(),
-						empresa.getNombreCorto(), empresa.getIdEmpresa() });
+						empresa.getNombreCorto(),empresa.getCodigo(), empresa.getIdEmpresa() });
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("modificarEmpresa(Empresa) - end - return value=" + returnint); //$NON-NLS-1$
 		}
@@ -152,7 +150,7 @@ public class daoEmpresas {
 				new Object[] { empresa.getNombre(),
 						empresa.getRolContribuyente(), empresa.getDireccion(),
 						empresa.getLocalidad().getIdLocalidad(),
-						empresa.getTipo(), empresa.getNombreCorto() });
+						empresa.getTipo(), empresa.getNombreCorto(),empresa.getCodigo()});
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("altaEmpresa(String, String, String, int, byte) - end - return value=" + returnint); //$NON-NLS-1$
 		}
