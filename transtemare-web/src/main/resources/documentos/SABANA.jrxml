@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="952" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="154d4d33-0864-44fd-b1b9-d97323c91b93">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="202"/>
+	<parameter name="nombreDespachante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigoDespachante" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreEmpresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rutEmpresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaActual" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nroContenedor" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nroContenedorValidacion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ciudadSaida" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nroDocumentoDNA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreTransportadoraCamion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="matriculaCamion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="matriculaRemolque" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreChofer" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoDocumentoChofer" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nroDocumentoChofer" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="510" splitType="Stretch">
+			<textField>
+				<reportElement x="108" y="86" width="226" height="20" uuid="87015ed7-e10f-48ff-8891-60f569340998"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$P{nombreDespachante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="86" width="140" height="20" uuid="a23d4324-5313-43b6-8888-1e470eb8e59c"/>
+				<textFieldExpression><![CDATA[$P{codigoDespachante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="142" width="226" height="20" uuid="15b34836-0971-48da-8b75-416b09b34069"/>
+				<textFieldExpression><![CDATA[$P{nombreEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="359" y="142" width="140" height="20" uuid="df50478f-d484-41bd-aef9-c6e8e24adcd1"/>
+				<textFieldExpression><![CDATA[$P{rutEmpresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="596" y="145" width="27" height="20" uuid="b1cb29df-f941-456c-809e-1923532ea861"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="828" y="53" width="132" height="20" uuid="e6c04278-675e-42c2-ac91-971f5e5f1ee7"/>
+				<textFieldExpression><![CDATA[$P{fechaActual}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="224" width="48" height="20" uuid="4506c411-48a2-4983-b3d2-09adeb7bb1bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DUA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="224" width="55" height="20" uuid="768cffa7-b788-419d-8eee-98d4430b9196"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="224" width="43" height="20" uuid="e1977aee-f947-4625-85b0-bfb9b7ed26ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CONT.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="224" width="28" height="20" uuid="deacc51b-dccf-40f4-b90d-789a8752f6ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="224" width="118" height="20" uuid="9bbb7650-f89d-4fcf-ba1c-4acee8fbc515"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[S/M    S/N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="224" width="190" height="20" uuid="25f8871c-898a-4f11-a780-aeb6909755ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VARIOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="701" y="224" width="77" height="20" uuid="72d9c8f9-8df1-4dc5-8457-4ae24cf7cf7a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{nroContenedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="778" y="224" width="29" height="20" uuid="c8ea6239-13ec-4800-a7f8-88382b07e2dc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{nroContenedorValidacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="867" y="224" width="66" height="20" uuid="6ee1af6e-910e-4c8d-9a57-8a8b2b0bc566"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{ciudadSaida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="438" width="226" height="20" uuid="6a481005-2221-48e8-808c-e02ab1420117"/>
+				<textFieldExpression><![CDATA[$P{nombreTransportadoraCamion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="469" width="138" height="20" uuid="1186b073-7fc3-4afe-bcfd-80f17938b831"/>
+				<textFieldExpression><![CDATA[$P{matriculaCamion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="225" y="469" width="138" height="20" uuid="d241499a-e285-4f3c-9044-bfd80aafb113"/>
+				<textFieldExpression><![CDATA[$P{matriculaRemolque}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="491" width="138" height="14" uuid="643b869f-198b-4af2-83e4-800e16018965"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreChofer}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="491" width="31" height="14" uuid="c9c5a014-cc37-4aa9-b343-0070e59113a8"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipoDocumentoChofer}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="490" width="120" height="15" uuid="40364a54-9d9b-48da-b094-2735f14f59e8"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nroDocumentoChofer}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="224" width="80" height="20" uuid="6aed59e7-31df-4351-a381-b962e5536d20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{nroDocumentoDNA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
