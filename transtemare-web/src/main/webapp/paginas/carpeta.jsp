@@ -5,6 +5,17 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
+<script type="text/javascript">
+	function okButton() {
+		$('#historicobuttondialog').dialog('close');
+		$('#hist').click();
+
+	};
+	function cancelButton() {
+		$('#historicobuttondialog').dialog('close');
+	};
+</script>
+
 <script>
 	$('#ruta').blur(function() {
 		var ruta = document.getElementById('carpeta.rutasLargo');
@@ -58,6 +69,15 @@
 	<s:param value="%{c.idCarpeta}" name="id" />
 </s:url>
 
+<sj:dialog id="historicobuttondialog"
+	buttons="{
+                'Confirmar':function() { okButton(); },
+                'Cancelar':function() { cancelButton(); }
+                }"
+	autoOpen="false" modal="true" title="Desea pasar a histórico?">
+     Por favor confirme, pero recuerde que pasar las carpetas a Histórico es irreversible.
+    </sj:dialog>
+
 <div id="dialogos">
 	<sj:submit href="%{enviarCarpeta}" targets="formResult" formIds="form"
 		value="Guardar Carpeta" loadingText="GUARDANDO CARPETA....."
@@ -109,8 +129,10 @@
 			href="${pageContext.request.contextPath}/CARATULA.action?id=<s:property  value='%{c.idCarpeta}' />"
 			class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
 			<span class="ui-button-text">CARATULA</span>
-		</a>--%>
-		<sj:a targets="formResult" button="true" href="%{historico}">A HISTORICO</sj:a>
+		</a>--%>	
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+		<sj:a openDialog="historicobuttondialog"  button="true" > A HISTORICO</sj:a>
+		<sj:a id="hist" targets="formResult"  href="%{historico}"/>
 	</s:if>
 </div>
 
@@ -133,7 +155,7 @@
 			<div id="ttwo">
 
 
-				<table cellpadding="1">
+				<table cellpadding="1" width="100%">
 					<tr>
 						<td title="Transportadora asignada a la carpeta">Transportadora:</td>
 						<td><b><s:property default="" value="%{c.trans}" /> </b>
@@ -143,6 +165,9 @@
 								value="%{c.cliente.toString()}" name="cliente"
 								href="%{jsonClientes}" delay="50" loadMinimumCount="2"
 								cssStyle="width: 350px " /></td>
+						<td  title="Cargar Info Garantia">Cargar Información Garantía:</td>
+									<td><sj:radio name="carpeta.cargarInformacionGarantia" 
+											list="#{'true':'Si','false':'No'}" value="%{c.cargarInformacionGarantia}" buttonset="false"  /></td>	
 					</tr>
 				</table>
 
@@ -547,13 +572,14 @@
 					collapsible="true" active="false">
 					<div style="width: 70%">
 						<sj:accordionItem title="Información Garantía">
+							<%-- 
 							 <table cellspacing="4" width="300px">
 						   		<tr>
 									<td width="130px" title="Cargar Info Garantia">Cargar Información Garantía:</td>
 									<td><sj:radio name="carpeta.cargarInformacionGarantia" 
 											list="#{'true':'Si','false':'No'}" value="%{c.cargarInformacionGarantia}" buttonset="false"  /></td>				
 								</tr>
-							</table>
+							</table>--%>
 							<table cellspacing="4">
 								<tr>
 									<td>Tipo Garantia :</td>

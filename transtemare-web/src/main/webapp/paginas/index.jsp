@@ -25,7 +25,7 @@
 		src="${pageContext.request.contextPath}/struts/xhtml/validation.js"></script>
 	<sj:head debug="true" locale="es" jquerytheme="showcase"
 		customBasepath="themes" loadFromGoogle="true"
-		defaultIndicator="indicator" />
+		defaultIndicator="indicator" jqueryui="true"/>
 </head>
 <body>
 

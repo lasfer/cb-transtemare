@@ -14,7 +14,6 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.migrate.js"></script>
 	
-
 <script type="text/javascript">	
 	var destGarantiasCarga='CarpetasACargarGarantiaReport';
 	var destGarantiasInfo='GarantiaCarpetasReport';
@@ -44,6 +43,11 @@
 	function changeDest(destParam) {
 		dest=destParam;
 		$('form').get(0).setAttribute('action', '${pageContext.request.contextPath}/'+dest);
+		if(dest != destGarantiasCarga){
+			$('#boton_guardar').hide();
+		}else{
+			$('#boton_guardar').show();
+		}
 	}
 </script>
 
@@ -75,5 +79,14 @@
 	action="none">
 	<div id="reporte">${tabla}</div>
 </form>
-
+<div id="boton_guardar">
+	<br>
+	<p align="center">
+		<sj:a id="ajaxlink3" indicator="indicator" button="true"
+			buttonIcon="ui-icon-refresh"
+			onclick="javascript:jQuery.jmesa.setSaveToWorksheet('tag');onInvokeAction('tag','save_worksheet');">
+		  	Guardar Todo
+		</sj:a>
+	</p>
+</div>
 
