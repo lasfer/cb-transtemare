@@ -1,10 +1,13 @@
 package com.web.transtemare.acciones.carpetas;
 
+import org.apache.log4j.Logger;
+
 import static org.jmesa.limit.ExportType.EXCEL;
 import static org.jmesa.limit.ExportType.PDF;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -48,6 +51,12 @@ import com.opensymphony.xwork2.ActionSupport;
 public class CarpetasACargarGarantiaReport extends ActionSupport implements
 		ServletRequestAware, ServletResponseAware, WorksheetSaver,
 		WorksheetCallbackHandler {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(CarpetasACargarGarantiaReport.class);
+
+	private /*static final*/ String codigoAgenciaDobleCheuqe="EVERGREEN";
 	public CarpetasACargarGarantiaReport(Fachada fac) {
 		super();
 		this.fac = fac;
@@ -75,7 +84,15 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 	private static final long serialVersionUID = 1L;
 
 	public void saveWorksheet(Worksheet worksheet) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("saveWorksheet(Worksheet) - start"); //$NON-NLS-1$
+		}
+
 		saveWorksheetChanges(worksheet);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("saveWorksheet(Worksheet) - end"); //$NON-NLS-1$
+		}
 	}
 
 	@Action(value = "/CarpetasACargarGarantiaReport", results = {
@@ -84,13 +101,38 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 					"destino", "urlRep" }),
 			@Result(location = "/paginas/carpetasACargarGarantiaReport.jsp", name = "error") })
 	public String execute() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("execute() - start"); //$NON-NLS-1$
+		}
+
 		TableModel tableModel = new TableModel("tag", request, response);
 		try {
 			tableModel.saveWorksheet(this);
 			Carpeta carpeta=new Carpeta();
 			carpeta.setCargarInformacionGarantia(true);
 			setCarpetas(fac.obtenerCarpetasGarantia(carpeta));
+			List<Carpeta> carpetasADulicar=new ArrayList<Carpeta>();
+			logger.info("Carpetas totales: " + getCarpetas().size());
+			for (Carpeta c : getCarpetas()) {
+				if (codigoAgenciaDobleCheuqe.equals(StringUtils.trim(c.getAgenciaMaritima().getNombre()))){
+					carpetasADulicar.add(c);
+				}				
+			}
+			logger.info("Carpetas a duplicar: " + carpetasADulicar.size());
+			for (Carpeta c : carpetasADulicar) {				
+				for (int i=0; i<getCarpetas().size();i++) {
+					Carpeta carpeta1=getCarpetas().get(i);
+					if (c.getIdCarpeta().equals(carpeta1.getIdCarpeta())){
+						getCarpetas().add(i+1, c);
+						logger.info("Duplicando carpeta: " + c.getIdCarpeta() + " En la posicion: " + (i+1));
+						break;
+					}	
+				}
+			}
+			
 		} catch (Exception e) {
+			logger.error("execute()", e); //$NON-NLS-1$
+
 			e.printStackTrace();
 		}
 		tableModel.setItems(carpetas);
@@ -106,6 +148,9 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 			tableModel.setTable(table);
 			tableModel.render();
 
+			if (logger.isDebugEnabled()) {
+				logger.debug("execute() - end"); //$NON-NLS-1$
+			}
 			return NONE;
 		}
 
@@ -122,6 +167,10 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 		tableModel.setTable(table);
 		if (tableModel.isExporting()) {
 			tableModel.render();
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("execute() - end"); //$NON-NLS-1$
+			}
 			return NONE;
 		}
 
@@ -141,8 +190,14 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 			try {
 				response.getOutputStream().write(contents);
 			} catch (IOException e) {
+				logger.error("execute()", e); //$NON-NLS-1$
+
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("execute() - end"); //$NON-NLS-1$
 			}
 			return NONE;
 		}
@@ -153,11 +208,23 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 		// return "reload";
 		// }
 		request.setAttribute("tabla", html);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("execute() - end"); //$NON-NLS-1$
+		}
 		return SUCCESS;
 	}
 
 	protected void saveWorksheetChanges(Worksheet worksheet) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("saveWorksheetChanges(Worksheet) - start"); //$NON-NLS-1$
+		}
+
 		worksheet.processRows(this);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("saveWorksheetChanges(Worksheet) - end"); //$NON-NLS-1$
+		}
 	}
 
 	@Override
@@ -178,6 +245,10 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 
 	@Override
 	public void process(WorksheetRow worksheetRow) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("process(WorksheetRow) - start"); //$NON-NLS-1$
+		}
+
 		boolean error = false;
 		if (worksheetRow.getRowStatus().equals(WorksheetRowStatus.ADD)) {
 			// would save the new President here
@@ -212,12 +283,16 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 								changedValue = new BigDecimal(
 										(String) changedValue);
 							} catch (Exception e) {
+								logger.error("process(WorksheetRow)", e); //$NON-NLS-1$
+
 								e.printStackTrace();
 							}
 						}
 						PropertyUtils.setProperty(carpetaBase, property,
 								changedValue);
 					} catch (Exception ex) {
+						logger.error("process(WorksheetRow)", ex); //$NON-NLS-1$
+
 						String msg = "Not able to set the property ["
 								+ property + "] when saving worksheet.";
 						throw new RuntimeException(msg);
@@ -229,14 +304,21 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 				carpetaBase.setFechaCargaGarantia(new Date());
 				carpetaBase.setCargarInformacionGarantia(false);
 				fac.modificarCarpeta(carpetaBase);
-				borrarCarpetaDelReporte(carpetaBase.getIdCarpeta());
+				borrarCarpetaDelReporte();
 
 			}
 		}
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("process(WorksheetRow) - end"); //$NON-NLS-1$
+		}
 	}
 
-	private void borrarCarpetaDelReporte(Integer idCarpeta) {
+	private void borrarCarpetaDelReporte() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("borrarCarpetaDelReporte(Integer) - start"); //$NON-NLS-1$
+		}
+
 		// for (Carpeta carpeta : carpetas) {
 		// if(carpeta.getIdCarpeta().equals(idCarpeta)){
 		// carpetas.remove(carpeta);
@@ -248,6 +330,9 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 		carpeta.setCargarInformacionGarantia(true);
 		carpetas.addAll(fac.obtenerCarpetasGarantia(carpeta));
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("borrarCarpetaDelReporte(Integer) - end"); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -255,6 +340,10 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 	 */
 	private void validateColumn(WorksheetColumn worksheetColumn,
 			String changedValue) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("validateColumn(WorksheetColumn, String) - start"); //$NON-NLS-1$
+		}
+
 		String property = worksheetColumn.getProperty();
 
 		if ("importeGarantia".equals(property)) {
@@ -272,9 +361,16 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 				worksheetColumn.removeError();
 			}
 		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("validateColumn(WorksheetColumn, String) - end"); //$NON-NLS-1$
+		}
 	}
 
 	private static void setTableData(Table table) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("setTableData(Table) - start"); //$NON-NLS-1$
+		}
 
 		table.setCaption("Carpetas con garantias a cargar");
 		Column tmpColumn = null;
@@ -324,6 +420,10 @@ public class CarpetasACargarGarantiaReport extends ActionSupport implements
 					.addWorksheetValidation(new WorksheetValidation(
 							WorksheetValidationType.NUMBER,
 							WorksheetValidation.TRUE));
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("setTableData(Table) - end"); //$NON-NLS-1$
 		}
 	}
 

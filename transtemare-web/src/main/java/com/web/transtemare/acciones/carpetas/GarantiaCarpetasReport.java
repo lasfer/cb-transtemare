@@ -4,11 +4,16 @@ import static org.jmesa.limit.ExportType.EXCEL;
 import static org.jmesa.limit.ExportType.PDF;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -17,19 +22,31 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.jmesa.limit.ExportType;
 import org.jmesa.model.TableModel;
 import org.jmesa.model.TableModelUtils;
+import org.jmesa.model.WorksheetSaver;
+import org.jmesa.util.ItemUtils;
 import org.jmesa.view.component.Column;
 import org.jmesa.view.component.Table;
+import org.jmesa.view.editor.CellEditor;
+import org.jmesa.view.html.HtmlBuilder;
 import org.jmesa.view.html.component.HtmlColumn;
 import org.jmesa.view.html.component.HtmlTable;
 import org.jmesa.view.html.editor.DroplistFilterEditor;
+import org.jmesa.worksheet.Worksheet;
+import org.jmesa.worksheet.WorksheetCallbackHandler;
+import org.jmesa.worksheet.WorksheetColumn;
+import org.jmesa.worksheet.WorksheetRow;
+import org.jmesa.worksheet.WorksheetRowStatus;
+import org.jmesa.worksheet.editor.RemoveRowWorksheetEditor;
 
 import com.core.transtemare.commons.Fachada;
 import com.core.transtemare.entidades.Carpeta;
+import com.core.transtemare.enums.EnumTipoGarantia;
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "default")
 public class GarantiaCarpetasReport extends ActionSupport implements
-		ServletRequestAware, ServletResponseAware {
+		ServletRequestAware, ServletResponseAware, WorksheetSaver,
+		WorksheetCallbackHandler{
 	public GarantiaCarpetasReport(Fachada fac) {
 		super();
 		this.fac = fac;
@@ -63,6 +80,7 @@ public class GarantiaCarpetasReport extends ActionSupport implements
 			@Result(location = "/paginas/carpetasACargarGarantiaReport.jsp", name = "error") })
 	public String execute() {
 		TableModel tableModel = new TableModel("tag", request, response);
+		tableModel.saveWorksheet(this);
 		try {
 			Carpeta carpeta = new Carpeta();
 			setCarpetas(fac.obtenerCarpetasGarantia(carpeta));
@@ -86,9 +104,9 @@ public class GarantiaCarpetasReport extends ActionSupport implements
 			return NONE;
 		}
 
-		tableModel.setEditable(false);
+		tableModel.setEditable(true);
 		tableModel.setExportTypes(PDF, EXCEL);
-
+		
 		HtmlTable table = TableModelUtils.createHtmlTable("idCarpeta",
 				"nroContenedor", "despachante.nombre",
 				"trans.nombreTransportadora", "agenciaMaritima.nombre",
@@ -201,11 +219,95 @@ public class GarantiaCarpetasReport extends ActionSupport implements
 		tmpColumn = table.getRow().getColumn("contenedorDevuelto");
 		tmpColumn.setTitle("Cont. Devuelto");
 		if (tmpColumn instanceof HtmlColumn) {
-			((HtmlColumn) tmpColumn).setEditable(false);
+			((HtmlColumn) tmpColumn).setEditable(true);
 			((HtmlColumn) tmpColumn)
 					.setFilterEditor(new DroplistFilterEditor());
+			((HtmlColumn) tmpColumn).setCellEditor(new CellEditor() {
+				@Override
+				public Object getValue(Object item, String property,
+						int rowcount) {
+					Object value = ItemUtils.getItemValue(item, property);
+					HtmlBuilder html = new HtmlBuilder();
+					html.bold().append(
+							BooleanUtils.isTrue(((Carpeta) item)
+									.getGarantiaDevuelta()) ? "SI" : "NO");
+					return html.toString();
+				}
+			});
 		}
+		HtmlColumn remove = new HtmlColumn("remove");
+		remove.setWorksheetEditor(new RemoveRowWorksheetEditor());
+		remove.setTitle("borrar");
+		remove.setFilterable(false);
+		remove.setSortable(false);
+		table.getRow().addColumn(remove);
 
 	}
 
+	@Override
+	public void process(WorksheetRow worksheetRow) {
+		if (worksheetRow.getRowStatus().equals(WorksheetRowStatus.ADD)) {
+			// would save the new President here
+		} else if (worksheetRow.getRowStatus()
+				.equals(WorksheetRowStatus.REMOVE)) {
+			String uniqueValue = worksheetRow.getUniqueProperty().getValue();
+			Carpeta carpetaBase = fac.obtenerCarpeta(Integer
+					.parseInt(uniqueValue));
+
+			Collection<WorksheetColumn> columns = worksheetRow.getColumns();
+
+			for (WorksheetColumn worksheetColumn : columns) {
+				Object changedValue = worksheetColumn.getChangedValue();
+				if (!StringUtils.equals(worksheetColumn.getOriginalValue(),
+						(String) changedValue)) {
+					String property = worksheetColumn.getProperty();
+					try {
+						if ("tipoGarantia".equals(property)) {
+							changedValue = EnumTipoGarantia
+									.getByName((String) changedValue);
+						}
+						if ("importeGarantia".equals(property)) {
+							try {
+								changedValue = new BigDecimal(
+										(String) changedValue);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+						PropertyUtils.setProperty(carpetaBase, property,
+								changedValue);
+					} catch (Exception ex) {
+						String msg = "Not able to set the property ["
+								+ property + "] when saving worksheet.";
+						throw new RuntimeException(msg);
+					}
+
+				}
+			}
+
+			carpetaBase.setGarantiaDevuelta(true);
+			carpetaBase.setCargarInformacionGarantia(false);
+			borrarCarpetaDelReporte();
+			fac.modificarCarpeta(carpetaBase);
+			// would delete the President here
+		} else if (worksheetRow.getRowStatus()
+				.equals(WorksheetRowStatus.MODIFY)) {
+		}
+	}
+
+	protected void saveWorksheetChanges(Worksheet worksheet) {
+		worksheet.processRows(this);
+	}
+
+	public void saveWorksheet(Worksheet worksheet) {
+		saveWorksheetChanges(worksheet);
+	}
+
+	private void borrarCarpetaDelReporte() {
+		carpetas.clear();
+		Carpeta carpeta = new Carpeta();
+		carpeta.setCargarInformacionGarantia(true);
+		carpetas.addAll(fac.obtenerCarpetasGarantia(carpeta));
+	}
 }

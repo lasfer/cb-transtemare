@@ -43,11 +43,12 @@
 	function changeDest(destParam) {
 		dest=destParam;
 		$('form').get(0).setAttribute('action', '${pageContext.request.contextPath}/'+dest);
+		<%--
 		if(dest != destGarantiasCarga){
 			$('#boton_guardar').hide();
 		}else{
 			$('#boton_guardar').show();
-		}
+		}--%>
 	}
 </script>
 
