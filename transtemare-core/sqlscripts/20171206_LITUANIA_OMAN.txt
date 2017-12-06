@@ -1,0 +1,2 @@
+INSERT INTO `skuncadb`.`pais` (`CodPais`, `Descripcion`, `codigo`) VALUES ('48', 'Lituania', '440');
+INSERT INTO `skuncadb`.`pais` (`CodPais`, `Descripcion`, `codigo`) VALUES ('49', 'Oman', '512');
