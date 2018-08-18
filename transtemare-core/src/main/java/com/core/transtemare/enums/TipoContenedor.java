@@ -2,7 +2,7 @@ package com.core.transtemare.enums;
 
 public enum TipoContenedor {
 
-	SUELTA("SUELTA", 0), T20("20", 20), T40("40", 40);
+	SUELTA("SUELTA", 0), T20("20", 20), T40("40", 40), LASTRE("LASTRE",1);
 
 	private int code;
 	private String value;

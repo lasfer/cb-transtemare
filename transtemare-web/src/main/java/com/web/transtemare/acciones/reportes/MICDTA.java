@@ -68,7 +68,7 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 			jasperReportCamionSust=JasperCompileManager.compileReport(fileReportCamionSust);
 			logger.info("Se compilo el micdta correctamente");
 		} catch (Exception e) {
-			logger.error("No se pudo compilar el micdta", e);
+			logger.error("No se pudo compilar el micdta o el micdta camion sust", e);
 		}
 	}
 
@@ -172,6 +172,8 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 
 	public void cargarParametros(HashMap<String, Object> param, Carpeta c,
 			HashMap<String, String> paises, ResourceBundle rb) {
+		
+		boolean isLastre=TipoContenedor.LASTRE.equals(c.getTipoContenedor());
 
 		param.put("logoPath",
 				(c.getTrans().getNombreArchivo() != null) ? MICDTA.class
@@ -187,6 +189,9 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 					c.getTrans().getPrefijo() + c.getNumeroDeMic());
 		}
 
+		param.put("nroTransmision",
+				c.getNroTransmision());
+		
 		if (c.getTrans().getRolDelContribuyente() != null)
 			param.put("RolContribuyente", c.getTrans().getRolDelContribuyente());
 
@@ -274,8 +279,8 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 			}
 			param.put("nroVencCamionOrig", sbDatosPolizaCamionOrig.toString());
 		}
-		if (c.getTrans().getRolDelContribuyente() != null)
-			param.put("rolContribuyenteOrig", c.getTrans()
+		if (!"0".equals(c.getTransportadoraCamion().getRolDelContribuyente()))
+			param.put("rolContribuyenteOrig", c.getTransportadoraCamion()
 					.getRolDelContribuyente());
 
 		if (c.getCamionSubstituto() != null
@@ -293,8 +298,8 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 					param.put("anioCamionSust",
 							String.valueOf(camion.getAnio()));
 			
-				if (c.getTrans().getRolDelContribuyente() != null)
-					param.put("rolContribuyenteSust", c.getTrans()
+				if (!"0".equals(c.getTransportadoraCamionSustituto().getRolDelContribuyente()))
+					param.put("rolContribuyenteSust", c.getTransportadoraCamionSustituto()
 							.getRolDelContribuyente());
 			}
 		}
@@ -323,7 +328,8 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 			param.put("aduanaDestinoCodigo", c.getAduanaDestino().getPais()
 					.getCodigo());
 		}
-		param.put("moneda", c.getMoneda());
+		if(!isLastre)
+			param.put("moneda", c.getMoneda());
 		if (c.getOrigenMercaderia().getDescripcion() != null
 				&& !c.getOrigenMercaderia().getDescripcion().isEmpty()) {
 			param.put("paisOrigen", (c.getOrigenMercaderia().toString()
@@ -390,11 +396,11 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 
 		// INICIO-NOMBRE Y DOMICILIO DEL REMITENTE
 		param.put("nombreRemitente", getEmpresaDomicilio(c.getRemitente()));
-
-		param.put("documentosAnexos", c.getDocumentosAnexos());
+		if(!isLastre)
+			param.put("documentosAnexos", c.getDocumentosAnexos());
 
 		StringBuilder marcaYnumerobultosSB = new StringBuilder();
-		if (StringUtils.isNotEmpty(c.getMarcaYnumerobultos())) {
+		if (StringUtils.isNotEmpty(c.getMarcaYnumerobultos()) && !isLastre) {
 			if (!TipoContenedor.SUELTA.equals(c.getTipoContenedor())) {
 				marcaYnumerobultosSB = marcaYnumerobultosSB
 						.append("1(UNO) CONTENEDOR DE ")
@@ -411,14 +417,18 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 		param.put("valorFOT", c.getValorFOT());
 		param.put("costoFlete", c.getCostoFlete());
 		param.put("seguro", c.getSeguro());
-		param.put("nroCRT", c.getTrans().getPrefijo() + c.getNroDocumento());
+		if(!isLastre)
+			param.put("nroCRT", c.getTrans().getPrefijo() + c.getNroDocumento());
 		param.put("transitoAduanero", c.getTransitoAduanero());
+		param.put("isLastre", isLastre);
 		param.put("nroCarpeta", String.valueOf(c.getIdCarpeta()));
 		param.put("referenciaDestino", c.getReferenciaDestino());
 		param.put("nombreTransportadora", c.getTrans()
 				.getNombreTransportadora());
 		param.put("nombreCortoDespachante", c.getDespachante() != null ? c
 				.getDespachante().getNombreCorto() : null);
+		param.put("firmante", StringUtils.isNotBlank(c.getFirmante()) ?
+					c.getFirmante() : "Flavio Skunca");
 	}
 
 	public String getEmpresaDomicilio(Empresa empresa) {

@@ -218,8 +218,10 @@
 						
 
 						</td>
-						<td></td>
-						<td></td>
+						<td title="Nro de transmisión"> Nro de transmisión:</td>
+						<td><sj:textfield id="carpeta.nroTransmision"
+								name="carpeta.nroTransmision" value="%{c.nroTransmision}"
+								size="30" /></td>
 					</tr>
 					<tr>
 						<td style="color: red" title="Aduana y ciudad de partida">Aduana
@@ -563,6 +565,13 @@
 						<td><sj:textfield name="carpeta.rutasCorto"
 								label="Rutas Corto" value="%{c.rutasCorto}" size="40"
 								maxlength="40" /></td>
+					</tr>
+					
+					<tr>
+						<td>Firmante MIC :</td>
+						<td><sj:textfield name="carpeta.firmante"
+								label="Firmante MIC" value="%{c.firmante}" size="30"
+								maxlength="30" /></td>
 					</tr>
 				</table>
 			</div>

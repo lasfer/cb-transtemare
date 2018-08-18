@@ -66,6 +66,9 @@
 	<parameter name="moneda" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
 	</parameter>
+	<parameter name="rolContribuyenteSust" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<parameter name="CiudadPaisDestino" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -252,6 +255,19 @@
 						<font size="7"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{capacidadCamionSust}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="268"
+						y="239"
+						width="112"
+						height="10"
+						key="textField-8"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{rolContribuyenteSust}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

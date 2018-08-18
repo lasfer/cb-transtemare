@@ -340,6 +340,8 @@ public class CarpetaMapper implements RowMapper<Carpeta> {
 				.getDate("fechaCargaGarantia")));
 		carpeta.setGarantiaDevuelta(rs.getBoolean("garantiaDevuelta"));
 		carpeta.setNroDUA(rs.getString("nroDUA"));
+		carpeta.setNroTransmision(rs.getString("nroTransmision"));
+		carpeta.setFirmante(rs.getString("firmante"));
 		return carpeta;
 	}
 

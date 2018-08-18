@@ -209,6 +209,8 @@ public class daoCarpeta {
 				carpeta.getBancoGarantia(), carpeta.getNroChequeGarantia(),
 				carpeta.getFechaCargaGarantia(), carpeta.getGarantiaDevuelta(),
 				carpeta.getNroDUA(),
+				carpeta.getNroTransmision(),
+				carpeta.getFirmante(),
 				carpeta.getIdCarpeta() };
 
 		LOGGER.info("Creando carpeta: " + carpeta.getIdCarpeta()

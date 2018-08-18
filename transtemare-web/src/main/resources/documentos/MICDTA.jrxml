@@ -36,7 +36,19 @@
 	<parameter name="nroMICDTA" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
 	</parameter>
+	<parameter name="nroTransmision" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firmante" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<parameter name="RolContribuyente" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rolContribuyenteOrig" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rolContribuyenteSust" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="responCamionOrig" isForPrompting="false" class="java.lang.String">
@@ -182,6 +194,9 @@
 	</parameter>
 	<parameter name="nroVencCamionSust" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="nroVencCamionOrig" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isLastre" isForPrompting="false" class="java.lang.Boolean">
+		<defaultValueExpression ><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -799,7 +814,7 @@ Manifiesto Internacional de Carga Rodoviária/Declaracao da Transito Aduaneiro]]
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{RolContribuyente}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{rolContribuyenteOrig}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -1028,8 +1043,8 @@ Cadastro geral do contribuyente]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="396"
-						y="54"
+						x="417"
+						y="60"
 						width="100"
 						height="12"
 						key="textField"/>
@@ -1037,7 +1052,7 @@ Cadastro geral do contribuyente]]></text>
 					<textElement textAlignment="Right">
 						<font size="9"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nroMICDTA}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nroTransmision}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -1489,7 +1504,7 @@ Placa de caminhão]]></text>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{RolContribuyente}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{rolContribuyenteSust}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -2560,10 +2575,10 @@ Placa de caminhão]]></text>
 					<reportElement
 						x="135"
 						y="580"
-						width="187"
+						width="209"
 						height="13"
 						key="staticText-53">
-							<printWhenExpression><![CDATA[$P{transitoAduanero}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{transitoAduanero} && !$P{isLastre}]]></printWhenExpression>
 						</reportElement>
 					<box></box>
 					<textElement>
@@ -2678,11 +2693,11 @@ Placa de caminhão]]></text>
 						x="5"
 						y="728"
 						width="245"
-						height="25"
+						height="15"
 						key="textField-49"/>
 					<box></box>
 					<textElement textAlignment="Right">
-						<font size="10"/>
+						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["p. " +$P{nombreTransportadora}]]></textFieldExpression>
 				</textField>
@@ -2738,6 +2753,45 @@ Placa de caminhão]]></text>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nroVencCamionSust}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="5"
+						y="746"
+						width="245"
+						height="15"
+						key="textField-52"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{firmante}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="417"
+						y="45"
+						width="100"
+						height="12"
+						key="textField-53"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nroMICDTA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="394"
+						y="62"
+						width="29"
+						height="10"
+						key="staticText-54"/>
+					<box></box>
+					<textElement>
+						<font size="7"/>
+					</textElement>
+				<text><![CDATA[Nro Tr:]]></text>
+				</staticText>
 			</band>
 		</detail>
 		<columnFooter>

@@ -98,7 +98,7 @@ public class SQLCarpetas {
 			+ "comentarios=?, tipoContenedor=?, fechaSalidaSolicitudCliente=?, transportadoraCamion=?, tamanioLetraMarcaYNumero=?, "
 			+ "validoHasta=?, rutasCorto=?, rutasLargo=?,transportadoraCamionSustituto=? , nombreFirmaDestinatario=?,  terminal=?, "
 			+ "contenedorDevuelto=?, cargarInformacionGarantia=?, tipoGarantia=?, importeGarantia=?, bancoGarantia=?, "
-			+ "nroChequeGarantia=?, fechaCargaGarantia=?, garantiaDevuelta=?, nroDUA=?  where idCarpeta=?";
+			+ "nroChequeGarantia=?, fechaCargaGarantia=?, garantiaDevuelta=?, nroDUA=?, nroTransmision=?, firmante=?  where idCarpeta=?";
 
 	public static final String BORRAR_EMPRESA = "UPDATE empresas SET Activo=0 WHERE idEmpresa=?";
 	public static final String PROCEDURE_NUMERADORES = "CALL `sp_numeradores`(?,?);";
