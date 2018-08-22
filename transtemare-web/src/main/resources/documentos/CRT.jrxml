@@ -8,8 +8,11 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="MarcaYNumeroStyle"/>
+	<style name="MarcaYNumeroStyle" isDefault="false"/>
 	<parameter name="nroDocumento" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firmante" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Localidad" class="java.lang.String">
@@ -697,11 +700,18 @@ Valor remetente
 ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField-10" x="16" y="1189" width="435" height="70"/>
+				<reportElement key="textField-10" x="16" y="1189" width="435" height="19"/>
 				<textElement textAlignment="Right">
-					<font size="15"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["p. " +$P{nombreTransportadora}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-101" x="51" y="1211" width="400" height="19"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firmante}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement key="textField" x="485" y="903" width="453" height="136"/>

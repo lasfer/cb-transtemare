@@ -205,6 +205,9 @@ public class CRT extends ActionSupport implements ServletResponseAware {
 			}
 		}
 
+		param.put("firmante", StringUtils.isNotBlank(c.getFirmante()) ?
+				c.getFirmante() : "Flavio Skunca");
+		
 		param.put("transitoAduanero", c.getTransitoAduanero());
 		param.put("nroCarpeta", String.valueOf(c.getIdCarpeta()));
 		param.put("referenciaDestino", c.getReferenciaDestino());

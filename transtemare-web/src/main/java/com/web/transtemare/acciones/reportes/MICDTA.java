@@ -43,6 +43,7 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(MICDTA.class);
 	private static String EXTENSION_ARCHIVO;
+	private static final String EN_LASTRE="En Lastre";
 	private HttpServletResponse response;
 	private InputStream inputStream;
 	private Fachada fac;
@@ -347,13 +348,7 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 
 		param.put("rutasCorto", c.getRutasCorto());
 		param.put("validoHasta", c.getValidoHasta());
-		if (StringUtils.isNotEmpty(c.getTipoBulto().getDescripcion())) {
-			param.put("tipo_bulto", c.getTipoBulto().getDescripcion());
-			// param.put("tipoBultoCodigo",
-			// String.valueOf(c.getTipoBulto().getCodBulto()));
-		}
-		param.put("cant_bultos", c.getCantidadBultos());
-		param.put("Peso_bruto", c.getPesoBruto());
+		
 
 		Map<String, String> listaRutas = new HashMap<String, String>();
 		try {
@@ -396,8 +391,6 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 
 		// INICIO-NOMBRE Y DOMICILIO DEL REMITENTE
 		param.put("nombreRemitente", getEmpresaDomicilio(c.getRemitente()));
-		if(!isLastre)
-			param.put("documentosAnexos", c.getDocumentosAnexos());
 
 		StringBuilder marcaYnumerobultosSB = new StringBuilder();
 		if (StringUtils.isNotEmpty(c.getMarcaYnumerobultos()) && !isLastre) {
@@ -411,12 +404,29 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 			}
 			marcaYnumerobultosSB.append("\n QUE DICE CONTENER ").append(
 					c.getMarcaYnumerobultos());
+		}else if(isLastre) {
+			marcaYnumerobultosSB.append(EN_LASTRE);
 		}
 		param.put("marcaYNumeroBultos", marcaYnumerobultosSB.toString());
-
-		param.put("valorFOT", c.getValorFOT());
-		param.put("costoFlete", c.getCostoFlete());
-		param.put("seguro", c.getSeguro());
+		if(!isLastre) {
+			param.put("documentosAnexos", c.getDocumentosAnexos());
+			param.put("valorFOT", c.getValorFOT());
+			param.put("costoFlete", c.getCostoFlete());
+			param.put("seguro", c.getSeguro());
+			if (StringUtils.isNotEmpty(c.getTipoBulto().getDescripcion())) {
+				param.put("tipo_bulto", c.getTipoBulto().getDescripcion());
+			}
+			param.put("cant_bultos", c.getCantidadBultos());
+			param.put("Peso_bruto", c.getPesoBruto());
+		}else {
+			param.put("documentosAnexos", EN_LASTRE);
+			param.put("valorFOT", EN_LASTRE);
+			param.put("costoFlete", EN_LASTRE);
+			param.put("seguro", EN_LASTRE);
+			param.put("tipo_bulto", EN_LASTRE);
+			param.put("cant_bultos", EN_LASTRE);
+			param.put("Peso_bruto", EN_LASTRE);
+		}
 		if(!isLastre)
 			param.put("nroCRT", c.getTrans().getPrefijo() + c.getNroDocumento());
 		param.put("transitoAduanero", c.getTransitoAduanero());
