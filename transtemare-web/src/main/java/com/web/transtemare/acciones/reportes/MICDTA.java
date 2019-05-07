@@ -326,8 +326,7 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 		if (!StringUtils.isEmpty(c.getAduanaDestino().getDescripcion())) {
 			param.put("aduanaDestino", c.getAduanaDestino().getDescripcion()
 					.toUpperCase());
-			param.put("aduanaDestinoCodigo", c.getAduanaDestino().getPais()
-					.getCodigo());
+			param.put("aduanaDestinoCodigo", c.getAduanaDestino().getCodigoAduana());
 		}
 		if(!isLastre)
 			param.put("moneda", c.getMoneda());

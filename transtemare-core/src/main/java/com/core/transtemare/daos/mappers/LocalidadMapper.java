@@ -23,6 +23,7 @@ public class LocalidadMapper implements RowMapper<Localidad> {
 		localidad.setIdLocalidad(rs.getInt("CodLocalidad"));
 		localidad.setDescripcion(rs.getString("Descripcion"));
 		localidad.setAduana(rs.getBoolean("esAduana"));
+		localidad.setCodigoAduana(rs.getString("codigoAduana"));
 		pais.setIdPais(rs.getInt("CodPais"));
 		pais.setDescripcion(rs.getString("DescripcionPais"));
 		pais.setCodigo(rs.getString("codigo"));

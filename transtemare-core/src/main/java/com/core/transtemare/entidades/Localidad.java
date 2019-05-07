@@ -8,6 +8,7 @@ public class Localidad{
 	private Pais pais;
 	private String descripcion;
 	private boolean aduana;
+	private String codigoAduana;
 
 	
 	public Localidad(int idLocalidad, Pais pais, String descripcion,
@@ -17,6 +18,15 @@ public class Localidad{
 		this.pais = pais;
 		this.descripcion = descripcion;
 		this.aduana = aduana;
+	}
+	public Localidad(int idLocalidad, Pais pais, String descripcion,
+			boolean aduana, String codigoAduana) {
+		super();
+		this.idLocalidad = idLocalidad;
+		this.pais = pais;
+		this.descripcion = descripcion;
+		this.aduana = aduana;
+		this.codigoAduana=codigoAduana;
 	}
 
 	public Localidad() {
@@ -63,6 +73,20 @@ public class Localidad{
 	 */
 	public void setAduana(boolean aduana) {
 		this.aduana = aduana;
+	}
+
+	/**
+	 * @return the codigoAduana
+	 */
+	public String getCodigoAduana() {
+		return codigoAduana;
+	}
+
+	/**
+	 * @param codigoAduana the codigoAduana to set
+	 */
+	public void setCodigoAduana(String codigoAduana) {
+		this.codigoAduana = codigoAduana;
 	}
 
 	public String toString() {

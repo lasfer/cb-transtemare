@@ -22,6 +22,7 @@ public class AduanaMapper implements RowMapper<Aduana> {
 		Pais pais = new Pais();
 		localidad.setIdLocalidad(rs.getInt("CodLocalidad"));
 		localidad.setDescripcion(rs.getString("Descripcion"));
+		localidad.setCodigoAduana(rs.getString("codigoAduana"));
 		pais.setIdPais(rs.getInt("CodPais"));
 		pais.setDescripcion(rs.getString("DescripcionPais"));
 		localidad.setPais(pais);

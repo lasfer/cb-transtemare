@@ -52,7 +52,7 @@ public class daoLocalidades {
 
 		int returnint = this.jdbcTemplate.queryForInt(
 				SQLComunes.OBTENER_COD_LOCALIDAD_POR_NOMBRE,
-				new Object[] { ciudad });
+				ciudad);
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("obtenerLocalidadPorNombre(String) - end - return value=" + returnint); //$NON-NLS-1$
 		}
@@ -157,6 +157,7 @@ public class daoLocalidades {
 			Localidad localidad = localidades.get(loc.getIdLocalidad());
 			localidad.setDescripcion(loc.getDescripcion());
 			localidad.setPais(loc.getPais());
+			localidad.setCodigoAduana(loc.getCodigoAduana());
 		}
 
 		if (LOGGER.isDebugEnabled()) {
@@ -171,8 +172,8 @@ public class daoLocalidades {
 
 		int returnint = this.jdbcTemplate.update(
 				SQLComunes.INSERTAR_LOCALIDAD,
-				new Object[] { localidad.getPais().getIdPais(),
-						localidad.getDescripcion(), new Boolean(localidad.isAduana()) });
+				 localidad.getPais().getIdPais(),
+						localidad.getDescripcion(), localidad.isAduana(), localidad.getCodigoAduana());
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("altaLocalidad(Localidad) - end - return value=" + returnint); //$NON-NLS-1$
 		}
@@ -186,9 +187,9 @@ public class daoLocalidades {
 
 		int returnint = this.jdbcTemplate.update(
 				SQLComunes.MODIFICAR_LOCALIDAD,
-				new Object[] { localidad.getDescripcion(),
-						localidad.getPais().getIdPais(), new Boolean(localidad.isAduana()),
-						localidad.getIdLocalidad() });
+				 localidad.getDescripcion(),
+						localidad.getPais().getIdPais(), localidad.isAduana(),
+						localidad.getCodigoAduana(), localidad.getIdLocalidad());
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("modificarLocalidad(Localidad) - end - return value=" + returnint); //$NON-NLS-1$
 		}

@@ -14,14 +14,15 @@ import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage(value = "default")
 public class ABMLocalidades extends ActionSupport {
-	private Logger logger = Logger.getLogger(ABMLocalidades.class);
+	private transient Logger logger = Logger.getLogger(ABMLocalidades.class);
 	private String oper = "";
 	private String id;
 	private Pais pais;
 	private String descripcion;
 	private Boolean aduana;
+	private String codigoAduana;
 
-	private Fachada fachada;
+	private transient Fachada fachada;
 
 	public ABMLocalidades(Fachada fachada) {
 		this.fachada = fachada;
@@ -36,6 +37,7 @@ public class ABMLocalidades extends ActionSupport {
 	}
 
 	@Action(value = "/ABMLocalidades", results = { @Result(location = "/paginas/simpleecho.jsp") })
+	@Override
 	public String execute() {
 		logger.debug("Entro al excecute");
 		try {
@@ -130,9 +132,9 @@ public class ABMLocalidades extends ActionSupport {
 		if (this.pais != null) {
 			ArrayList<Pais> paises = new ArrayList<Pais>();
 			fachada.darTodosLosPaises(paises);
-			for (Pais pais : paises) {
-				if (this.pais.getDescripcion().equals(pais.getDescripcion())) {
-					this.pais.setIdPais(pais.getIdPais());
+			for (Pais pais1 : paises) {
+				if (this.pais.getDescripcion().equals(pais1.getDescripcion())) {
+					this.pais.setIdPais(pais1.getIdPais());
 				}
 			}
 		} else {
@@ -140,7 +142,7 @@ public class ABMLocalidades extends ActionSupport {
 			pais.setIdPais(0);
 		}
 		return new Localidad(id.equals("_empty") ? 0 : Integer.parseInt(id),
-				pais, descripcion, aduana);
+				pais, descripcion, aduana, codigoAduana);
 	}
 
 	/**
@@ -156,5 +158,19 @@ public class ABMLocalidades extends ActionSupport {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the codigoAduana
+	 */
+	public String getCodigoAduana() {
+		return codigoAduana;
+	}
+
+	/**
+	 * @param codigoAduana the codigoAduana to set
+	 */
+	public void setCodigoAduana(String codigoAduana) {
+		this.codigoAduana = codigoAduana;
 	}
 }

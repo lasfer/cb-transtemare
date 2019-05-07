@@ -1,9 +1,15 @@
 package com.core.transtemare.entidades;
 
+import java.io.Serializable;
+
 import com.core.transtemare.commons.Utils;
 
-public class Pais {
+public class Pais implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7006914030333032688L;
 	private int idPais;
 	private String descripcion;
 	private String codigo;
