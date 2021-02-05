@@ -32,6 +32,7 @@ public class JSONListaMonedas extends ActionSupport {
 		lista = new ArrayList<String>();
 		lista.add("US$");
 		lista.add("US");
+		lista.add("EUR");
 		return SUCCESS;
 	}
 

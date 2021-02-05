@@ -2,7 +2,7 @@ package com.core.transtemare.entidades;
 
 public enum Monedas {
 	
-	US$(1),US(2);
+	US$(1),US(2),EUR(3);
 	
 	private int codigo;
 	

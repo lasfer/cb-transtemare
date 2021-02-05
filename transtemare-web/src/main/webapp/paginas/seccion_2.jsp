@@ -7,7 +7,7 @@
 			<ul style="align: right;" >
    			<li><s:textfield name="numPrecintos" label="Numero de precintos"  value="%{c.numeroPrecinto}" theme="xhtml" /></li>
    			<li><sx:autocompleter keyValue="%{c.origenMercaderia.idPais}" keyName="paisOrigenMercaderias" label="Pais de Origen" labelposition="left" name="paisOriMerc" id="paisOriMerc" list="paises" autoComplete="true" showDownArrow="true" required="true" forceValidOption="true" value="%{c.origenMercaderia.descripcion}"/></li>
-			<li>Moneda :  <s:select name="moneda"	list="#{'1':'US$','2':'US'}" 	label="Moneda" value="%{c.moneda}" /></li>
+			<li>Moneda :  <s:select name="moneda"	list="#{'1':'US$','2':'US','3':'EUR'}" 	label="Moneda" value="%{c.moneda}" /></li>
 			<li>Valor FOT:<s:textfield name="valorFOT" label="Valor FOT"  value="%{c.valorFOT}" /></li>
 			<li>Flete en US$ : <s:textfield name="costoFlete" label="Flete en US$" required="true" value="%{c.costoFlete}" /></li>
 			<li>Seguro en US$ :  <s:textfield name="seguro" label="Seguro en US$"  value="%{c.seguro}" /></li>
@@ -19,7 +19,7 @@
 			<li>Monto Remitente : <s:textfield name="montoRemitente" label="Monto Remitente"  value="%{c.montoRemitente}" /></li>
 			<li>Moneda Remitente :<s:select name="monedaRemitente"	list="#{'1':'US$','2':'US'}" 	label="Moneda Remitente"  value="%{c.monedaRemitente}"/></li>
 			<li>Monto Destinatario : <s:textfield name="montoDestinatario" label="Monto Destinatario" value="%{c.montoDestinatario}" /></li>
-			<li>Moneda Destinatario :<s:select name="monedaDestinatario"	list="#{'1':'US$','2':'US'}" 	label="Moneda Destinatario" value="%{c.monedaDestinatario}" /></li>
+			<li>Moneda Destinatario :<s:select name="monedaDestinatario"	list="#{'1':'US$','2':'US','3':'EUR'}" 	label="Moneda Destinatario" value="%{c.monedaDestinatario}" /></li>
 			<li>Monto del flete externo :<s:textfield name="montoFleteExterno" label="Monto del flete externo"  value="%{c.montoFleteExterno}" /></li>
 			<li>Monto de rembolso contra entrega :<s:textfield name="montoRetorno" label="Monto de rembolso contra entrega"  value="%{c.montoRembolso}" /></li>
 			<li>Declaraci&oacute;n del valor de las mercancias :<s:textfield name="decValor" label="Declaraci&oacute;n del valor de las mercancias" value="%{c.valorMercancias}" /></li>

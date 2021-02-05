@@ -1600,7 +1600,7 @@ Placa de caminhão]]></text>
 						x="264"
 						y="362"
 						width="257"
-						height="20"
+						height="28"
 						key="textField-13"/>
 					<box></box>
 					<textElement>
@@ -1682,7 +1682,7 @@ Placa de caminhão]]></text>
 						key="textField-19"/>
 					<box></box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8"/>
+						<font size="6"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentosAnexos}]]></textFieldExpression>
 				</textField>
