@@ -45,14 +45,18 @@ public class SABANA extends ActionSupport implements ServletResponseAware {
 	}
 
 	static {
+		InputStream is = null;
 		try {
-			String fileReport = SABANA.class.getClassLoader()
-					.getResource("documentos/SABANA.jrxml").getFile();
-			logger.info("Compilando el fuente: " + fileReport);
-			jasperReport = JasperCompileManager.compileReport(fileReport);
+			logger.info("Compilando el fuente: documentos/SABANA.jrxml");
+			is = SABANA.class.getClassLoader().getResourceAsStream("documentos/SABANA.jrxml");
+			jasperReport = JasperCompileManager.compileReport(is);
 			logger.info("Se compilo la sabana correctamente");
 		} catch (Exception e) {
 			logger.error("No se pudo compilar la sabana ", e);
+		} finally {
+			if (is != null) {
+				try { is.close(); } catch (Exception ignored) { }
+			}
 		}
 	}
 

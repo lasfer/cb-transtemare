@@ -264,6 +264,57 @@ $("#valorFot").blur(function() {
 	$("#valorFot").val(number);
 });
 
+$.subscribe('rowselectTransportadora', function(event, data) {
+	var id = jQuery("#gridedittable").jqGrid('getGridParam', 'selrow');
+	if (id) {
+		var ret = jQuery("#gridedittable").jqGrid('getRowData', id);
+		var imgUrl = ctx + '/verImagenTransportadora.action?id=' + id + '&t=' + new Date().getTime();
+		var html =
+			'<div style="display:inline-block;padding:10px 14px;border:1px solid #aaa;background:#f0f8ff;border-radius:4px;text-align:left;">' +
+			'<b>Logo de transportadora: ' + ret.nombre + '</b><br/>' +
+			'<img id="logoActualTransp" src="' + imgUrl + '" alt="Sin logo" ' +
+			'style="max-height:80px;max-width:200px;margin:6px 0;display:block;border:1px solid #ddd;" ' +
+			'onerror="this.style.display=\'none\';document.getElementById(\'sinLogoMsg\').style.display=\'inline\';" />' +
+			'<span id="sinLogoMsg" style="display:none;color:#999;font-style:italic;">Sin logo cargado</span><br/>' +
+			'<input type="file" id="logoFileInputTransp" accept="image/*" style="margin:4px 0;" />' +
+			'&nbsp;<button onclick="subirLogoTransportadora(' + id + '); return false;">Subir logo</button>' +
+			'&nbsp;<span id="msgLogoTransp" style="color:#555;"></span>' +
+			'</div>';
+		$("#gridLogoTransportadora").html(html);
+	}
+});
+
+function subirLogoTransportadora(id) {
+	var fileInput = document.getElementById('logoFileInputTransp');
+	if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+		alert('Seleccione un archivo de imagen primero.');
+		return;
+	}
+	var fd = new FormData();
+	fd.append('id', id);
+	fd.append('logoFile', fileInput.files[0]);
+	$("#msgLogoTransp").text('Subiendo...');
+	$.ajax({
+		url: ctx + '/subirLogoTransportadora.action',
+		type: 'POST',
+		data: fd,
+		processData: false,
+		contentType: false,
+		success: function() {
+			$("#msgLogoTransp").text('Logo subido correctamente.');
+			var img = document.getElementById('logoActualTransp');
+			if (img) {
+				img.style.display = 'block';
+				img.src = img.src.replace(/&t=\d+/, '') + '&t=' + new Date().getTime();
+				document.getElementById('sinLogoMsg').style.display = 'none';
+			}
+		},
+		error: function() {
+			$("#msgLogoTransp").text('Error al subir el logo.');
+		}
+	});
+}
+
 $.subscribe('formatFot', function(event, data) {
 
 	// take US format text into std number format

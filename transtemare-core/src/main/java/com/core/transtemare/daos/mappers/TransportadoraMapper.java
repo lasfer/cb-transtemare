@@ -24,6 +24,15 @@ public class TransportadoraMapper implements RowMapper<Transportadora> {
 		t.setPrefijo(rs.getString("t.Prefijo"));
 		t.setNumerador(rs.getInt("numero"));
 		t.setNombreArchivo(rs.getString("t.imagen"));
+		try {
+			t.setImagenLogo(rs.getBytes("imagen_logo"));
+			t.setImagenContentType(rs.getString("imagen_content_type"));
+		} catch (SQLException e1) {
+			try {
+				t.setImagenLogo(rs.getBytes("t.imagen_logo"));
+				t.setImagenContentType(rs.getString("t.imagen_content_type"));
+			} catch (SQLException ignored) { /* columnas pueden no existir aún */ }
+		}
 		l.setIdLocalidad(rs.getInt("t.CodLocallidad_FK"));
 		l.setDescripcion(rs.getString("p.Descripcion"));
 		p.setIdPais(rs.getInt("p.CodPais"));

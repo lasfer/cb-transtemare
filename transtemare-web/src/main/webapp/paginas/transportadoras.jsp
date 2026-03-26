@@ -17,7 +17,8 @@
     	id="gridedittable" caption="Transportadoras" dataType="json" href="%{urlTransportadora}" pager="true" navigator="true" 
     	navigatorAddOptions="{height:300,reloadAfterSubmit:true,top:1,left:1,width:350}"
     	navigatorEditOptions="{height:300,width:350, reloadAfterSubmit:true}" navigatorDelete="true" navigatorSearch="false"
-    	navigatorDeleteOptions="{height:150,reloadAfterSubmit:true}"  gridModel="gridModel" rowList="15" rowNum="15" editurl="%{editurl}"  editinline="false"  >
+    	navigatorDeleteOptions="{height:150,reloadAfterSubmit:true}"  gridModel="gridModel" rowList="15" rowNum="15" editurl="%{editurl}"  editinline="false"
+    	onSelectRowTopics="rowselectTransportadora"  >
     	
     	<sjg:gridColumn name="id" index="id"  title="ID"  editable="false"  width="30" key="true" required="false"  />
     	<sjg:gridColumn name="nombre"  index="nombre" id="nombre" title="Nombre"   editable="true" edittype="text"  editrules="{required: true}" />
@@ -30,18 +31,15 @@
     	<sjg:gridColumn name="numerador"  index="numerador" title="Numerador" editable="true" hidden="true"  editrules="{edithidden:true,required: true}" edittype="text" />
     	<sjg:gridColumn name="numerador" width="70" index="numerador" title="Numerador"  />
     	<sjg:gridColumn name="imagen" width="90" index="imagen" title="Imagen" editable="true" />
-    	
+    
     </sjg:grid>
 <!--    <sj:submit id="grid_edit_addbutton" value="Crear Transportadora" onClickTopics="rowadd" button="true"  />-->
     
-
   </div>
-  
+
+<div id="gridLogoTransportadora" style="margin-top:8px; text-align:center;"></div>
  
 <div id="ie_clearing"> &#160; </div>
-
-
-
 
 
 

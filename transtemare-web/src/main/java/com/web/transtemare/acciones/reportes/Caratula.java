@@ -39,13 +39,18 @@ public class Caratula extends ActionSupport implements ServletResponseAware {
 	}
 
 	static {
+		InputStream is = null;
 		try {
 			logger.info("Comenzando el compilado del reporte CARATULA.jrxml");
-			jasperReport = JasperCompileManager.compileReport(Caratula.class.getClassLoader()
-					.getResource("documentos/CARATULA.jrxml").getFile());
+			is = Caratula.class.getClassLoader().getResourceAsStream("documentos/CARATULA.jrxml");
+			jasperReport = JasperCompileManager.compileReport(is);
 			logger.info("La caratula se compilo correctamente");
 		} catch (Exception e) {
 			logger.error("No se pudo compilar la caratula", e);
+		} finally {
+			if (is != null) {
+				try { is.close(); } catch (Exception ignored) { }
+			}
 		}
 	}
 

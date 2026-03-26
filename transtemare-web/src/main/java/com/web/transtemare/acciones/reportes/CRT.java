@@ -2,7 +2,10 @@ package com.web.transtemare.acciones.reportes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,16 +55,20 @@ public class CRT extends ActionSupport implements ServletResponseAware {
 	}
 
 	static {
+		InputStream is = null;
 		try {
 			ResourceBundle rb2 = ResourceBundle.getBundle("propiedades");
 			EXTENSION_ARCHIVO = rb2.getString("extension.archivos.logos");
-			jasperReport = JasperCompileManager.compileReport(CRT.class
-					.getClassLoader().getResource("documentos/CRT.jrxml")
-					.getFile());
+			is = CRT.class.getClassLoader().getResourceAsStream("documentos/CRT.jrxml");
+			jasperReport = JasperCompileManager.compileReport(is);
 			logger.info("Se compilo el reporte crt");
 		} catch (Exception e1) {
 			logger.error("No se pudo compilar el CRT");
 			logger.error(e1.getMessage(), e1);
+		} finally {
+			if (is != null) {
+				try { is.close(); } catch (Exception ignored) { }
+			}
 		}
 	}
 
@@ -79,6 +86,15 @@ public class CRT extends ActionSupport implements ServletResponseAware {
 
 		HashMap<String, String> paises = new HashMap<String, String>();
 		fac.darTodosLosPaisesHash(paises);
+		if (c != null && c.getTrans() != null && c.getTrans().getIdTransportadora() != null) {
+			try {
+				com.core.transtemare.entidades.Transportadora t = fac.obtenerTransportadoraPorId(c.getTrans().getIdTransportadora());
+				if (t != null) {
+					c.getTrans().setImagenLogo(t.getImagenLogo());
+					c.getTrans().setImagenContentType(t.getImagenContentType());
+				}
+			} catch (Exception ignored) { }
+		}
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		this.cargarParametros(param, c, paises, rb);
 
@@ -93,12 +109,35 @@ public class CRT extends ActionSupport implements ServletResponseAware {
 		param.put("nroDocumento", (c != null && c.getTrans() != null && c
 				.getTrans().getPrefijo() != null) ? c.getTrans().getPrefijo()
 				+ c.getNroDocumento() : "");
-		// Path para la carpeta donde estan los logos
-		param.put("logoPath",
-				(c.getTrans().getNombreArchivo() != null) ? CRT.class
-						.getClassLoader().getResource("documentos/logos")
-						.getFile().concat(c.getTrans().getNombreArchivo())
-						.concat(EXTENSION_ARCHIVO) : "");
+		// Logo: si hay imagen subida (BLOB) se escribe a temp y se usa; si no, path por classpath + nombreArchivo
+		String logoPath = "";
+		if (c.getTrans().getImagenLogo() != null && c.getTrans().getImagenLogo().length > 0) {
+			try {
+				String ext = EXTENSION_ARCHIVO;
+				if (c.getTrans().getImagenContentType() != null && c.getTrans().getImagenContentType().contains("jpeg")) {
+					ext = ".jpg";
+				} else if (c.getTrans().getImagenContentType() != null && c.getTrans().getImagenContentType().contains("gif")) {
+					ext = ".gif";
+				}
+				File tmp = File.createTempFile("logo_trans_", ext);
+				try (FileOutputStream fos = new FileOutputStream(tmp)) {
+					fos.write(c.getTrans().getImagenLogo());
+				}
+				logoPath = tmp.getAbsolutePath();
+			} catch (Exception e) {
+				logger.warn("No se pudo escribir logo BLOB a temp, se usa nombreArchivo si existe", e);
+			}
+		}
+		if (logoPath.isEmpty() && c.getTrans().getNombreArchivo() != null) {
+			try {
+				logoPath = URLDecoder.decode(CRT.class.getClassLoader().getResource("documentos/logos").getFile(), "UTF-8")
+						.concat(c.getTrans().getNombreArchivo()).concat(EXTENSION_ARCHIVO);
+			} catch (java.io.UnsupportedEncodingException e) {
+				logoPath = CRT.class.getClassLoader().getResource("documentos/logos").getFile()
+						.concat(c.getTrans().getNombreArchivo()).concat(EXTENSION_ARCHIVO);
+			}
+		}
+		param.put("logoPath", logoPath);
 
 		// param.put("Localidad", (c.getCiudadPaisDestino() != null) ?
 		// c.getCiudadPaisDestino().getDescripcion().toUpperCase() + "-"+

@@ -281,6 +281,11 @@ public class FachadaTransportadoras {
 		return daoTransportadora.totalTransportadoras();
 	}
 
+	public boolean actualizarLogoTransportadora(int idTransportadora, byte[] imagenLogo, String imagenContentType) throws FachadaException {
+		int r = daoTransportadora.actualizarLogoTransportadora(idTransportadora, imagenLogo, imagenContentType);
+		return r != 0;
+	}
+
 	public Integer totalChoferes() throws FachadaException {
 		return daoResponsable.totalChoferes();
 	}

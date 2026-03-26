@@ -52,6 +52,9 @@ public class SQLTransportadoras {
 	public static final String MODIFICAR_TRANSPORTADORA = "UPDATE "
 			+ SQLTablas.TABLA_TRANSPORTADORAS
 			+ " set Nombre= ? , RolContribuyente = ? , Domicilio = ? , CodLocallidad_FK = ? ,Prefijo = ?,imagen = ? WHERE CodTransportadora = ?";
+	public static final String ACTUALIZAR_LOGO_TRANSPORTADORA = "UPDATE "
+			+ SQLTablas.TABLA_TRANSPORTADORAS
+			+ " SET imagen_logo = ?, imagen_content_type = ? WHERE CodTransportadora = ?";
 
 	// Crear
 	public static final String INSERTAR_TRANSPORTADORA = "INSERT INTO "

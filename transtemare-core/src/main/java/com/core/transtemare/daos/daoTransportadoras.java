@@ -199,4 +199,16 @@ public class daoTransportadoras {
 		}
 		return returnint;
 	}
+
+	public int actualizarLogoTransportadora(int idTransportadora, byte[] imagenLogo, String imagenContentType) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("actualizarLogoTransportadora(int=" + idTransportadora + ") - start");
+		}
+		int out = this.jdbcTemplate.update(SQLTransportadoras.ACTUALIZAR_LOGO_TRANSPORTADORA,
+				new Object[] { imagenLogo, imagenContentType != null ? imagenContentType : "image/png", idTransportadora });
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("actualizarLogoTransportadora(int, byte[], String) - end - return value=" + out);
+		}
+		return out;
+	}
 }

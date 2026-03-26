@@ -1,0 +1,25 @@
+# MySQL 5.1 para Transtemare (cb-transtemare)
+# Respaldo generado con MySQL 5.0.77; tabla 'carpeta' usa ROW_FORMAT=FIXED (compatible con 5.1).
+# No existe imagen oficial mysql:5.1; se usa imagen comunitaria vsamov/mysql-5.1.73.
+# Uso: docker compose up -d
+
+version: "3"
+services:
+  mysql:
+    image: vsamov/mysql-5.1.73
+    container_name: transtemare-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: skuncadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:

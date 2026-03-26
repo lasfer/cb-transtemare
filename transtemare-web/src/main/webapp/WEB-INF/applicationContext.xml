@@ -304,12 +304,16 @@
 	<bean id="abmtransportadora" class="com.web.transtemare.acciones.transportadora.ABMTransportadora">
 		<constructor-arg ref="fachada" />
 	</bean>
+	<bean id="verImagenTransportadora" class="com.web.transtemare.acciones.transportadora.VerImagenTransportadora">
+		<constructor-arg ref="fachada" />
+	</bean>
+	<bean id="subirLogoTransportadora" class="com.web.transtemare.acciones.transportadora.SubirLogoTransportadora">
+		<constructor-arg ref="fachada" />
+	</bean>
 
-	<!-- <bean id="jsontabletransportadoras" -->
-	<!-- class="com.web.transtemare.acciones.transportadora.JsonTableTransportadora"> -->
-	<!-- <constructor-arg ref="fachada" /> -->
-	<!-- </bean> -->
-
+	<bean id="jsonTableTransportadoras" class="com.web.transtemare.acciones.transportadora.JsonTableTransportadora">
+		<constructor-arg ref="fachada" />
+	</bean>
 
 	<bean id="jsontableterminales" class="com.web.transtemare.acciones.terminales.JSONTerminales">
 		<constructor-arg ref="fachada" />

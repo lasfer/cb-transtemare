@@ -2,7 +2,10 @@ package com.web.transtemare.acciones.reportes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -57,19 +60,22 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 	}
 
 	static {
+		InputStream isMicdta = null;
+		InputStream isCamionSust = null;
 		try {
 			ResourceBundle rb2 = ResourceBundle.getBundle("propiedades");
 			EXTENSION_ARCHIVO = rb2.getString("extension.archivos.logos");
-			String fileReport = MICDTA.class.getClassLoader()
-					.getResource("documentos/MICDTA.jrxml").getFile();
-			String fileReportCamionSust = MICDTA.class.getClassLoader()
-					.getResource("documentos/MICDTACamionSust.jrxml").getFile();
-			logger.info("Compilando el fuente: " + fileReport);
-			jasperReport = JasperCompileManager.compileReport(fileReport);
-			jasperReportCamionSust=JasperCompileManager.compileReport(fileReportCamionSust);
+			logger.info("Compilando el fuente: documentos/MICDTA.jrxml");
+			isMicdta = MICDTA.class.getClassLoader().getResourceAsStream("documentos/MICDTA.jrxml");
+			isCamionSust = MICDTA.class.getClassLoader().getResourceAsStream("documentos/MICDTACamionSust.jrxml");
+			jasperReport = JasperCompileManager.compileReport(isMicdta);
+			jasperReportCamionSust = JasperCompileManager.compileReport(isCamionSust);
 			logger.info("Se compilo el micdta correctamente");
 		} catch (Exception e) {
 			logger.error("No se pudo compilar el micdta o el micdta camion sust", e);
+		} finally {
+			if (isMicdta != null) { try { isMicdta.close(); } catch (Exception ignored) { } }
+			if (isCamionSust != null) { try { isCamionSust.close(); } catch (Exception ignored) { } }
 		}
 	}
 
@@ -85,7 +91,15 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 		}
 		HashMap<String, String> paises = new HashMap<String, String>();
 		fac.darTodosLosPaisesHash(paises);
-
+		if (c != null && c.getTrans() != null && c.getTrans().getIdTransportadora() != null) {
+			try {
+				com.core.transtemare.entidades.Transportadora t = fac.obtenerTransportadoraPorId(c.getTrans().getIdTransportadora());
+				if (t != null) {
+					c.getTrans().setImagenLogo(t.getImagenLogo());
+					c.getTrans().setImagenContentType(t.getImagenContentType());
+				}
+			} catch (Exception ignored) { }
+		}
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		ResourceBundle rb = ResourceBundle.getBundle("propiedades");
 		this.cargarParametros(param, c, paises, rb);
@@ -176,11 +190,34 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 		
 		boolean isLastre=TipoContenedor.LASTRE.equals(c.getTipoContenedor());
 
-		param.put("logoPath",
-				(c.getTrans().getNombreArchivo() != null) ? MICDTA.class
-						.getClassLoader().getResource("documentos/logos")
-						.getFile().concat(c.getTrans().getNombreArchivo())
-						.concat(EXTENSION_ARCHIVO) : "");
+		String logoPath = "";
+		if (c.getTrans().getImagenLogo() != null && c.getTrans().getImagenLogo().length > 0) {
+			try {
+				String ext = EXTENSION_ARCHIVO;
+				if (c.getTrans().getImagenContentType() != null && c.getTrans().getImagenContentType().contains("jpeg")) {
+					ext = ".jpg";
+				} else if (c.getTrans().getImagenContentType() != null && c.getTrans().getImagenContentType().contains("gif")) {
+					ext = ".gif";
+				}
+				File tmp = File.createTempFile("logo_trans_", ext);
+				try (FileOutputStream fos = new FileOutputStream(tmp)) {
+					fos.write(c.getTrans().getImagenLogo());
+				}
+				logoPath = tmp.getAbsolutePath();
+			} catch (Exception e) {
+				logger.warn("No se pudo escribir logo BLOB a temp", e);
+			}
+		}
+		if (logoPath.isEmpty() && c.getTrans().getNombreArchivo() != null) {
+			try {
+				logoPath = URLDecoder.decode(MICDTA.class.getClassLoader().getResource("documentos/logos").getFile(), "UTF-8")
+						.concat(c.getTrans().getNombreArchivo()).concat(EXTENSION_ARCHIVO);
+			} catch (java.io.UnsupportedEncodingException e) {
+				logoPath = MICDTA.class.getClassLoader().getResource("documentos/logos").getFile()
+						.concat(c.getTrans().getNombreArchivo()).concat(EXTENSION_ARCHIVO);
+			}
+		}
+		param.put("logoPath", logoPath);
 
 		if (c.getEsCRT()) {
 			param.put("nroMICDTA",

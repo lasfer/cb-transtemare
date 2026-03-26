@@ -13,7 +13,10 @@ public class Transportadora {
 	private String prefijo;
 	private Integer numerador;
 	private String nombreArchivo;
-	
+	/** Logo subido (BLOB); si no es null se usa en reportes en lugar del archivo por nombre. */
+	private byte[] imagenLogo;
+	private String imagenContentType;
+
 	public Transportadora(Integer id) {
 		idTransportadora = id ;
 	}
@@ -89,7 +92,22 @@ public class Transportadora {
 		this.nombreArchivo = nombreArchivo;
 	}
 
-	
+	public byte[] getImagenLogo() {
+		return imagenLogo;
+	}
+
+	public void setImagenLogo(byte[] imagenLogo) {
+		this.imagenLogo = imagenLogo;
+	}
+
+	public String getImagenContentType() {
+		return imagenContentType;
+	}
+
+	public void setImagenContentType(String imagenContentType) {
+		this.imagenContentType = imagenContentType;
+	}
+
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		if(getIdTransportadora() > 0){

@@ -131,6 +131,10 @@ public class Fachada {
 
 	}
 
+	public boolean actualizarLogoTransportadora(int idTransportadora, byte[] imagenLogo, String imagenContentType) throws FachadaException {
+		return fT.actualizarLogoTransportadora(idTransportadora, imagenLogo, imagenContentType);
+	}
+
 	public boolean altaChofer(Responsable responsable) throws FachadaException {
 		boolean check = false;
 		int idLocalidad = fCo.obtenerCodLocalidad(responsable.getLocalidad()
