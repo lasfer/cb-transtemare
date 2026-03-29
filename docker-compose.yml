@@ -2,6 +2,7 @@
 # Respaldo generado con MySQL 5.0.77; tabla 'carpeta' usa ROW_FORMAT=FIXED (compatible con 5.1).
 # No existe imagen oficial mysql:5.1; se usa imagen comunitaria vsamov/mysql-5.1.73.
 # Uso: docker compose up -d
+# Cargar respaldo + SQL de transtemare-core/sqlscripts: .\scripts\init-transtemare-db.ps1 -Recreate
 
 version: "3"
 services:
