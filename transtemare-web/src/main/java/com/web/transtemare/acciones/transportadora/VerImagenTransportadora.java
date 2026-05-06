@@ -39,11 +39,13 @@ public class VerImagenTransportadora extends ActionSupport implements ServletRes
 			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Sin imagen");
 			return NONE;
 		}
-		String contentType = t.getImagenContentType();
-		if (contentType == null || contentType.isEmpty()) {
-			contentType = "image/png";
+		String contentType = LogoTransportadoraUtil.detectContentType(t.getImagenLogo());
+		if (contentType == null) {
+			response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Imagen no valida");
+			return NONE;
 		}
 		response.setContentType(contentType);
+		response.setHeader("X-Content-Type-Options", "nosniff");
 		response.setContentLength(t.getImagenLogo().length);
 		OutputStream out = response.getOutputStream();
 		out.write(t.getImagenLogo());
