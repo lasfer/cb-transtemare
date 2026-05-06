@@ -1,5 +1,6 @@
 package com.web.transtemare.acciones.transportadora;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import org.apache.log4j.Logger;
@@ -36,17 +37,28 @@ public class SubirLogoTransportadora extends ActionSupport {
 			addActionError("Faltan id o archivo de imagen.");
 			return ERROR;
 		}
-		byte[] bytes = new byte[(int) logoFile.length()];
-		try (InputStream in = new java.io.FileInputStream(logoFile)) {
-			int n = 0;
-			int len;
-			while (n < bytes.length && (len = in.read(bytes, n, bytes.length - n)) != -1) {
-				n += len;
-			}
+		if (logoFile.length() > LogoTransportadoraUtil.MAX_LOGO_BYTES) {
+			addActionError("El logo supera el tamano maximo permitido.");
+			return ERROR;
 		}
-		String contentType = logoFileContentType != null ? logoFileContentType : "image/png";
-		if (!contentType.startsWith("image/")) {
-			contentType = "image/png";
+		byte[] bytes;
+		try (InputStream in = new java.io.FileInputStream(logoFile)) {
+			ByteArrayOutputStream out = new ByteArrayOutputStream((int) logoFile.length());
+			byte[] buffer = new byte[8192];
+			int len;
+			while ((len = in.read(buffer)) != -1) {
+				if (out.size() + len > LogoTransportadoraUtil.MAX_LOGO_BYTES) {
+					addActionError("El logo supera el tamano maximo permitido.");
+					return ERROR;
+				}
+				out.write(buffer, 0, len);
+			}
+			bytes = out.toByteArray();
+		}
+		String contentType = LogoTransportadoraUtil.detectContentType(bytes);
+		if (contentType == null) {
+			addActionError("Formato de logo no permitido.");
+			return ERROR;
 		}
 		try {
 			boolean ok = fac.actualizarLogoTransportadora(id, bytes, contentType);
