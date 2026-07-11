@@ -2,11 +2,11 @@
 
 ## Requisitos
 
-- JDK 6+ (proyecto compilado a 1.6; conviene JDK 8 para tooling moderno si el build lo permite)
+- **JDK 8** (bytecode target 1.8)
 - Maven 3.x
 - MySQL con base `skuncadb`
 - Node.js 20+ (para React)
-- Contenedor servlet (Tomcat/JBoss) en `http://localhost:8080`
+- **Tomcat 8.5** en `http://localhost:8080` (JBoss 4.2 ya no es el runtime soportado)
 
 ## Base de datos
 
@@ -25,13 +25,19 @@ mvn clean install
 
 cd ../transtemare-web
 mvn clean package
-# Desplegar target/transtemare-web.war en el servidor
+# Desplegar target/transtemare-web.war en Tomcat 8.5
 ```
 
 Contexto: `/transtemare-web`  
 Smoke: `http://localhost:8080/transtemare-web/` → `index.action`
 
-El plugin Cargo del POM apunta a JBoss 4.2.3 (paths Linux); en Windows suele desplegarse a mano.
+### Deploy en Tomcat 8.5
+
+1. Copiar `transtemare-web/target/transtemare-web.war` a `$CATALINA_HOME/webapps/`
+2. Arrancar Tomcat con JDK 8
+3. Verificar `http://localhost:8080/transtemare-web/`
+
+Cargo en el POM está configurado como `tomcat85x` (opcional). En Windows suele ser más simple el deploy manual; descomentar `<home>` en el POM si usás Cargo.
 
 ## Frontend
 
@@ -59,3 +65,10 @@ El proxy Vite reescribe:
 ## Login
 
 Usar un usuario existente en DB. Tras login, React valida sesión con `GET /api/jsonEmpresas?rows=1&page=1`.
+
+## Smoke checklist (post Java 8)
+
+1. Login Struts / sesión
+2. Grids JSON + ABM (empresas/camiones)
+3. Carpetas + PDF CRT/MICDTA
+4. React `npm run dev` contra `/api`
