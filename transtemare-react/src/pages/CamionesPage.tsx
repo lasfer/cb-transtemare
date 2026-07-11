@@ -146,15 +146,6 @@ export default function CamionesPage() {
     setModalOpen(true)
   }
 
-  const onSubmit = (form: CamionFormData) => {
-    if (editingRow) {
-      const id = typeof editingRow.id === 'string' ? parseInt(editingRow.id, 10) : editingRow.id
-      editMutation.mutate({ id, form })
-    } else {
-      createMutation.mutate(form)
-    }
-  }
-
   const isMutating = createMutation.isPending || editMutation.isPending
 
   const rows = data?.gridModel ?? []
@@ -183,8 +174,8 @@ export default function CamionesPage() {
       field: 'vencimientoPoliza',
       headerName: 'Venc. Póliza',
       width: 110,
-      valueFormatter: (params) => {
-        const v = params?.value
+      valueFormatter: (value) => {
+        const v = value
         if (v == null || v === '') return '—'
         const d = new Date(v as string | number)
         return isNaN(d.getTime()) ? String(v) : d.toLocaleDateString('es-AR')

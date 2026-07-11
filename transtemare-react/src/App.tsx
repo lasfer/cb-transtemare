@@ -8,6 +8,8 @@ import TransportadorasPage from './pages/TransportadorasPage'
 import CamionesPage from './pages/CamionesPage'
 import ErrorBoundary from './components/ErrorBoundary'
 import TerminalesPage from './pages/TerminalesPage'
+import CarpetasFormPage from './pages/CarpetasFormPage'
+import CarpetasPage from './pages/CarpetasPage'
 
 export default function App() {
   return (
@@ -28,6 +30,8 @@ export default function App() {
             <Route path="transportadoras" element={<TransportadorasPage />} />
             <Route path="camiones" element={<ErrorBoundary><CamionesPage /></ErrorBoundary>} />
             <Route path="terminales" element={<TerminalesPage />} />
+            <Route path="carpetas" element={<CarpetasPage />} />
+            <Route path="carpetas/:idCarpeta" element={<CarpetasFormPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

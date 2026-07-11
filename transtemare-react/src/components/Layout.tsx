@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactElement } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import {
   AppBar,
@@ -23,17 +23,26 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import WarehouseIcon from '@mui/icons-material/Warehouse'
+import FolderIcon from '@mui/icons-material/Folder'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useAuth } from '../contexts/AuthContext'
 
 const DRAWER_WIDTH = 220
 const DRAWER_COLLAPSED = 64
 
-const NAV_ITEMS = [
+type NavItem = {
+  label: string
+  path: string
+  icon: ReactElement
+  disabled?: boolean
+}
+
+const NAV_ITEMS: NavItem[] = [
   { label: 'Empresas', path: '/empresas', icon: <BusinessIcon /> },
   { label: 'Transportadoras', path: '/transportadoras', icon: <LocalShippingIcon /> },
   { label: 'Camiones', path: '/camiones', icon: <DirectionsBusIcon /> },
   { label: 'Terminales', path: '/terminales', icon: <WarehouseIcon /> },
+  { label: 'Carpetas', path: '/carpetas', icon: <FolderIcon /> },
 ]
 
 export default function Layout() {
