@@ -1,0 +1,14 @@
+---
+description: Deploy local del WAR en Tomcat vía servicio Windows (no catalina.bat)
+alwaysApply: true
+---
+
+# Tomcat deploy local
+
+Al **compilar / empaquetar / deployar / redeploy** el backend:
+
+1. Leer y seguir la skill del proyecto `.cursor/skills/deploy-tomcat/SKILL.md`.
+2. Gestionar Tomcat solo con el servicio Windows **`Tomcat9`** (`Get-Service` / `Start-Service` / `Stop-Service`).
+3. **Nunca** usar `catalina.bat`, `startup.bat` ni `shutdown.bat`.
+4. Si el servicio está parado y `Start-Service` falla por permisos, **pedir al usuario** que lo levante (admin); no improvisar arranque por `.bat` ni matar `java`.
+5. WAR: `transtemare-web/target/transtemare-web.war` → `C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\`.

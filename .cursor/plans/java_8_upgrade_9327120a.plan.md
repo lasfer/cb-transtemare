@@ -1,23 +1,25 @@
 ---
 name: Java 8 Upgrade
-overview: Subir el backend de Java 1.6 a Java 8 con cambios mínimos de build y runtime (Tomcat 8.5), sin migrar Struts/Spring ni Jakarta. El entorno local ya tiene JDK 8.
+overview: "COMPLETADO (branch java8, 2026-07-11): backend en Java 8 + Tomcat 9 servicio Windows; Jasper CRT/MICDTA corregido; deploy vía /deploy-backend."
 todos:
   - id: java8-compiler
     content: Subir maven-compiler-plugin a 1.8 en core y web; verificar mvn install/package
-    status: pending
+    status: completed
   - id: java8-tomcat
     content: Cambiar runtime Cargo/docs de JBoss 4.2 a Tomcat 8.5; desplegar WAR
-    status: pending
+    status: completed
   - id: java8-docs
     content: Actualizar local-dev, architecture, java-backend.mdc y presentacion (Java 8)
-    status: pending
+    status: completed
   - id: java8-smoke
     content: "Smoke: login, grids/ABM, carpetas/PDFs, React proxy"
-    status: pending
+    status: completed
 isProject: false
 ---
 
 # Plan: migrar a Java 8
+
+> **Estado: ejecutado y completado con éxito** (branch `java8`, commit `445f5d0`). Runtime local: JDK 8 + servicio Windows `Tomcat9`. Fix extra: carga Jasper sin `URL.getFile()` (`JasperTemplates`).
 
 ## Enfoque
 

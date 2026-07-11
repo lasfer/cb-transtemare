@@ -31,13 +31,26 @@ mvn clean package
 Contexto: `/transtemare-web`  
 Smoke: `http://localhost:8080/transtemare-web/` → `index.action`
 
-### Deploy en Tomcat 8.5
+### Deploy en Tomcat (Windows)
 
-1. Copiar `transtemare-web/target/transtemare-web.war` a `$CATALINA_HOME/webapps/`
-2. Arrancar Tomcat con JDK 8
-3. Verificar `http://localhost:8080/transtemare-web/`
+En esta máquina el runtime es el servicio **`Tomcat9`** (Tomcat 9.0 bajo JDK 8).  
+`CATALINA_HOME`: `C:\Program Files\Apache Software Foundation\Tomcat 9.0`
 
-Cargo en el POM está configurado como `tomcat85x` (opcional). En Windows suele ser más simple el deploy manual; descomentar `<home>` en el POM si usás Cargo.
+```powershell
+Get-Service Tomcat9
+# Si está Stopped (puede requerir PowerShell admin):
+Start-Service Tomcat9
+
+Copy-Item -Force transtemare-web\target\transtemare-web.war `
+  "C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\transtemare-web.war"
+```
+
+Verificar `http://localhost:8080/transtemare-web/`.
+
+**No** arrancar/parar con `catalina.bat`: usar siempre el servicio.  
+Agente: skill `.cursor/skills/deploy-tomcat/` y comando `/deploy-backend`.
+
+Cargo en el POM está como `tomcat85x` (opcional). En Windows preferir servicio + copy del WAR.
 
 ## Frontend
 
