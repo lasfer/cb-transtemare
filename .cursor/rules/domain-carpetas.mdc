@@ -1,0 +1,35 @@
+---
+description: Dominio de negocio: carpetas, CRT, MICDTA, transportadoras
+globs: **/carpeta*.{ts,tsx,java},**/Carpetas*.{ts,tsx,java},**/CRT.java,**/MICDTA.java,**/SQLCarpetas.java
+alwaysApply: false
+---
+
+# Dominio Carpetas
+
+`Carpeta` es la entidad central (embarque / documentación aduanera).
+
+## Conceptos
+
+- **CRT** (`esCRT=true`): documento principal; carpeta padre.
+- **MIC/MICDTA** (`esCRT=false`): documentos subsidiarios (`cantidadMic`).
+- **Transportadora**: prefijo, numeradores, logo.
+- **Empresas** (tipo byte): remitente, destinatario, consignatario, cliente, despachante, agencia.
+- **Camión / remolque / chofer**: original + sustituto.
+- **Contenedor**: `TipoContenedor` (SUELTA, 20, 40, LASTRE).
+- **Histórico**: flag + acción `pasarCarpetaHistorico`.
+
+## Frontend
+
+- Lista/acciones: `CarpetasPage.tsx`
+- Formulario: `CarpetasFormPage.tsx` (acordeones + `LegacyAutocompleteField`)
+- API: `api/carpetas.ts` → `/jsonCarpetas`, `/NuevaCarpeta`, `/CrearCarpeta`
+
+## Backend
+
+- Entity: `entidades/Carpeta.java`
+- Persistencia: `daoCarpeta` + `SQLCarpetas`
+- Negocio: `FachadaCarpetas`
+- Alta/edición: `NuevaCarpeta`, `CrearCarpeta`
+- Reportes: `CRT.java` / `MICDTA.java` + `.jrxml` en `resources/documentos/`
+
+Al tocar reportes, editar `.jrxml` y `cargarParametros()` juntos.

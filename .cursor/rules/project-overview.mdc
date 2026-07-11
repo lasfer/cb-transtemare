@@ -1,0 +1,37 @@
+---
+description: Visión general del monorepo Transtemare y convenciones globales
+alwaysApply: true
+---
+
+# Transtemare — Overview
+
+Monorepo de gestión de carpetas de transporte internacional (CRT/MICDTA). Tres módulos sin `pom.xml` raíz:
+
+| Módulo | Rol |
+|--------|-----|
+| `transtemare-core` | JAR: entidades, DAOs, SQL, Fachadas |
+| `transtemare-web` | WAR: Struts 2 + Spring JDBC + JasperReports + JSP |
+| `transtemare-react` | SPA Vite/React que consume acciones Struts vía proxy `/api` |
+
+## Principios
+
+- Migración strangler: React reemplaza JSP; el backend Struts sigue siendo la API.
+- No inventar REST nuevo si ya existe una acción `.action` / JSON.
+- UI y mensajes en español (Argentina).
+- No commitear secretos; DB local en `applicationContext.xml` (`skuncadb`).
+- Preferir cambios mínimos y alineados a patrones existentes.
+
+## Build / run (orden)
+
+```bash
+cd transtemare-core && mvn clean install
+cd ../transtemare-web && mvn clean package
+cd ../transtemare-react && npm install && npm run dev
+```
+
+Backend: `http://localhost:8080/transtemare-web`  
+Frontend: `http://localhost:3000` (proxy `/api` → backend)
+
+## Docs
+
+Ver `.cursor/docs/` para arquitectura, contrato API y guía de migración.

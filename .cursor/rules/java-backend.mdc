@@ -1,0 +1,39 @@
+---
+description: Capas y convenciones del backend Java (core + web Struts)
+globs: transtemare-{core,web}/**/*.{java,xml}
+alwaysApply: false
+---
+
+# Java Backend
+
+Java 1.6, Struts 2.3, Spring 3.1 JDBC (sin Hibernate), MySQL `skuncadb`.
+
+## Capas (obligatorio)
+
+```
+Action (web) → Fachada (core) → dao* (core) → SQL* (core) → MySQL
+```
+
+- Nunca poner SQL en actions.
+- SQL en `com.core.transtemare.persistencia.sql.*`.
+- DAOs: prefijo `dao` (`daoCarpeta`, `daoCamiones`).
+- Fachadas: `Fachada`, `FachadaCarpetas`, `FachadaTransportadoras`, `FachadaComunes`.
+
+## Actions
+
+- Extienden `ActionSupport`, `@ParentPackage("default")` (auth).
+- Reciben `Fachada` por constructor; bean en `applicationContext.xml`.
+- Naming: `ABM*`, `JSON*` / `jsonTable*`, `JSONLista*`, `URL*`, reportes en mayúsculas (`CRT`, `MICDTA`).
+- Paquete: `com.web.transtemare.acciones.<dominio>`.
+
+## Nueva action checklist
+
+1. Clase en `acciones/<dominio>`
+2. Bean Spring con `<constructor-arg ref="fachada" />`
+3. Si hay DB: método DAO → constante SQL → método Fachada → action
+4. JSON grid: devolver `gridModel`, `page`, `total`, `records`
+5. Listas autocomplete: `{ lista: string[] }` con `id--descripcion` (`Utils.ID`)
+
+## Compatibilidad
+
+Mantener estilo Java 1.6 (sin lambdas/streams) salvo upgrade explícito.

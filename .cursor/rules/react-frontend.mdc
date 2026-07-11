@@ -1,0 +1,42 @@
+---
+description: Convenciones del frontend React (Vite, MUI, React Query)
+globs: transtemare-react/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# React Frontend
+
+Stack: React 19, Vite 8, MUI 7, DataGrid, TanStack Query, axios, react-hook-form, react-router 7.
+
+## Estructura
+
+```
+src/api/          # un módulo por dominio (client.ts compartido)
+src/types/        # interfaces + DEFAULT_* + enums
+src/pages/        # *Page.tsx
+src/components/   # UI reutilizable
+src/contexts/     # AuthContext + useAuth()
+```
+
+## Reglas
+
+- HTTP solo vía `src/api/client.ts` (`baseURL: '/api'`, `withCredentials`, form-urlencoded).
+- Tipos: `import type { X }`; TS strict + `verbatimModuleSyntax`.
+- Listas CRUD: copiar patrón de `CamionesPage` / `EmpresasPage` (DataGrid server-side + Dialog + ConfirmDialog).
+- Carpetas complejas: `CarpetasPage` + `CarpetasFormPage` + `LegacyAutocompleteField`.
+- Nueva sección: `types/` → `api/` → `pages/` → ruta en `App.tsx` + `NAV_ITEMS` en `Layout.tsx`.
+- Query keys: `['entidad', ...params]`; invalidar tras mutaciones.
+- Fechas al backend: `dd/mm/yyyy` cuando el Struts lo espere.
+- Estilos: MUI `sx` + `theme.ts`; no Tailwind ni CSS modules nuevos.
+- No cambiar auth a JWT sin cambios de backend (sesión cookie).
+
+## ABM legacy
+
+```typescript
+const params = new URLSearchParams({
+  oper: 'add' | 'edit' | 'del',
+  id: '_empty' | String(id),
+  ...fields,
+})
+await client.post('/ABMCamiones', params)
+```

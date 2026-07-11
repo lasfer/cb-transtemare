@@ -1,0 +1,44 @@
+---
+description: Contrato entre React y acciones Struts (grids, ABM, auth, reportes)
+globs: transtemare-react/src/api/**/*.{ts,tsx},transtemare-web/src/main/java/com/web/transtemare/acciones/**/*.java
+alwaysApply: false
+---
+
+# Contrato Struts ↔ React
+
+No hay REST moderno. Endpoints = acciones Struts (runtime `.action`).
+
+## Auth
+
+- Login: `POST /entrar` (`usuario`, `contrasena`) → sesión `JSESSIONID`
+- Probe: `GET /jsonEmpresas?rows=1&page=1` → válido si `gridModel` es array
+- Logout: `GET /logout`
+- React: `withCredentials: true` + rewrite de cookies en `vite.config.ts`
+
+## Grid (jqGrid)
+
+Params: `rows`, `page`, `sord`, `sidx`, `searchField`, `searchString`, `searchOper`  
+Response: `{ gridModel, total, records, page }`
+
+## ABM
+
+`POST` form-urlencoded: `oper=add|edit|del`, `id=_empty|<id>`, campos del form.
+
+## Autocomplete
+
+`GET /jsonLista*?term=` → strings `id--label` (separador `Utils.ID` = `"--"`).  
+En React usar `LegacyAutocompleteField`.
+
+## Reportes PDF
+
+Abrir en browser, no axios:
+
+```typescript
+window.open(`/api/CRT.action?id=${id}`, '_blank')
+window.open(`/api/MICDTA.action?id=${id}&camionSust=true`, '_blank')
+```
+
+## Nombres de campos
+
+Al guardar carpetas, mirror exacto de params Struts (p.ej. `'carpeta.terminal.id'`).  
+Algunas respuestas son HTML: inferir éxito por contenido (`ok.png` / `warn.png`).
