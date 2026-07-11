@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -41,8 +40,7 @@ public class Caratula extends ActionSupport implements ServletResponseAware {
 	static {
 		try {
 			logger.info("Comenzando el compilado del reporte CARATULA.jrxml");
-			jasperReport = JasperCompileManager.compileReport(Caratula.class.getClassLoader()
-					.getResource("documentos/CARATULA.jrxml").getFile());
+			jasperReport = JasperTemplates.compile("documentos/CARATULA.jrxml");
 			logger.info("La caratula se compilo correctamente");
 		} catch (Exception e) {
 			logger.error("No se pudo compilar la caratula", e);

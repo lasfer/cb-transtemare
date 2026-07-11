@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRStyle;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -60,13 +59,8 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 		try {
 			ResourceBundle rb2 = ResourceBundle.getBundle("propiedades");
 			EXTENSION_ARCHIVO = rb2.getString("extension.archivos.logos");
-			String fileReport = MICDTA.class.getClassLoader()
-					.getResource("documentos/MICDTA.jrxml").getFile();
-			String fileReportCamionSust = MICDTA.class.getClassLoader()
-					.getResource("documentos/MICDTACamionSust.jrxml").getFile();
-			logger.info("Compilando el fuente: " + fileReport);
-			jasperReport = JasperCompileManager.compileReport(fileReport);
-			jasperReportCamionSust=JasperCompileManager.compileReport(fileReportCamionSust);
+			jasperReport = JasperTemplates.compile("documentos/MICDTA.jrxml");
+			jasperReportCamionSust = JasperTemplates.compile("documentos/MICDTACamionSust.jrxml");
 			logger.info("Se compilo el micdta correctamente");
 		} catch (Exception e) {
 			logger.error("No se pudo compilar el micdta o el micdta camion sust", e);
@@ -176,11 +170,11 @@ public class MICDTA extends ActionSupport implements ServletResponseAware {
 		
 		boolean isLastre=TipoContenedor.LASTRE.equals(c.getTipoContenedor());
 
+		String logosDir = JasperTemplates.resourceDirPath("documentos/logos");
 		param.put("logoPath",
-				(c.getTrans().getNombreArchivo() != null) ? MICDTA.class
-						.getClassLoader().getResource("documentos/logos")
-						.getFile().concat(c.getTrans().getNombreArchivo())
-						.concat(EXTENSION_ARCHIVO) : "");
+				(c.getTrans().getNombreArchivo() != null && logosDir != null)
+						? logosDir.concat(c.getTrans().getNombreArchivo())
+								.concat(EXTENSION_ARCHIVO) : "");
 
 		if (c.getEsCRT()) {
 			param.put("nroMICDTA",

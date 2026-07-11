@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRStyle;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -55,9 +54,7 @@ public class CRT extends ActionSupport implements ServletResponseAware {
 		try {
 			ResourceBundle rb2 = ResourceBundle.getBundle("propiedades");
 			EXTENSION_ARCHIVO = rb2.getString("extension.archivos.logos");
-			jasperReport = JasperCompileManager.compileReport(CRT.class
-					.getClassLoader().getResource("documentos/CRT.jrxml")
-					.getFile());
+			jasperReport = JasperTemplates.compile("documentos/CRT.jrxml");
 			logger.info("Se compilo el reporte crt");
 		} catch (Exception e1) {
 			logger.error("No se pudo compilar el CRT");
@@ -94,11 +91,11 @@ public class CRT extends ActionSupport implements ServletResponseAware {
 				.getTrans().getPrefijo() != null) ? c.getTrans().getPrefijo()
 				+ c.getNroDocumento() : "");
 		// Path para la carpeta donde estan los logos
+		String logosDir = JasperTemplates.resourceDirPath("documentos/logos");
 		param.put("logoPath",
-				(c.getTrans().getNombreArchivo() != null) ? CRT.class
-						.getClassLoader().getResource("documentos/logos")
-						.getFile().concat(c.getTrans().getNombreArchivo())
-						.concat(EXTENSION_ARCHIVO) : "");
+				(c.getTrans().getNombreArchivo() != null && logosDir != null)
+						? logosDir.concat(c.getTrans().getNombreArchivo())
+								.concat(EXTENSION_ARCHIVO) : "");
 
 		// param.put("Localidad", (c.getCiudadPaisDestino() != null) ?
 		// c.getCiudadPaisDestino().getDescripcion().toUpperCase() + "-"+
@@ -274,8 +271,7 @@ public class CRT extends ActionSupport implements ServletResponseAware {
 		try {
 
 			if (jasperReport == null) {
-				jasperReport = JasperCompileManager
-						.compileReport(getText("CRT"));
+				jasperReport = JasperTemplates.compile("documentos/CRT.jrxml");
 			}
 			JasperPrint jp = JasperFillManager.fillReport(jasperReport,
 					parametros, new JREmptyDataSource());

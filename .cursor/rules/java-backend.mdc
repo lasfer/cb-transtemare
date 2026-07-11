@@ -6,7 +6,8 @@ alwaysApply: false
 
 # Java Backend
 
-Java 1.6, Struts 2.3, Spring 3.1 JDBC (sin Hibernate), MySQL `skuncadb`.
+Java 8 (bytecode 1.8), Struts 2.3, Spring 3.1 JDBC (sin Hibernate), MySQL `skuncadb`.
+Runtime de despliegue: **Tomcat 8.5**.
 
 ## Capas (obligatorio)
 
@@ -36,4 +37,4 @@ Action (web) → Fachada (core) → dao* (core) → SQL* (core) → MySQL
 
 ## Compatibilidad
 
-Mantener estilo Java 1.6 (sin lambdas/streams) salvo upgrade explícito.
+Target Java 8: se pueden usar lambdas/streams si aportan claridad; mantener el estilo del módulo (Fachada → DAO → SQL) y naming legacy.

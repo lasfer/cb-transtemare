@@ -9,7 +9,8 @@ tramstemare/
 └── transtemare-react/    # SPA de migración (Vite)
 ```
 
-No hay POM padre: compilar **core → web**. React es independiente (npm).
+No hay POM padre: compilar **core → web** con **JDK 8**. React es independiente (npm).
+Runtime WAR: **Tomcat 8.5** (`/transtemare-web`).
 
 ## Flujo de request
 

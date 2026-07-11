@@ -23,6 +23,8 @@ Monorepo de gestión de carpetas de transporte internacional (CRT/MICDTA). Tres 
 
 ## Build / run (orden)
 
+JDK **8** + Tomcat **8.5** para el WAR.
+
 ```bash
 cd transtemare-core && mvn clean install
 cd ../transtemare-web && mvn clean package

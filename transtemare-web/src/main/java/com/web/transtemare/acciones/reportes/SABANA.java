@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -46,10 +45,8 @@ public class SABANA extends ActionSupport implements ServletResponseAware {
 
 	static {
 		try {
-			String fileReport = SABANA.class.getClassLoader()
-					.getResource("documentos/SABANA.jrxml").getFile();
-			logger.info("Compilando el fuente: " + fileReport);
-			jasperReport = JasperCompileManager.compileReport(fileReport);
+			logger.info("Compilando el fuente: documentos/SABANA.jrxml");
+			jasperReport = JasperTemplates.compile("documentos/SABANA.jrxml");
 			logger.info("Se compilo la sabana correctamente");
 		} catch (Exception e) {
 			logger.error("No se pudo compilar la sabana ", e);

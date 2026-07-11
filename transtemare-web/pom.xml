@@ -12,7 +12,15 @@
 	<properties>
 		<struts2.version>2.3.3</struts2.version>
 		<spring.version>3.1.3.RELEASE</spring.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<!-- JasperReports pulls iText/olap4j forks from Jaspersoft repos (HTTP blocked by Maven 3.8+). -->
+	<repositories>
+		<repository>
+			<id>jaspersoft-third-party</id>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -167,11 +175,12 @@
 		<finalName>transtemare-web</finalName>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
+				<version>3.11.0</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<!-- <plugin> -->
@@ -183,32 +192,27 @@
 			<!-- </configuration> -->
 			<!-- </plugin> -->
 
+			<!-- Deploy target: Tomcat 8.5 + JDK 8 (JBoss 4.2 no soporta Java 8).
+			     Prefer manual deploy of target/transtemare-web.war on Windows.
+			     Uncomment and set <home> to your Tomcat 8.5 install if using Cargo. -->
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.3.1</version>
+				<version>1.9.13</version>
 				<configuration>
-					<!-- Container configuration -->
 					<container>
-						<!-- <containerId>tomcat6x</containerId> -->
-						<!-- <home>/opt/apache-tomcat-6.0.33</home> -->
-						<containerId>jboss42x</containerId>
-						<home>/usr/lib/jboss/jboss-4.2.3.GA/</home>
+						<containerId>tomcat85x</containerId>
+						<!-- <home>C:/apache-tomcat-8.5.xx</home> -->
 					</container>
-					<!-- Configuration to use with the container -->
 					<configuration>
 						<type>standalone</type>
 						<properties>
 							<cargo.process.spawn>true</cargo.process.spawn>
 						</properties>
 					</configuration>
-
-					<!-- Deployer configuration -->
 					<deployer>
 						<type>installed</type>
 					</deployer>
-
-					<!-- Deployables configuration -->
 					<deployables>
 						<deployable>
 							<groupId>com.transtemare</groupId>
